@@ -1,0 +1,437 @@
+# Radiotherapy Clinical Transcription Vocabulary
+#
+# Usage: Feed as initial_prompt to Whisper or as vocabulary bias list
+# Format: One term per line. # comments ignored.
+# Maintain per-clinic: add staff names, local equipment names, protocols
+#
+# Last updated: 2026-04-03
+# Source: Preliminary - requires clinic-specific customization
+
+# === Treatment Techniques ===
+IMRT
+VMAT
+3DCRT
+SRS
+SRT
+SBRT
+IGRT
+brachytherapy
+HDR
+LDR
+PDR
+electron beam
+photon beam
+proton therapy
+total body irradiation
+TBI
+total skin electron therapy
+TSET
+cranio-spinal irradiation
+CSI
+stereotactic
+hypofractionation
+hyperfractionation
+boost
+sequential boost
+simultaneous integrated boost
+SIB
+adaptive radiotherapy
+ART
+breath hold
+DIBH
+deep inspiration breath hold
+respiratory gating
+flattening filter free
+FFF
+
+# === Dose and Fractionation ===
+Gray
+Gy
+cGy
+centigray
+milligray
+mGy
+dose per fraction
+total dose
+prescribed dose
+mean dose
+maximum dose
+minimum dose
+D95
+D2
+Dmax
+Dmean
+V20
+V5
+biologically effective dose
+BED
+equivalent dose in 2 Gy fractions
+EQD2
+alpha/beta ratio
+nominal treatment dose
+NTD
+organ at risk dose
+OAR dose
+dose volume histogram
+DVH
+conformity index
+homogeneity index
+gradient index
+monitor units
+MU
+
+# === Equipment ===
+linear accelerator
+linac
+multileaf collimator
+MLC
+cone beam CT
+CBCT
+kV imaging
+MV imaging
+electronic portal imaging
+EPID
+on-board imager
+OBI
+bolus
+compensator
+immobilization
+thermoplastic mask
+vacloc
+vac-lok
+wingboard
+breast board
+belly board
+head rest
+bite block
+stereotactic frame
+Gamma Knife
+CyberKnife
+TomoTherapy
+Halcyon
+TrueBeam
+Versa HD
+Elekta
+Varian
+Siemens
+Accuray
+ViewRay
+MRIdian
+Unity
+MR-linac
+
+# === Anatomical Sites ===
+brain
+brainstem
+spinal cord
+optic chiasm
+optic nerve
+parotid
+submandibular gland
+cochlea
+lens
+retina
+lacrimal gland
+pituitary
+hippocampus
+nasopharynx
+oropharynx
+hypopharynx
+larynx
+oral cavity
+tongue base
+tonsil
+thyroid
+supraclavicular
+axilla
+breast
+chest wall
+lung
+esophagus
+heart
+liver
+kidney
+stomach
+pancreas
+duodenum
+small bowel
+large bowel
+rectum
+bladder
+prostate
+seminal vesicles
+cervix
+uterus
+vagina
+vulva
+ovary
+femoral head
+sacral plexus
+brachial plexus
+cauda equina
+
+# === Target Volumes (ICRU) ===
+GTV
+gross tumor volume
+CTV
+clinical target volume
+ITV
+internal target volume
+PTV
+planning target volume
+PRV
+planning organ at risk volume
+GTV-p
+GTV-n
+CTV-HR
+CTV-IR
+CTV-LR
+
+# === Organs at Risk ===
+OAR
+organ at risk
+serial organ
+parallel organ
+PRV
+dose constraint
+tolerance dose
+TD 5/5
+QUANTEC
+spinal cord PRV
+brainstem PRV
+penile bulb
+femoral heads
+bowel bag
+peritoneal cavity
+body minus PTV
+
+# === Treatment Planning ===
+treatment planning system
+TPS
+Eclipse
+Pinnacle
+RayStation
+Monaco
+treatment plan
+plan review
+plan check
+isocenter
+isocentre
+field arrangement
+beam arrangement
+gantry angle
+collimator angle
+couch angle
+field size
+jaw setting
+wedge
+dynamic wedge
+virtual wedge
+aperture
+segment
+control point
+arc
+partial arc
+full arc
+coplanar
+non-coplanar
+inverse planning
+forward planning
+optimization
+dose calculation
+convolution
+superposition
+Monte Carlo
+collapsed cone
+AAA
+analytical anisotropic algorithm
+Acuros
+heterogeneity correction
+grid size
+dose grid
+
+# === Image Guidance ===
+image guidance
+daily imaging
+cone beam
+kilovoltage
+megavoltage
+planar imaging
+volumetric imaging
+registration
+rigid registration
+deformable registration
+online match
+offline review
+couch shift
+translational shift
+rotational correction
+six degrees of freedom
+6DOF
+ExacTrac
+surface guided radiation therapy
+SGRT
+AlignRT
+Catalyst
+fiducial marker
+gold seed
+electromagnetic transponder
+Calypso
+
+# === Quality Assurance ===
+QA
+quality assurance
+patient specific QA
+PSQA
+pre-treatment verification
+machine QA
+daily QA
+monthly QA
+annual QA
+output check
+beam data
+commissioning
+ion chamber
+farmer chamber
+diode
+film dosimetry
+MOSFET
+OSLD
+optically stimulated luminescence
+TLD
+thermoluminescent dosimeter
+phantom
+solid water
+MapCHECK
+ArcCHECK
+Delta4
+SRS MapCHECK
+portal dosimetry
+gamma analysis
+gamma passing rate
+dose difference
+distance to agreement
+DTA
+tolerance
+action level
+TG-51
+TG-142
+TG-218
+
+# === Clinical Terms ===
+simulation
+CT simulation
+MRI simulation
+PET-CT
+fusion
+image fusion
+contouring
+auto-segmentation
+structure set
+DICOM
+DICOM-RT
+RT plan
+RT structure
+RT dose
+RT image
+treatment record
+verify and record
+record and verify
+R&V
+fraction
+treatment fraction
+daily treatment
+setup
+patient setup
+treatment delivery
+beam on
+beam off
+interlock
+interrupt
+override
+incident
+near miss
+variance
+clinical decision
+multidisciplinary
+tumor board
+MDT
+radiation oncologist
+radiation therapist
+RTT
+medical physicist
+dosimetrist
+
+# === Concurrent Medications (common) ===
+cisplatin
+carboplatin
+temozolomide
+cetuximab
+pembrolizumab
+nivolumab
+durvalumab
+5-fluorouracil
+5-FU
+capecitabine
+mitomycin
+gemcitabine
+paclitaxel
+docetaxel
+dexamethasone
+ondansetron
+amifostine
+
+# === Common Abbreviations ===
+Fx
+fx
+BID
+QD
+QOD
+PRN
+STAT
+NPO
+po
+IV
+IM
+SQ
+ENT
+GU
+GI
+GYN
+CNS
+H&N
+head and neck
+NPC
+NSCLC
+SCLC
+HCC
+RCC
+GBM
+SCC
+adenocarcinoma
+squamous cell carcinoma
+TNM
+AJCC
+FIGO
+Gleason
+PSA
+CEA
+AFP
+CA-125
+KPS
+Karnofsky
+ECOG
+performance status
+
+# === Per-Clinic Customization (add below) ===
+# Staff names
+# e.g., Dr. Smith, Dr. Patel, Jennifer, Marcus
+
+# Local protocol names
+# e.g., PROFIT, SABR-5, HypoRT
+
+# Equipment-specific names
+# e.g., Linac 1, Linac 2, TB-1234
+
+# Patient name (per session)
+# e.g., injected at transcription start
