@@ -58,10 +58,7 @@ def build_initial_prompt(vocabulary_path: Path) -> str:
 
     # Whisper's initial_prompt works best with terms in natural sentence context.
     # For domain vocabulary, a comma-separated list in a framing sentence works.
-    prompt = (
-        "This is a radiotherapy clinical dictation. "
-        "Key terms include: " + ", ".join(terms[:200]) + "."
-    )
+    prompt = "This is a radiotherapy clinical dictation. Key terms include: " + ", ".join(terms[:200]) + "."
     logger.info("Built initial_prompt with %d terms (truncated to 200)", len(terms))
     return prompt
 
