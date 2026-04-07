@@ -49,6 +49,25 @@ asr-medasr = [
     "pyctcdecode>=0.5",
     "kenlm>=0.3",
 ]
+# Cohere Transcribe backend. Native transformers >=5.4 is required
+# because that is the version where CohereAsrForConditionalGeneration
+# was registered as a first-class model class. Torch is needed for
+# inference; MPS support requires torch>=2.2 on Apple Silicon.
+asr-cohere = [
+    "numpy>=1.24",
+    "scipy>=1.11",
+    "soundfile>=0.12",
+    "transformers>=5.4",
+    "torch>=2.2",
+    "huggingface-hub>=0.25",
+    # Cohere's feature extractor imports librosa for mel-spectrogram
+    # preprocessing. This is required at processor load time, not just
+    # at inference time, so we must install it eagerly.
+    "librosa>=0.10",
+    # Required by transformers when using device_map="auto" for
+    # placement across MPS/CUDA/CPU.
+    "accelerate>=1.0",
+]
 
 [project.scripts]
 transcribe-radrx = "transcriber_radrx.cli:main"
