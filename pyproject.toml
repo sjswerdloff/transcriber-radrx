@@ -29,6 +29,9 @@ audio = [
     "scipy>=1.11",
     "pyroomacoustics>=0.7",
 ]
+validation = [
+    "jiwer>=4.0",
+]
 
 [project.scripts]
 transcribe-radrx = "transcriber_radrx.cli:main"
