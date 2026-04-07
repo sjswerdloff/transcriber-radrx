@@ -292,10 +292,19 @@ class GraniteSpeechBackend(ASRBackend):
         return str(decoded[0]).strip()
 
     def unload(self) -> None:
-        """Release model, processor, tokenizer references. Idempotent."""
+        """Release model + processor + tokenizer and force GC. Idempotent.
+
+        Granite-Speech 8B loaded peak is ~22-25 GB and the bake-off
+        runner loads backends sequentially. Forced gc.collect() before
+        emptying the MPS/CUDA cache makes the release deterministic so
+        the next backend doesn't OOM on a slow Python collection.
+        """
+        import gc
+
         self._model = None
         self._processor = None
         self._tokenizer = None
+        gc.collect()
         try:
             import torch
 

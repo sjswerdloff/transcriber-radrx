@@ -48,16 +48,13 @@ from transcriber_radrx.asr_backends.base import ASRBackend, ASRBackendError
 
 logger = logging.getLogger(__name__)
 
-# Neutral default system prompt for transcription-only use. When the
-# caller passes an explicit system_prompt, it replaces this.
-_DEFAULT_SYSTEM_PROMPT = (
-    "You are a transcription assistant. When given audio, output ONLY the "
-    "verbatim transcription of the speech. Do not summarize, interpret, "
-    "or add commentary. Do not answer questions about the audio — just "
-    "transcribe what is said."
-)
-
-_DEFAULT_USER_TEXT = "Transcribe the following audio verbatim."
+# NOTE: We previously had _DEFAULT_SYSTEM_PROMPT and _DEFAULT_USER_TEXT
+# constants here for the chat-template inference path. That path is
+# currently broken on transformers 5.5.0 (Voxtral's chat template
+# fails to compile in jinja with "Can't compile non template nodes"),
+# so we now use apply_transcription_request() instead, which does not
+# need either constant. They have been removed to keep the file clean
+# until the chat-template path is restored.
 
 
 class VoxtralBackend(ASRBackend):
@@ -103,6 +100,7 @@ class VoxtralBackend(ASRBackend):
         self._model: Any = None
         self._processor: Any = None
         self._initial_prompt_warned = False
+        self._system_prompt_warned = False
 
     def load(self) -> None:
         """Download and load model + processor. Idempotent."""
@@ -158,26 +156,32 @@ class VoxtralBackend(ASRBackend):
         self,
         audio_path: Path,
         *,
-        language: str = "en",  # noqa: ARG002  # protocol requires; Voxtral auto-detects
+        language: str = "en",
         initial_prompt: str | None = None,
         system_prompt: str | None = None,
     ) -> str:
         """Transcribe one 16 kHz mono WAV file with Voxtral.
 
+        Uses Voxtral's `apply_transcription_request` for the actual
+        transcription path. The chat-template path (which would let us
+        thread a system_prompt through) is currently broken on
+        transformers 5.5.0 — Voxtral's chat template fails to compile
+        in jinja with "Can't compile non template nodes". So for now
+        Voxtral runs in pure transcription mode and system_prompt is
+        logged-and-ignored. Granite-Speech is the working audio-LLM
+        for the instructability experiment in this PR; Voxtral's
+        instructability path is a TODO that needs either a transformers
+        version pin or a workaround using mistral-common directly.
+
         Args:
             audio_path: Path to a WAV file.
-            language: Ignored — Voxtral does automatic language detection.
-            initial_prompt: Ignored with a one-time warning. For domain
-                biasing, use `system_prompt` to give the model an
-                instruction-following directive.
-            system_prompt: Chat-template system instruction. If None,
-                a neutral "transcribe verbatim" default is used. Pass
-                a domain prompt here to test instructable transcription
-                (e.g. "Preserve Gy as Gy. Preserve PTV/CTV/IMRT.").
+            language: Language code for apply_transcription_request.
+            initial_prompt: Ignored with a one-time warning.
+            system_prompt: Currently ignored with a one-time warning.
+                See the docstring above for the chat-template issue.
 
         Returns:
-            Raw transcription text, decoded from the model's generation
-            after stripping input prompt tokens.
+            Raw transcription text from the model's generation.
         """
         if not audio_path.exists():
             msg = f"Audio file not found: {audio_path}"
@@ -185,10 +189,21 @@ class VoxtralBackend(ASRBackend):
 
         if initial_prompt is not None and not self._initial_prompt_warned:
             logger.info(
-                "[%s] initial_prompt ignored (Voxtral is instruction-following; use system_prompt instead for domain biasing)",
+                "[%s] initial_prompt ignored (Voxtral uses apply_transcription_request)",
                 self.name,
             )
             self._initial_prompt_warned = True
+
+        if system_prompt is not None and not self._system_prompt_warned:
+            logger.warning(
+                "[%s] system_prompt ignored — Voxtral chat template fails to "
+                "compile on transformers 5.5.0. Falling back to neutral "
+                "apply_transcription_request path. For instructable "
+                "transcription comparison, use the granite_speech backend "
+                "instead until the chat template issue is resolved.",
+                self.name,
+            )
+            self._system_prompt_warned = True
 
         self.load()
 
@@ -198,22 +213,15 @@ class VoxtralBackend(ASRBackend):
             msg = "Voxtral backend was not loaded; call load() first"
             raise ASRBackendError(msg)
 
-        # Build chat template with audio + text turns. Voxtral accepts
-        # a file path directly in the audio content field.
-        effective_system = system_prompt if system_prompt is not None else _DEFAULT_SYSTEM_PROMPT
-        conversation = [
-            {"role": "system", "content": effective_system},
-            {
-                "role": "user",
-                "content": [
-                    {"type": "audio", "path": str(audio_path)},
-                    {"type": "text", "text": _DEFAULT_USER_TEXT},
-                ],
-            },
-        ]
-
         try:
-            inputs = self._processor.apply_chat_template(conversation, return_tensors="pt")
+            # Voxtral's dedicated transcription path. Takes a file path
+            # (or URL) and a language code, returns processed inputs
+            # ready to feed into model.generate().
+            inputs = self._processor.apply_transcription_request(
+                language=language,
+                audio=str(audio_path),
+                model_id=self.model_id,
+            )
 
             # Move to device and cast floats to model dtype.
             model_param = next(self._model.parameters())
@@ -253,9 +261,23 @@ class VoxtralBackend(ASRBackend):
         return str(decoded[0]).strip()
 
     def unload(self) -> None:
-        """Release model + processor references. Idempotent."""
+        """Release model + processor references and force GC. Idempotent.
+
+        Voxtral Mini 3B has a real on-disk footprint of ~17 GB and a
+        loaded peak around 18-22 GB. The bake-off runner loads backends
+        sequentially and relies on each backend's unload() to fully
+        release memory before the next load(). Setting references to
+        None alone is not sufficient — Python GC is not deterministic
+        for large objects, and torch.mps cache can hold onto memory
+        until the underlying tensors are actually collected. Force
+        gc.collect() before emptying the MPS/CUDA cache to make
+        the release deterministic.
+        """
+        import gc
+
         self._model = None
         self._processor = None
+        gc.collect()
         try:
             import torch
 

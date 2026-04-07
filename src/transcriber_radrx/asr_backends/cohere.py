@@ -251,9 +251,19 @@ class CohereBackend(ASRBackend):
         return str(decoded[0]).strip()
 
     def unload(self) -> None:
-        """Release model + processor references. Idempotent."""
+        """Release model + processor and force GC. Idempotent.
+
+        See voxtral.unload() / granite.unload() for the OOM rationale:
+        Python GC is not deterministic for large model objects, so we
+        force gc.collect() before emptying the torch device cache to
+        ensure the next backend's load() starts with the previous
+        model's memory fully reclaimed.
+        """
+        import gc
+
         self._model = None
         self._processor = None
+        gc.collect()
         try:
             import torch
 
