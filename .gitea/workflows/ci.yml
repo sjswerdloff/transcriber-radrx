@@ -26,13 +26,13 @@ jobs:
           fi
 
       - name: Install dependencies
-        run: uv sync --extra dev --extra phonetic
+        run: uv sync --extra dev --extra phonetic --extra audio
 
       - name: Run pre-commit hooks
         run: uv run pre-commit run --all-files
 
       - name: Type check with mypy
-        run: uv run mypy src/
+        run: uv run mypy src/ tests/validation/audio_synthesis
 
   test:
     name: Run Tests
@@ -47,7 +47,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          uv sync --extra dev --extra phonetic
+          uv sync --extra dev --extra phonetic --extra audio
           uv pip install -e .
 
       - name: Run tests
