@@ -31,9 +31,16 @@ def _make_medasr(**kwargs: object) -> ASRBackend:
     return MedASRBackend(**kwargs)  # type: ignore[arg-type]
 
 
+def _make_cohere(**kwargs: object) -> ASRBackend:
+    from transcriber_radrx.asr_backends.cohere import CohereBackend
+
+    return CohereBackend(**kwargs)  # type: ignore[arg-type]
+
+
 BACKENDS: dict[str, BackendFactory] = {
     "mlx_whisper": _make_mlx_whisper,
     "medasr": _make_medasr,
+    "cohere": _make_cohere,
 }
 
 
