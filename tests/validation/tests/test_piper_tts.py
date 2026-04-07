@@ -100,6 +100,30 @@ class TestLoadFixtures:
         with pytest.raises(ValueError, match="text"):
             load_fixtures(fixtures_file)
 
+    def test_raises_typeerror_on_non_string_id(self, tmp_path: Path) -> None:
+        """Contract: non-string id raises TypeError rather than silently coercing."""
+        fixtures_file = tmp_path / "fixtures.jsonl"
+        fixtures_file.write_text('{"id": 12345, "text": "Hello."}\n')
+
+        with pytest.raises(TypeError, match="id"):
+            load_fixtures(fixtures_file)
+
+    def test_raises_typeerror_on_non_string_text(self, tmp_path: Path) -> None:
+        """Contract: non-string text raises TypeError."""
+        fixtures_file = tmp_path / "fixtures.jsonl"
+        fixtures_file.write_text('{"id": "t-001", "text": 42}\n')
+
+        with pytest.raises(TypeError, match="text"):
+            load_fixtures(fixtures_file)
+
+    def test_raises_typeerror_on_non_string_language(self, tmp_path: Path) -> None:
+        """Contract: non-string language raises TypeError."""
+        fixtures_file = tmp_path / "fixtures.jsonl"
+        fixtures_file.write_text('{"id": "t-001", "text": "Hello.", "language": 1}\n')
+
+        with pytest.raises(TypeError, match="language"):
+            load_fixtures(fixtures_file)
+
     def test_preserves_raw_record(self, tmp_path: Path) -> None:
         """Contract: optional fields are preserved in fixture.raw for manifest use."""
         fixtures_file = tmp_path / "fixtures.jsonl"

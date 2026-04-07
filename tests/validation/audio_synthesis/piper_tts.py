@@ -93,11 +93,24 @@ def load_fixtures(path: Path) -> list[TextFixture]:
                     msg = f"Missing required field '{required}' on line {line_num}"
                     raise ValueError(msg)
 
+            # Per SCHEMA.md, id/text/language must be strings. Validate
+            # rather than silently coercing — schema violations should be
+            # loud so they're caught early in fixture creation, not hidden
+            # behind str() coercion of ints or other types.
+            for string_field in ("id", "text"):
+                if not isinstance(record[string_field], str):
+                    msg = f"Field '{string_field}' on line {line_num} is {type(record[string_field]).__name__}, expected str"
+                    raise TypeError(msg)
+            language_raw = record.get("language", "en")
+            if not isinstance(language_raw, str):
+                msg = f"Field 'language' on line {line_num} is {type(language_raw).__name__}, expected str"
+                raise TypeError(msg)
+
             fixtures.append(
                 TextFixture(
-                    id=str(record["id"]),
-                    text=str(record["text"]),
-                    language=str(record.get("language", "en")),
+                    id=record["id"],
+                    text=record["text"],
+                    language=language_raw,
                     raw=record,
                 )
             )
@@ -107,10 +120,11 @@ def load_fixtures(path: Path) -> list[TextFixture]:
 
 
 def _resample_linear(audio: np.ndarray, src_rate: int, dst_rate: int) -> np.ndarray:
-    """Resample int16 mono audio using polyphase filtering.
+    """Resample int16 mono audio using scipy polyphase filtering.
 
     Uses scipy.signal.resample_poly for high-quality rate conversion.
-    Falls back to linear interpolation if scipy is unavailable.
+    scipy is a hard dependency of the audio extra — there is no silent
+    fallback. Silent quality degradation in medical code is a footgun.
 
     Args:
         audio: Int16 mono audio samples.
@@ -119,33 +133,24 @@ def _resample_linear(audio: np.ndarray, src_rate: int, dst_rate: int) -> np.ndar
 
     Returns:
         Int16 mono audio at dst_rate.
+
+    Raises:
+        ImportError: If scipy is not installed (audio extra not present).
     """
     if src_rate == dst_rate:
         return audio
 
-    try:
-        from math import gcd
+    from math import gcd
 
-        from scipy.signal import resample_poly
+    from scipy.signal import resample_poly
 
-        common = gcd(src_rate, dst_rate)
-        up = dst_rate // common
-        down = src_rate // common
-        # resample_poly expects float; convert then cast back
-        resampled_float = resample_poly(audio.astype(np.float64), up, down)
-        return np.clip(resampled_float, -32768, 32767).astype(np.int16)
-    except ImportError:
-        logger.warning(
-            "scipy not available, using linear interpolation for resampling (quality reduced)",
-        )
-        src_len = len(audio)
-        dst_len = round(src_len * dst_rate / src_rate)
-        if dst_len == 0:
-            return np.zeros(0, dtype=np.int16)
-        x_src = np.arange(src_len, dtype=np.float64)
-        x_dst = np.linspace(0, src_len - 1, dst_len, dtype=np.float64)
-        interp = np.interp(x_dst, x_src, audio.astype(np.float64))
-        return np.clip(interp, -32768, 32767).astype(np.int16)
+    common = gcd(src_rate, dst_rate)
+    up = dst_rate // common
+    down = src_rate // common
+    # resample_poly expects float; convert then cast back
+    resampled_float: np.ndarray = resample_poly(audio.astype(np.float64), up, down)
+    clipped: np.ndarray = np.clip(resampled_float, -32768, 32767).astype(np.int16)
+    return clipped
 
 
 def synthesize_one(
@@ -167,7 +172,8 @@ def synthesize_one(
     Raises:
         RuntimeError: If piper fails or produces no audio.
     """
-    cmd = [*(piper_cmd or ["piper"]), "--model", str(voice_model), "--output_raw"]
+    cmd_prefix = list(piper_cmd) if piper_cmd is not None else ["piper"]
+    cmd = [*cmd_prefix, "--model", str(voice_model), "--output_raw"]
 
     try:
         result = subprocess.run(  # noqa: S603

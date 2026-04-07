@@ -16,7 +16,12 @@ from unittest.mock import MagicMock, patch
 import numpy as np
 import pytest
 
-from tests.validation.audio_synthesis.acoustic_sim import (
+# Module-level skip if pyroomacoustics is not available. Even the mocked
+# tests use patch("pyroomacoustics.ShoeBox") which imports the module.
+# This provides defense-in-depth alongside the CI --extra audio install.
+pytest.importorskip("pyroomacoustics")
+
+from tests.validation.audio_synthesis.acoustic_sim import (  # noqa: E402
     ROOM_PRESETS,
     build_manifest_entry,
     read_wav,
@@ -298,6 +303,93 @@ class TestSimulateManifest:
 
         assert len(entries) == 1
         assert (tmp_path / "acoustic" / "t-001-piper-amy-linac_vault.wav").exists()
+
+
+class TestMicPlacement3D:
+    """Contract tests for 3D mic placement math."""
+
+    def test_ceiling_mic_actual_distance_matches_preset(self) -> None:
+        """Contract: actual Euclidean source-mic distance equals preset.mic_distance_m.
+
+        Verifies the fix for M-1: previously, preset.mic_distance_m was applied as
+        horizontal offset, which combined with vertical separation for ceiling mics
+        produced a larger true 3D distance than claimed.
+        """
+        import pyroomacoustics as pra
+
+        captured: dict[str, object] = {}
+
+        class _CapturingRoom:
+            def __init__(self, *_args: object, **_kwargs: object) -> None:
+                self._source_pos: list[float] | None = None
+                self._mic_pos: list[float] | None = None
+
+            def add_source(self, pos: list[float], **_kwargs: object) -> None:
+                self._source_pos = pos
+
+            def add_microphone(self, pos: list[float]) -> None:
+                self._mic_pos = pos
+                captured["source"] = self._source_pos
+                captured["mic"] = self._mic_pos
+
+            def simulate(self) -> None:
+                self.mic_array = type("MA", (), {"signals": [np.zeros(100, dtype=np.float64)]})()
+
+        with patch.object(pra, "ShoeBox", _CapturingRoom), patch.object(pra, "Material"):
+            audio = np.ones(100, dtype=np.int16) * 1000
+            simulate_room(audio, 16000, ROOM_PRESETS["linac_vault"])
+
+        source = captured["source"]
+        mic = captured["mic"]
+        assert isinstance(source, list)
+        assert isinstance(mic, list)
+
+        dx = mic[0] - source[0]
+        dy = mic[1] - source[1]
+        dz = mic[2] - source[2]
+        actual_distance = float(np.sqrt(dx * dx + dy * dy + dz * dz))
+
+        expected = ROOM_PRESETS["linac_vault"].mic_distance_m
+        assert abs(actual_distance - expected) < 0.01, f"Expected 3D distance {expected}, got {actual_distance}"
+
+    def test_desk_mic_actual_distance_matches_preset(self) -> None:
+        """Contract: desk-mic placement also honours true 3D distance."""
+        import pyroomacoustics as pra
+
+        captured: dict[str, object] = {}
+
+        class _CapturingRoom:
+            def __init__(self, *_args: object, **_kwargs: object) -> None:
+                self._source: list[float] | None = None
+                self._mic: list[float] | None = None
+
+            def add_source(self, pos: list[float], **_kwargs: object) -> None:
+                self._source = pos
+
+            def add_microphone(self, pos: list[float]) -> None:
+                self._mic = pos
+                captured["source"] = self._source
+                captured["mic"] = self._mic
+
+            def simulate(self) -> None:
+                self.mic_array = type("MA", (), {"signals": [np.zeros(100, dtype=np.float64)]})()
+
+        with patch.object(pra, "ShoeBox", _CapturingRoom), patch.object(pra, "Material"):
+            audio = np.ones(100, dtype=np.int16) * 1000
+            simulate_room(audio, 16000, ROOM_PRESETS["exam_room"])
+
+        source = captured["source"]
+        mic = captured["mic"]
+        assert isinstance(source, list)
+        assert isinstance(mic, list)
+
+        dx = mic[0] - source[0]
+        dy = mic[1] - source[1]
+        dz = mic[2] - source[2]
+        actual_distance = float(np.sqrt(dx * dx + dy * dy + dz * dz))
+
+        expected = ROOM_PRESETS["exam_room"].mic_distance_m
+        assert abs(actual_distance - expected) < 0.01
 
 
 @pytest.mark.requires_audio

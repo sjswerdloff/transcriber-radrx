@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import math
 import sys
 import wave
 from dataclasses import dataclass
@@ -31,6 +32,20 @@ if TYPE_CHECKING:
     from collections.abc import Iterable
 
 logger = logging.getLogger(__name__)
+
+# Speaker standing head height for source placement (meters)
+SPEAKER_HEAD_HEIGHT_M = 1.7
+# Desk mic typical height (meters)
+DESK_MIC_HEIGHT_M = 1.2
+# Ceiling mic clearance below ceiling (meters)
+CEILING_MIC_CLEARANCE_M = 0.3
+# Sabine's formula: RT60 = 0.161 * V / (S * alpha)
+SABINE_COEFFICIENT = 0.161
+# Physical absorption coefficient bounds
+MIN_ABSORPTION = 0.05
+MAX_ABSORPTION = 0.99
+# Image-source reflection order (higher = more accurate, slower)
+IMAGE_SOURCE_MAX_ORDER = 10
 
 
 @dataclass(frozen=True)
@@ -148,30 +163,54 @@ def simulate_room(
     # Convert to float for processing
     audio_float = audio.astype(np.float64) / 32768.0
 
-    # Compute absorption from RT60 using Sabine's formula
-    # RT60 = 0.161 * V / (S * alpha)
+    # Compute absorption from RT60 using Sabine's formula:
+    # RT60 = 0.161 * V / (S * alpha), solving for alpha
     width, depth, height = preset.dimensions_m
     volume = width * depth * height
     surface_area = 2 * (width * depth + width * height + depth * height)
-    # Inverting Sabine's formula to solve for alpha
-    absorption = 0.161 * volume / (surface_area * preset.rt60_seconds)
-    # Clamp to physical range
-    absorption = max(0.05, min(0.99, absorption))
+    absorption = SABINE_COEFFICIENT * volume / (surface_area * preset.rt60_seconds)
+    absorption = float(np.clip(absorption, MIN_ABSORPTION, MAX_ABSORPTION))
 
     # Build shoebox room with computed absorption
     room = pra.ShoeBox(
         list(preset.dimensions_m),
         fs=sample_rate,
         materials=pra.Material(absorption),
-        max_order=10,
+        max_order=IMAGE_SOURCE_MAX_ORDER,
     )
 
-    # Source near one wall, microphone at configured distance toward center
-    source_pos = [width * 0.2, depth * 0.5, 1.7]  # Speaker standing height
+    # Place source near one wall at standing head height
+    source_pos = [width * 0.2, depth * 0.5, SPEAKER_HEAD_HEIGHT_M]
+
+    # Place microphone so that the true 3D Euclidean distance from the
+    # source equals preset.mic_distance_m. For a ceiling mic this means
+    # solving for horizontal offset given the vertical separation.
+    mic_z = height - CEILING_MIC_CLEARANCE_M if preset.mic_position == "ceiling" else DESK_MIC_HEIGHT_M
+    vertical_delta = mic_z - SPEAKER_HEAD_HEIGHT_M
+    vertical_sq = vertical_delta * vertical_delta
+    target_sq = preset.mic_distance_m * preset.mic_distance_m
+
+    if vertical_sq >= target_sq:
+        # Vertical separation alone exceeds desired distance — mic directly
+        # above/below source (horizontal offset zero). Actual distance will
+        # be |vertical_delta|, which is recorded in the manifest.
+        horizontal_offset = 0.0
+        logger.warning(
+            "[acoustic_sim] Preset %s: vertical separation %.2fm exceeds desired "
+            "mic_distance_m=%.2f. Placing mic directly above/below source; "
+            "actual distance will be %.2fm.",
+            preset.name,
+            abs(vertical_delta),
+            preset.mic_distance_m,
+            abs(vertical_delta),
+        )
+    else:
+        horizontal_offset = math.sqrt(target_sq - vertical_sq)
+
     mic_pos = [
-        source_pos[0] + preset.mic_distance_m,
+        source_pos[0] + horizontal_offset,
         depth * 0.5,
-        height - 0.3 if preset.mic_position == "ceiling" else 1.2,
+        mic_z,
     ]
     room.add_source(source_pos, signal=audio_float)
     room.add_microphone(mic_pos)
@@ -191,7 +230,7 @@ def simulate_room(
         simulated = simulated * (input_peak / output_peak)
 
     # Clip and convert back to int16
-    simulated_int16 = np.clip(simulated * 32768.0, -32768, 32767).astype(np.int16)
+    simulated_int16: np.ndarray = np.clip(simulated * 32768.0, -32768, 32767).astype(np.int16)
     return simulated_int16
 
 
@@ -287,7 +326,7 @@ def simulate_manifest(
         audio, rate = read_wav(clean_path)
         try:
             simulated = simulate_room(audio, rate, preset)
-        except Exception:
+        except (ValueError, RuntimeError, np.linalg.LinAlgError):
             logger.exception("Simulation failed for %s", clean_entry["text_id"])
             continue
 
