@@ -92,20 +92,26 @@ if not entry.is_acronym and lower not in self._stop_words and lower not in self.
 
 This affects `ART`, `OAR`, `PTV`, `GTV`, `CTV`, `SBRT`, `IMRT`, `VMAT`, `Gy`, etc. — any short all-caps acronym that collides with an English word. `art`, `oar`, `ptv`, `gty` probably not a concern for most except `art`. `our`/`are`/`or` collide with `OAR` but are already in `DEFAULT_STOP_WORDS` so they escape via the stop-word path.
 
-### B-2. Multi-word vocabulary entries produce space-containing replacements (HIGH)
+### B-2. Multi-word vocabulary entries cause clinical meaning corruption (HIGH)
 
-**Symptom:** `"brain structures for skull"` → `"brain structure set for skull"` under phonetic ON — the word `structures` gets phonetically matched to the vocabulary entry `structure set`, and the replacement string (containing a space) is inserted verbatim into the output text.
+**Symptom:** `"brain structures for skull"` → `"brain structure set for skull"` under phonetic ON — the word `structures` gets phonetically matched to the vocabulary entry `structure set`.
+
+**Why this is a clinical problem, not just a UX bug:**
+
+`structures` (plural anatomical noun) and `structure set` (DICOM RTSTRUCT container) are **different concepts used by different roles**:
+
+- A **clinician** describing anatomy says "structures" — "lower doses to hippocampi and other brain structures"
+- A **physicist/engineer** discussing the DICOM data containing the contours that define those structures says "structure set" or "RT Structure Set" — "load the structure set from the planning system"
+
+These are not spelling variants. One refers to the thing being contoured; the other refers to the digital container of the contours. My corrector conflates them via phonetic matching, silently rewriting what a clinician said into what a physicist would say. That is exactly the kind of meaning corruption the safety review is supposed to prevent.
 
 **Root cause:** The corrector uses `_WORD_PATTERN = re.compile(r"[\w'-]+|[^\w\s]")` which matches single tokens. When `structures` matches `structure set` phonetically, the replacement is the literal string `"structure set"` including the embedded space, turning one word into two in the output.
 
 **The design intent** was single-word matching only. Multi-word vocabulary entries were not in scope but were silently accepted at load time.
 
-**Fix options:**
-1. **Reject multi-word entries at load time** with a clear warning (simplest).
-2. **Strip multi-word entries from phonetic matching** but keep them available for future n-gram-aware matching.
-3. **Implement proper n-gram matching** (large scope — probably not needed for single-term vocabulary).
+**Fix:** Reject multi-word entries from all correction tiers at load time with a warning. Multi-word terms **should remain** in the `initial_prompt` (Whisper soft bias) so `structure set` is recognizable **when actually said by a physicist** — but they must never be injected via post-hoc correction of a different word. Both `structures` (clinician) and `structure set` (physicist) need to be transcribable as-is.
 
-I recommend option (1) for now: log a warning and exclude any vocab term containing whitespace from all matching tiers. Multi-word terms remain in the initial_prompt (which passes them to Whisper as soft bias) but are not available for post-processing correction until n-gram matching exists.
+Proper n-gram aware matching is a separate future feature that would need strong disambiguation signals (POS tagging, role awareness) to avoid exactly this class of error.
 
 ### B-3 (not a bug, observation). Jenny Dioco and LJSpeech are hard for Whisper
 
