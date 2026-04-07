@@ -1,0 +1,2143 @@
+{
+  "vocabulary": "/Users/stuartswerdloff/ai/ClaudeInstanceHomeOffices/silas-397300f6/kindled_projects/transcriber-radrx/data/rt_vocabulary.txt",
+  "sample_count": 24,
+  "dense_only": true,
+  "seed": 42,
+  "system_prompt": "You are a verbatim transcription assistant for clinical radiation oncology dictation. Transcribe what is spoken in the audio with the following domain rules:\n\n1. Preserve the dose unit \"Gy\" (Gray) exactly as \"Gy\". Do NOT transcribe it as \"GI\", \"Jai\", \"ji\", \"jive\", \"gai\", \"gy\" in lowercase, or any phonetic variant. Whenever you would output \"GI\" following a number, output \"Gy\" instead.\n\n2. Preserve radiotherapy acronyms exactly in uppercase and without letter-by-letter spacing: PTV, CTV, GTV, OAR, IMRT, VMAT, IGRT, SRS, SBRT, SRT, CBCT, DIBH, SIB, HDR, LDR, 3DCRT. Never write them as \"p t v\" or \"P T V\" or spell them out as \"planning target volume\" unless that phrase is what the speaker explicitly says.\n\n3. Use numeric digits for doses and fractions as spoken. If the speaker says \"fifty-four\" transcribe \"54\". If the speaker says \"fifty point four\" transcribe \"50.4\". Do NOT transcribe numeric doses as spelled-out words.\n\n4. Preserve drug names in their clinical spelling (iridium, cisplatin, capecitabine, amlodipine, metoprolol, clopidogrel). Do not introduce phonetic misspellings like \"riddium\" or \"brachtherapy\".\n\n5. Preserve \"brachytherapy\" as one word. Do not break it into \"brach therapy\" or \"BRCA therapy\" or any other variant.\n\n6. Output ONLY the transcription. No commentary, no summary, no interpretation, no answering of questions that appear in the audio.\n\nThis prompt targets the exact failure modes observed in the 2026-04-07 Whisper/MedASR/Cohere bake-off on dense RT clinical fixtures.",
+  "fixture_ids": [
+    "dense-0001",
+    "dense-0002",
+    "dense-0003",
+    "dense-0004",
+    "dense-0005",
+    "dense-0006",
+    "dense-0007",
+    "dense-0008",
+    "dense-0009",
+    "dense-0010",
+    "dense-0011",
+    "dense-0012",
+    "dense-0013",
+    "dense-0014",
+    "dense-0015",
+    "dense-0016",
+    "dense-0017",
+    "dense-0018",
+    "dense-0019",
+    "dense-0020",
+    "dense-0021",
+    "dense-0022",
+    "dense-0023",
+    "dense-0024"
+  ],
+  "voices": [
+    "en_GB-alan-medium",
+    "en_US-lessac-high"
+  ],
+  "backends": [
+    "granite_speech",
+    "granite_speech:granite-speech-3.3-8b"
+  ],
+  "results": [
+    {
+      "backend": "granite_speech",
+      "by_voice": [
+        {
+          "voice": "en_GB-alan-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.4147,
+            "avg_corrected_wer": 0.4147,
+            "terms_found": 19,
+            "terms_total": 63,
+            "term_recall": 0.3016
+          },
+          "samples": [
+            {
+              "fixture_id": "dense-0001",
+              "category": "dose_prescription",
+              "dense_subtype": "dose",
+              "ground_truth": "Prescribed dose of 54 Gy in 30 fractions to the PTV with a simultaneous integrated boost to 60 Gy for the high-risk CTV.",
+              "raw_transcription": "the following is a transcript of a radiology case from 2026-04-07 whisper/cohere bake-off",
+              "corrected_transcription": "the following is a transcript of a radiology case from 2026-04-07 whisper/cohere bake-off",
+              "raw_wer": 0.9130434782608695,
+              "corrected_wer": 0.9130434782608695,
+              "vocabulary_terms": [
+                "Gy",
+                "PTV",
+                "CTV",
+                "simultaneous integrated boost"
+              ],
+              "terms_found": 0,
+              "terms_total": 4,
+              "terms_missing": [
+                "Gy",
+                "PTV",
+                "CTV",
+                "simultaneous integrated boost"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0002",
+              "category": "dose_prescription",
+              "dense_subtype": "dose",
+              "ground_truth": "The patient will receive 50 Gy in 25 fractions delivered via IMRT with daily image guidance.",
+              "raw_transcription": "the patient will receive 50 gy in 25 fractions delivered via irradiation with daily image guidance.",
+              "corrected_transcription": "the patient will receive 50 Gy in 25 fractions delivered via irradiation with daily image guidance.",
+              "raw_wer": 0.0625,
+              "corrected_wer": 0.0625,
+              "vocabulary_terms": [
+                "Gy",
+                "IMRT",
+                "IGRT"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "IMRT",
+                "IGRT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0003",
+              "category": "dose_prescription",
+              "dense_subtype": "dose",
+              "ground_truth": "Hypofractionated regimen of 40.05 Gy in 15 fractions with a sequential boost of 10 Gy in 4 fractions to the tumor bed.",
+              "raw_transcription": "hyperfractionation regimen of forty point zero five gi in fifteen fractions with a sequential boost of ten gi in four fractions to the tumor bed",
+              "corrected_transcription": "hyperfractionation regimen of forty point zero five GI in fifteen fractions with a sequential boost of ten GI in four fractions to the tumor BED",
+              "raw_wer": 0.43478260869565216,
+              "corrected_wer": 0.43478260869565216,
+              "vocabulary_terms": [
+                "Gy",
+                "hypofractionation",
+                "boost"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "Gy",
+                "hypofractionation"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0004",
+              "category": "dose_prescription",
+              "dense_subtype": "dose",
+              "ground_truth": "Total dose of 70 Gy in 35 fractions over 7 weeks with concurrent chemotherapy.",
+              "raw_transcription": "total dose of 70 gi in 35 fractions over 7 weeks with concurrent chemotherapy",
+              "corrected_transcription": "total dose of 70 GI in 35 fractions over 7 weeks with concurrent chemotherapy",
+              "raw_wer": 0.07142857142857142,
+              "corrected_wer": 0.07142857142857142,
+              "vocabulary_terms": [
+                "Gy",
+                "chemoradiation"
+              ],
+              "terms_found": 0,
+              "terms_total": 2,
+              "terms_missing": [
+                "Gy",
+                "chemoradiation"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0005",
+              "category": "oar_constraints",
+              "dense_subtype": "oar",
+              "ground_truth": "Organs at risk included the parotids, pharyngeal constrictors, brainstem, and cervical spinal cord.",
+              "raw_transcription": "organs at risk included the parotids pharyngeal constrictors brainstem and cervical spinal cord",
+              "corrected_transcription": "organs at risk included the parotids pharyngeal constrictors brainstem and cervical spinal cord",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "OAR",
+                "brainstem",
+                "spinal cord"
+              ],
+              "terms_found": 2,
+              "terms_total": 3,
+              "terms_missing": [
+                "OAR"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0006",
+              "category": "oar_constraints",
+              "dense_subtype": "oar",
+              "ground_truth": "Dose volume constraints: V20 to both lungs less than 30 percent, mean heart dose less than 25 Gy, and maximum spinal cord dose less than 45 Gy.",
+              "raw_transcription": "most volume constraints v20 to both lungs less than 30 mean heart dose less than 25 gi and maximum spinal cord dose less than 45 gi",
+              "corrected_transcription": "most volume constraints V20 to both lungs less than 30 mean heart dose less than 25 GI and maximum spinal cord dose less than 45 GI",
+              "raw_wer": 0.14814814814814814,
+              "corrected_wer": 0.14814814814814814,
+              "vocabulary_terms": [
+                "V20",
+                "Gy",
+                "spinal cord"
+              ],
+              "terms_found": 2,
+              "terms_total": 3,
+              "terms_missing": [
+                "Gy"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0007",
+              "category": "oar_constraints",
+              "dense_subtype": "oar",
+              "ground_truth": "Target parotid mean dose was limited to 26 Gy with a V30 of less than 50 percent.",
+              "raw_transcription": "target parietal mean dose was limited to 26 gy with a v30 of less than 50",
+              "corrected_transcription": "target parietal mean dose was limited to 26 Gy with a v30 of less than 50",
+              "raw_wer": 0.11764705882352941,
+              "corrected_wer": 0.11764705882352941,
+              "vocabulary_terms": [
+                "Gy",
+                "V30"
+              ],
+              "terms_found": 2,
+              "terms_total": 2,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0008",
+              "category": "oar_constraints",
+              "dense_subtype": "oar",
+              "ground_truth": "The planning target volume abuts the bowel, so we constrained the V45 to less than 195 cubic centimeters.",
+              "raw_transcription": "the planning target volume abuts the bowel so we constrained the b45 to less than 195 cubic centimeters",
+              "corrected_transcription": "the planning target volume abuts the bowel so we constrained the b45 to less than 195 cubic centimeters",
+              "raw_wer": 0.05555555555555555,
+              "corrected_wer": 0.05555555555555555,
+              "vocabulary_terms": [
+                "PTV",
+                "V45"
+              ],
+              "terms_found": 0,
+              "terms_total": 2,
+              "terms_missing": [
+                "PTV",
+                "V45"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0009",
+              "category": "treatment_summary",
+              "dense_subtype": "technique",
+              "ground_truth": "Treatment was delivered using volumetric modulated arc therapy with daily kilovoltage image guidance.",
+              "raw_transcription": "treatment was delivered using volumetric-modulated arc therapy with daily kilovoltage image guidance.",
+              "corrected_transcription": "treatment was delivered using volumetric-modulated arc therapy with daily kilovoltage image guidance.",
+              "raw_wer": 0.15384615384615385,
+              "corrected_wer": 0.15384615384615385,
+              "vocabulary_terms": [
+                "VMAT",
+                "IGRT"
+              ],
+              "terms_found": 0,
+              "terms_total": 2,
+              "terms_missing": [
+                "VMAT",
+                "IGRT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0010",
+              "category": "treatment_summary",
+              "dense_subtype": "technique",
+              "ground_truth": "The plan was optimized with intensity modulated radiation therapy using seven coplanar beams.",
+              "raw_transcription": "the plan was optimized with intensity-modulated radiation therapy using seven coplanar beams.",
+              "corrected_transcription": "the plan was optimized with intensity-modulated radiation therapy using seven coplanar beams.",
+              "raw_wer": 0.15384615384615385,
+              "corrected_wer": 0.15384615384615385,
+              "vocabulary_terms": [
+                "IMRT"
+              ],
+              "terms_found": 0,
+              "terms_total": 1,
+              "terms_missing": [
+                "IMRT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0011",
+              "category": "treatment_summary",
+              "dense_subtype": "technique",
+              "ground_truth": "Three dimensional conformal radiation therapy was used for the whole pelvis field with a boost using IMRT.",
+              "raw_transcription": "pre-dimensional conformal radiation therapy was used for the whole pelvis field with a boost using iodine-131",
+              "corrected_transcription": "pre-dimensional conformal radiation therapy was used for the whole pelvis field with a boost using iodine-131",
+              "raw_wer": 0.17647058823529413,
+              "corrected_wer": 0.17647058823529413,
+              "vocabulary_terms": [
+                "3DCRT",
+                "IMRT",
+                "boost"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "3DCRT",
+                "IMRT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0012",
+              "category": "treatment_summary",
+              "dense_subtype": "technique",
+              "ground_truth": "Deep inspiration breath hold technique was employed to reduce cardiac dose during left breast irradiation.",
+              "raw_transcription": "deep inspiration breath hold technique was employed to reduce cardiac dose during left breast irradiation.",
+              "corrected_transcription": "deep inspiration breath hold technique was employed to reduce cardiac dose during left breast irradiation.",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "DIBH"
+              ],
+              "terms_found": 0,
+              "terms_total": 1,
+              "terms_missing": [
+                "DIBH"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0013",
+              "category": "treatment_summary",
+              "dense_subtype": "brachy",
+              "ground_truth": "Brachytherapy boost was administered via high dose rate iridium-192 afterloading with three fractions of 7 Gy.",
+              "raw_transcription": "brachytherapy boost was administered via high-dose-rate iridium 192 afterloading with three fractions of seven gigayesla.",
+              "corrected_transcription": "brachytherapy boost was administered via high-dose-rate iridium 192 afterloading with three fractions of seven gigayesla.",
+              "raw_wer": 0.375,
+              "corrected_wer": 0.375,
+              "vocabulary_terms": [
+                "brachytherapy",
+                "HDR",
+                "Gy",
+                "boost"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "HDR",
+                "Gy"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0014",
+              "category": "treatment_summary",
+              "dense_subtype": "brachy",
+              "ground_truth": "Intracavitary brachytherapy was delivered using a Fletcher Suit tandem and ovoids applicator.",
+              "raw_transcription": "intra cavatory brachytherapy was delivered using a flecher suit tandem and ovois applicator.",
+              "corrected_transcription": "intra cavatory brachytherapy was delivered using a flecher suit tandem and ovois applicator.",
+              "raw_wer": 0.3333333333333333,
+              "corrected_wer": 0.3333333333333333,
+              "vocabulary_terms": [
+                "brachytherapy"
+              ],
+              "terms_found": 1,
+              "terms_total": 1,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0015",
+              "category": "treatment_summary",
+              "dense_subtype": "srs_sbrt",
+              "ground_truth": "Stereotactic radiosurgery was planned with a single 18 Gy fraction to the 80 percent isodose line.",
+              "raw_transcription": "the exact failure modes observed in the 2026-04-07 whisper/medasr/cohere bake-off on dense rt clinical fixtures",
+              "corrected_transcription": "the exact failure modes observed in the 2026-04-07 whisper/medasr/cohere bake-off on dense rt clinical fixtures",
+              "raw_wer": 1.0625,
+              "corrected_wer": 1.0625,
+              "vocabulary_terms": [
+                "SRS",
+                "Gy",
+                "isodose",
+                "stereotactic"
+              ],
+              "terms_found": 0,
+              "terms_total": 4,
+              "terms_missing": [
+                "SRS",
+                "Gy",
+                "isodose",
+                "stereotactic"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0016",
+              "category": "treatment_summary",
+              "dense_subtype": "srs_sbrt",
+              "ground_truth": "Stereotactic body radiation therapy was delivered to the lung metastasis using 54 Gy in 3 fractions.",
+              "raw_transcription": "the exact failure modes observed in the 2026-04-07 whisper/medasr/cohere bake-off on dense rt clinical fixtures",
+              "corrected_transcription": "the exact failure modes observed in the 2026-04-07 whisper/medasr/cohere bake-off on dense rt clinical fixtures",
+              "raw_wer": 1.0625,
+              "corrected_wer": 1.0625,
+              "vocabulary_terms": [
+                "SBRT",
+                "Gy",
+                "stereotactic"
+              ],
+              "terms_found": 0,
+              "terms_total": 3,
+              "terms_missing": [
+                "SBRT",
+                "Gy",
+                "stereotactic"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0017",
+              "category": "treatment_summary",
+              "dense_subtype": "srs_sbrt",
+              "ground_truth": "The patient underwent fractionated stereotactic radiotherapy with 30 Gy in 5 fractions to the cavernous sinus.",
+              "raw_transcription": "the patient underwent fractionated stereotactic radiotherapy with thirty-g in five fractions to the cavernous sinus",
+              "corrected_transcription": "the patient underwent fractionated stereotactic radiotherapy with thirty-g in five fractions to the cavernous sinus",
+              "raw_wer": 0.1875,
+              "corrected_wer": 0.1875,
+              "vocabulary_terms": [
+                "SRT",
+                "Gy",
+                "stereotactic"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "SRT",
+                "Gy"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0018",
+              "category": "setup_instructions",
+              "dense_subtype": "imaging",
+              "ground_truth": "CT simulation was performed with a five millimeter slice thickness in the treatment position with thermoplastic mask immobilization.",
+              "raw_transcription": "the exact failure modes observed in the 2026-04-07 whisper/medasr/cohere bake-off on dense rt clinical fixtures",
+              "corrected_transcription": "the exact failure modes observed in the 2026-04-07 whisper/medasr/cohere bake-off on dense rt clinical fixtures",
+              "raw_wer": 1.0,
+              "corrected_wer": 1.0,
+              "vocabulary_terms": [],
+              "terms_found": 0,
+              "terms_total": 0,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0019",
+              "category": "setup_instructions",
+              "dense_subtype": "imaging",
+              "ground_truth": "Daily cone beam CT was used for image guidance with a threshold of 3 millimeters for translational correction.",
+              "raw_transcription": "early cone beam ct was used for image guidance with a threshold of three millimeters for translational correction",
+              "corrected_transcription": "early cone beam ct was used for image guidance with a threshold of three millimeters for translational correction",
+              "raw_wer": 0.1111111111111111,
+              "corrected_wer": 0.1111111111111111,
+              "vocabulary_terms": [
+                "CBCT",
+                "IGRT"
+              ],
+              "terms_found": 0,
+              "terms_total": 2,
+              "terms_missing": [
+                "CBCT",
+                "IGRT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0020",
+              "category": "setup_instructions",
+              "dense_subtype": "imaging",
+              "ground_truth": "PET CT was fused to the planning CT for gross tumor volume delineation.",
+              "raw_transcription": "the exact failure modes observed in the 2026-04-07 whisper/medasr/cohere bake-off on dense rt clinical fixtures",
+              "corrected_transcription": "the exact failure modes observed in the 2026-04-07 whisper/medasr/cohere bake-off on dense rt clinical fixtures",
+              "raw_wer": 1.2307692307692308,
+              "corrected_wer": 1.2307692307692308,
+              "vocabulary_terms": [
+                "GTV"
+              ],
+              "terms_found": 0,
+              "terms_total": 1,
+              "terms_missing": [
+                "GTV"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0021",
+              "category": "treatment_summary",
+              "dense_subtype": "chemo_rt",
+              "ground_truth": "Concurrent cisplatin was administered weekly at 40 milligrams per square meter during radiotherapy.",
+              "raw_transcription": "the transcript is a record of the conference call",
+              "corrected_transcription": "the transcript is a record of the conference call",
+              "raw_wer": 1.0,
+              "corrected_wer": 1.0,
+              "vocabulary_terms": [
+                "chemoradiation",
+                "concurrent"
+              ],
+              "terms_found": 0,
+              "terms_total": 2,
+              "terms_missing": [
+                "chemoradiation",
+                "concurrent"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0022",
+              "category": "treatment_summary",
+              "dense_subtype": "chemo_rt",
+              "ground_truth": "Neoadjuvant chemoradiation consisted of 50.4 Gy in 28 fractions with concurrent capecitabine.",
+              "raw_transcription": "you are a helpful assistant",
+              "corrected_transcription": "you are a helpful assistant",
+              "raw_wer": 1.0,
+              "corrected_wer": 1.0,
+              "vocabulary_terms": [
+                "Gy",
+                "chemoradiation",
+                "concurrent"
+              ],
+              "terms_found": 0,
+              "terms_total": 3,
+              "terms_missing": [
+                "Gy",
+                "chemoradiation",
+                "concurrent"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0023",
+              "category": "acronym_dense",
+              "dense_subtype": "acronym_dense",
+              "ground_truth": "IMRT plan delivered 60 Gy in 30 fractions to the PTV sparing the OARs including parotids and cord.",
+              "raw_transcription": "imat plan delivered 60 gy in 30 fractions to the ptv sparing the oars including parotids and chest wall",
+              "corrected_transcription": "imat plan delivered 60 Gy in 30 fractions to the PTV sparing the oars including parotids and chest wall",
+              "raw_wer": 0.16666666666666666,
+              "corrected_wer": 0.16666666666666666,
+              "vocabulary_terms": [
+                "IMRT",
+                "Gy",
+                "PTV",
+                "OAR",
+                "spinal cord"
+              ],
+              "terms_found": 2,
+              "terms_total": 5,
+              "terms_missing": [
+                "IMRT",
+                "OAR",
+                "spinal cord"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0024",
+              "category": "acronym_dense",
+              "dense_subtype": "acronym_dense",
+              "ground_truth": "VMAT plan with SIB delivered 70 Gy to the GTV and 56 Gy to the CTV in 35 fractions with daily IGRT.",
+              "raw_transcription": "the matt plan with sib delivered 70 gy to the gtv and 56 gy to the ctv in 35 fractions with daily igt",
+              "corrected_transcription": "the matt plan with SIB delivered 70 Gy to the GTV and 56 Gy to the CTV in 35 fractions with daily igt",
+              "raw_wer": 0.13636363636363635,
+              "corrected_wer": 0.13636363636363635,
+              "vocabulary_terms": [
+                "VMAT",
+                "SIB",
+                "Gy",
+                "GTV",
+                "CTV",
+                "IGRT"
+              ],
+              "terms_found": 4,
+              "terms_total": 6,
+              "terms_missing": [
+                "VMAT",
+                "IGRT"
+              ],
+              "error": false
+            }
+          ]
+        },
+        {
+          "voice": "en_US-lessac-high",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.3099,
+            "avg_corrected_wer": 0.3099,
+            "terms_found": 15,
+            "terms_total": 63,
+            "term_recall": 0.2381
+          },
+          "samples": [
+            {
+              "fixture_id": "dense-0001",
+              "category": "dose_prescription",
+              "dense_subtype": "dose",
+              "ground_truth": "Prescribed dose of 54 Gy in 30 fractions to the PTV with a simultaneous integrated boost to 60 Gy for the high-risk CTV.",
+              "raw_transcription": "the exact failure modes observed in the 2026-04-07 whisper/medasr/cohere bake-off on dense rt clinical fixtures",
+              "corrected_transcription": "the exact failure modes observed in the 2026-04-07 whisper/medasr/cohere bake-off on dense rt clinical fixtures",
+              "raw_wer": 0.9130434782608695,
+              "corrected_wer": 0.9130434782608695,
+              "vocabulary_terms": [
+                "Gy",
+                "PTV",
+                "CTV",
+                "simultaneous integrated boost"
+              ],
+              "terms_found": 0,
+              "terms_total": 4,
+              "terms_missing": [
+                "Gy",
+                "PTV",
+                "CTV",
+                "simultaneous integrated boost"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0002",
+              "category": "dose_prescription",
+              "dense_subtype": "dose",
+              "ground_truth": "The patient will receive 50 Gy in 25 fractions delivered via IMRT with daily image guidance.",
+              "raw_transcription": "the patient will receive 50 gi in 25 fractions delivered via imit with daily image guidance",
+              "corrected_transcription": "the patient will receive 50 GI in 25 fractions delivered via imit with daily image guidance",
+              "raw_wer": 0.125,
+              "corrected_wer": 0.125,
+              "vocabulary_terms": [
+                "Gy",
+                "IMRT",
+                "IGRT"
+              ],
+              "terms_found": 0,
+              "terms_total": 3,
+              "terms_missing": [
+                "Gy",
+                "IMRT",
+                "IGRT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0003",
+              "category": "dose_prescription",
+              "dense_subtype": "dose",
+              "ground_truth": "Hypofractionated regimen of 40.05 Gy in 15 fractions with a sequential boost of 10 Gy in 4 fractions to the tumor bed.",
+              "raw_transcription": "hypofractionated regimen of forty point zero five g in fifteen fractions with a sequential boost of ten g in four fractions to the tumor bed",
+              "corrected_transcription": "hypofractionated regimen of forty point zero five g in fifteen fractions with a sequential boost of ten g in four fractions to the tumor BED",
+              "raw_wer": 0.391304347826087,
+              "corrected_wer": 0.391304347826087,
+              "vocabulary_terms": [
+                "Gy",
+                "hypofractionation",
+                "boost"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "Gy",
+                "hypofractionation"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0004",
+              "category": "dose_prescription",
+              "dense_subtype": "dose",
+              "ground_truth": "Total dose of 70 Gy in 35 fractions over 7 weeks with concurrent chemotherapy.",
+              "raw_transcription": "total dose of 70 gi and 35 fractions over seven weeks with concurrent chemotherapy",
+              "corrected_transcription": "total dose of 70 GI and 35 fractions over seven weeks with concurrent chemotherapy",
+              "raw_wer": 0.21428571428571427,
+              "corrected_wer": 0.21428571428571427,
+              "vocabulary_terms": [
+                "Gy",
+                "chemoradiation"
+              ],
+              "terms_found": 0,
+              "terms_total": 2,
+              "terms_missing": [
+                "Gy",
+                "chemoradiation"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0005",
+              "category": "oar_constraints",
+              "dense_subtype": "oar",
+              "ground_truth": "Organs at risk included the parotids, pharyngeal constrictors, brainstem, and cervical spinal cord.",
+              "raw_transcription": "organs at risk included the parotids pharyngeal constrictors brainstem and cervical spinal cord",
+              "corrected_transcription": "organs at risk included the parotids pharyngeal constrictors brainstem and cervical spinal cord",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "OAR",
+                "brainstem",
+                "spinal cord"
+              ],
+              "terms_found": 2,
+              "terms_total": 3,
+              "terms_missing": [
+                "OAR"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0006",
+              "category": "oar_constraints",
+              "dense_subtype": "oar",
+              "ground_truth": "Dose volume constraints: V20 to both lungs less than 30 percent, mean heart dose less than 25 Gy, and maximum spinal cord dose less than 45 Gy.",
+              "raw_transcription": "dosage volume constraints v20 to both lungs less than 30 mean heart dose less than 25 gi and maximum spinal cord dose less than 45 gi",
+              "corrected_transcription": "dosage volume constraints V20 to both lungs less than 30 mean heart dose less than 25 GI and maximum spinal cord dose less than 45 GI",
+              "raw_wer": 0.14814814814814814,
+              "corrected_wer": 0.14814814814814814,
+              "vocabulary_terms": [
+                "V20",
+                "Gy",
+                "spinal cord"
+              ],
+              "terms_found": 2,
+              "terms_total": 3,
+              "terms_missing": [
+                "Gy"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0007",
+              "category": "oar_constraints",
+              "dense_subtype": "oar",
+              "ground_truth": "Target parotid mean dose was limited to 26 Gy with a V30 of less than 50 percent.",
+              "raw_transcription": "target-parretted mean dose was limited to 26 gi with a v30 of less than 50",
+              "corrected_transcription": "target-parretted mean dose was limited to 26 GI with a v30 of less than 50",
+              "raw_wer": 0.23529411764705882,
+              "corrected_wer": 0.23529411764705882,
+              "vocabulary_terms": [
+                "Gy",
+                "V30"
+              ],
+              "terms_found": 1,
+              "terms_total": 2,
+              "terms_missing": [
+                "Gy"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0008",
+              "category": "oar_constraints",
+              "dense_subtype": "oar",
+              "ground_truth": "The planning target volume abuts the bowel, so we constrained the V45 to less than 195 cubic centimeters.",
+              "raw_transcription": "the planning target volume abuts the bowel so we constrained the v45 to less than 195 cubic centimeters",
+              "corrected_transcription": "the planning target volume abuts the bowel so we constrained the v45 to less than 195 cubic centimeters",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "PTV",
+                "V45"
+              ],
+              "terms_found": 1,
+              "terms_total": 2,
+              "terms_missing": [
+                "PTV"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0009",
+              "category": "treatment_summary",
+              "dense_subtype": "technique",
+              "ground_truth": "Treatment was delivered using volumetric modulated arc therapy with daily kilovoltage image guidance.",
+              "raw_transcription": "treatment was delivered using volumetric modulated arc therapy with daily kilovoltage image guidance.",
+              "corrected_transcription": "treatment was delivered using volumetric modulated arc therapy with daily kilovoltage image guidance.",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "VMAT",
+                "IGRT"
+              ],
+              "terms_found": 0,
+              "terms_total": 2,
+              "terms_missing": [
+                "VMAT",
+                "IGRT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0010",
+              "category": "treatment_summary",
+              "dense_subtype": "technique",
+              "ground_truth": "The plan was optimized with intensity modulated radiation therapy using seven coplanar beams.",
+              "raw_transcription": "the plan was optimized with intensity-modulated radiation therapy using seven coplanar beams.",
+              "corrected_transcription": "the plan was optimized with intensity-modulated radiation therapy using seven coplanar beams.",
+              "raw_wer": 0.15384615384615385,
+              "corrected_wer": 0.15384615384615385,
+              "vocabulary_terms": [
+                "IMRT"
+              ],
+              "terms_found": 0,
+              "terms_total": 1,
+              "terms_missing": [
+                "IMRT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0011",
+              "category": "treatment_summary",
+              "dense_subtype": "technique",
+              "ground_truth": "Three dimensional conformal radiation therapy was used for the whole pelvis field with a boost using IMRT.",
+              "raw_transcription": "three-dimensional conformal radiation therapy was used for the whole pelvis field with a boost using imat",
+              "corrected_transcription": "three-dimensional conformal radiation therapy was used for the whole pelvis field with a boost using imat",
+              "raw_wer": 0.17647058823529413,
+              "corrected_wer": 0.17647058823529413,
+              "vocabulary_terms": [
+                "3DCRT",
+                "IMRT",
+                "boost"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "3DCRT",
+                "IMRT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0012",
+              "category": "treatment_summary",
+              "dense_subtype": "technique",
+              "ground_truth": "Deep inspiration breath hold technique was employed to reduce cardiac dose during left breast irradiation.",
+              "raw_transcription": "deep inspiration breath hold technique was employed to reduce cardiac dose during left breast irradiation.",
+              "corrected_transcription": "deep inspiration breath hold technique was employed to reduce cardiac dose during left breast irradiation.",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "DIBH"
+              ],
+              "terms_found": 0,
+              "terms_total": 1,
+              "terms_missing": [
+                "DIBH"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0013",
+              "category": "treatment_summary",
+              "dense_subtype": "brachy",
+              "ground_truth": "Brachytherapy boost was administered via high dose rate iridium-192 afterloading with three fractions of 7 Gy.",
+              "raw_transcription": "brachytherapy boost was administered via high-dose-rate iridium-192 after loading with thirty-four fractions of seven gigayesla.",
+              "corrected_transcription": "brachytherapy boost was administered via high-dose-rate iridium-192 after loading with thirty-four fractions of seven gigayesla.",
+              "raw_wer": 0.5,
+              "corrected_wer": 0.5,
+              "vocabulary_terms": [
+                "brachytherapy",
+                "HDR",
+                "Gy",
+                "boost"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "HDR",
+                "Gy"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0014",
+              "category": "treatment_summary",
+              "dense_subtype": "brachy",
+              "ground_truth": "Intracavitary brachytherapy was delivered using a Fletcher Suit tandem and ovoids applicator.",
+              "raw_transcription": "intrecaverary breca therapy was delivered using a fleshers suit tandem and ovo's applicator",
+              "corrected_transcription": "intrecaverary breca therapy was delivered using a fleshers suit tandem and ovo's applicator",
+              "raw_wer": 0.4166666666666667,
+              "corrected_wer": 0.4166666666666667,
+              "vocabulary_terms": [
+                "brachytherapy"
+              ],
+              "terms_found": 0,
+              "terms_total": 1,
+              "terms_missing": [
+                "brachytherapy"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0015",
+              "category": "treatment_summary",
+              "dense_subtype": "srs_sbrt",
+              "ground_truth": "Stereotactic radiosurgery was planned with a single 18 Gy fraction to the 80 percent isodose line.",
+              "raw_transcription": "sterotactic radio surgery was planned with a single 18-gi fraction to the 80% isodose line",
+              "corrected_transcription": "sterotactic radio surgery was planned with a single 18-gi fraction to the 80% isodose line",
+              "raw_wer": 0.375,
+              "corrected_wer": 0.375,
+              "vocabulary_terms": [
+                "SRS",
+                "Gy",
+                "isodose",
+                "stereotactic"
+              ],
+              "terms_found": 1,
+              "terms_total": 4,
+              "terms_missing": [
+                "SRS",
+                "Gy",
+                "stereotactic"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0016",
+              "category": "treatment_summary",
+              "dense_subtype": "srs_sbrt",
+              "ground_truth": "Stereotactic body radiation therapy was delivered to the lung metastasis using 54 Gy in 3 fractions.",
+              "raw_transcription": "the stereotactic body radiation therapy was delivered to the lung metastases using 54 gi in three fractions",
+              "corrected_transcription": "the stereotactic body radiation therapy was delivered to the lung metastases using 54 GI in three fractions",
+              "raw_wer": 0.25,
+              "corrected_wer": 0.25,
+              "vocabulary_terms": [
+                "SBRT",
+                "Gy",
+                "stereotactic"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "SBRT",
+                "Gy"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0017",
+              "category": "treatment_summary",
+              "dense_subtype": "srs_sbrt",
+              "ground_truth": "The patient underwent fractionated stereotactic radiotherapy with 30 Gy in 5 fractions to the cavernous sinus.",
+              "raw_transcription": "the patient underwent fractionated stereotactic radiotherapy with thirty-five gys in five fractions to the cavernous sinus",
+              "corrected_transcription": "the patient underwent fractionated stereotactic radiotherapy with thirty-five gys in five fractions to the cavernous sinus",
+              "raw_wer": 0.1875,
+              "corrected_wer": 0.1875,
+              "vocabulary_terms": [
+                "SRT",
+                "Gy",
+                "stereotactic"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "SRT",
+                "Gy"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0018",
+              "category": "setup_instructions",
+              "dense_subtype": "imaging",
+              "ground_truth": "CT simulation was performed with a five millimeter slice thickness in the treatment position with thermoplastic mask immobilization.",
+              "raw_transcription": "ct simulation was performed with a 5 mm slice thickness in the treatment position with thermoplastic mask immobilization",
+              "corrected_transcription": "ct simulation was performed with a 5 mm slice thickness in the treatment position with thermoplastic mask immobilization",
+              "raw_wer": 0.1111111111111111,
+              "corrected_wer": 0.1111111111111111,
+              "vocabulary_terms": [],
+              "terms_found": 0,
+              "terms_total": 0,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0019",
+              "category": "setup_instructions",
+              "dense_subtype": "imaging",
+              "ground_truth": "Daily cone beam CT was used for image guidance with a threshold of 3 millimeters for translational correction.",
+              "raw_transcription": "the following is a transcript of a radiology case with a clinical question",
+              "corrected_transcription": "the following is a transcript of a radiology case with a clinical question",
+              "raw_wer": 0.8888888888888888,
+              "corrected_wer": 0.8888888888888888,
+              "vocabulary_terms": [
+                "CBCT",
+                "IGRT"
+              ],
+              "terms_found": 0,
+              "terms_total": 2,
+              "terms_missing": [
+                "CBCT",
+                "IGRT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0020",
+              "category": "setup_instructions",
+              "dense_subtype": "imaging",
+              "ground_truth": "PET CT was fused to the planning CT for gross tumor volume delineation.",
+              "raw_transcription": "be tct was fused to the planning ct for gross tumor volume delineation",
+              "corrected_transcription": "be tct was fused to the planning ct for gross tumor volume delineation",
+              "raw_wer": 0.15384615384615385,
+              "corrected_wer": 0.15384615384615385,
+              "vocabulary_terms": [
+                "GTV"
+              ],
+              "terms_found": 0,
+              "terms_total": 1,
+              "terms_missing": [
+                "GTV"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0021",
+              "category": "treatment_summary",
+              "dense_subtype": "chemo_rt",
+              "ground_truth": "Concurrent cisplatin was administered weekly at 40 milligrams per square meter during radiotherapy.",
+              "raw_transcription": "concurrent cisplatin was administered weekly at 40 mg per square meter during radiotherapy.",
+              "corrected_transcription": "concurrent cisplatin was administered weekly at 40 mg per square meter during radiotherapy.",
+              "raw_wer": 0.07692307692307693,
+              "corrected_wer": 0.07692307692307693,
+              "vocabulary_terms": [
+                "chemoradiation",
+                "concurrent"
+              ],
+              "terms_found": 1,
+              "terms_total": 2,
+              "terms_missing": [
+                "chemoradiation"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0022",
+              "category": "treatment_summary",
+              "dense_subtype": "chemo_rt",
+              "ground_truth": "Neoadjuvant chemoradiation consisted of 50.4 Gy in 28 fractions with concurrent capecitabine.",
+              "raw_transcription": "you are a helpful assistant",
+              "corrected_transcription": "you are a helpful assistant",
+              "raw_wer": 1.0,
+              "corrected_wer": 1.0,
+              "vocabulary_terms": [
+                "Gy",
+                "chemoradiation",
+                "concurrent"
+              ],
+              "terms_found": 0,
+              "terms_total": 3,
+              "terms_missing": [
+                "Gy",
+                "chemoradiation",
+                "concurrent"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0023",
+              "category": "acronym_dense",
+              "dense_subtype": "acronym_dense",
+              "ground_truth": "IMRT plan delivered 60 Gy in 30 fractions to the PTV sparing the OARs including parotids and cord.",
+              "raw_transcription": "imit plan delivered 60 gi in 30 fractions to the ptv sparing the oars including parotids and chord",
+              "corrected_transcription": "imit plan delivered 60 GI in 30 fractions to the PTV sparing the oars including parotids and chord",
+              "raw_wer": 0.16666666666666666,
+              "corrected_wer": 0.16666666666666666,
+              "vocabulary_terms": [
+                "IMRT",
+                "Gy",
+                "PTV",
+                "OAR",
+                "spinal cord"
+              ],
+              "terms_found": 1,
+              "terms_total": 5,
+              "terms_missing": [
+                "IMRT",
+                "Gy",
+                "OAR",
+                "spinal cord"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0024",
+              "category": "acronym_dense",
+              "dense_subtype": "acronym_dense",
+              "ground_truth": "VMAT plan with SIB delivered 70 Gy to the GTV and 56 Gy to the CTV in 35 fractions with daily IGRT.",
+              "raw_transcription": "the exact failure modes observed in the 2026-04-07 whisper/medasr/cohere bake-off on dense rt clinical fixtures",
+              "corrected_transcription": "the exact failure modes observed in the 2026-04-07 whisper/medasr/cohere bake-off on dense rt clinical fixtures",
+              "raw_wer": 0.9545454545454546,
+              "corrected_wer": 0.9545454545454546,
+              "vocabulary_terms": [
+                "VMAT",
+                "SIB",
+                "Gy",
+                "GTV",
+                "CTV",
+                "IGRT"
+              ],
+              "terms_found": 0,
+              "terms_total": 6,
+              "terms_missing": [
+                "VMAT",
+                "SIB",
+                "Gy",
+                "GTV",
+                "CTV",
+                "IGRT"
+              ],
+              "error": false
+            }
+          ]
+        }
+      ],
+      "overall": {
+        "sample_count": 48,
+        "error_count": 0,
+        "avg_raw_wer": 0.3623,
+        "avg_corrected_wer": 0.3623,
+        "terms_found": 34,
+        "terms_total": 126,
+        "term_recall": 0.2698
+      }
+    },
+    {
+      "backend": "granite_speech:granite-speech-3.3-8b",
+      "by_voice": [
+        {
+          "voice": "en_GB-alan-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.0925,
+            "avg_corrected_wer": 0.0925,
+            "terms_found": 35,
+            "terms_total": 63,
+            "term_recall": 0.5556
+          },
+          "samples": [
+            {
+              "fixture_id": "dense-0001",
+              "category": "dose_prescription",
+              "dense_subtype": "dose",
+              "ground_truth": "Prescribed dose of 54 Gy in 30 fractions to the PTV with a simultaneous integrated boost to 60 Gy for the high-risk CTV.",
+              "raw_transcription": "prescribed dose of 54 gy in 30 fractions to the ptv with a simultaneous integrated boost to 60 gy for the high-risk ctv",
+              "corrected_transcription": "prescribed dose of 54 Gy in 30 fractions to the PTV with a simultaneous integrated boost to 60 Gy for the high-risk CTV",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "Gy",
+                "PTV",
+                "CTV",
+                "simultaneous integrated boost"
+              ],
+              "terms_found": 4,
+              "terms_total": 4,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0002",
+              "category": "dose_prescription",
+              "dense_subtype": "dose",
+              "ground_truth": "The patient will receive 50 Gy in 25 fractions delivered via IMRT with daily image guidance.",
+              "raw_transcription": "the patient will receive 50 gi in 25 fractions delivered via imrt with daily image guidance",
+              "corrected_transcription": "the patient will receive 50 GI in 25 fractions delivered via IMRT with daily image guidance",
+              "raw_wer": 0.0625,
+              "corrected_wer": 0.0625,
+              "vocabulary_terms": [
+                "Gy",
+                "IMRT",
+                "IGRT"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "Gy",
+                "IGRT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0003",
+              "category": "dose_prescription",
+              "dense_subtype": "dose",
+              "ground_truth": "Hypofractionated regimen of 40.05 Gy in 15 fractions with a sequential boost of 10 Gy in 4 fractions to the tumor bed.",
+              "raw_transcription": "hyperfractionated regimen of 40.05 gi in 15 fractions with a sequential boost of 10 gi in 4 fractions to the tumor bed",
+              "corrected_transcription": "hyperfractionated regimen of 40.05 GI in 15 fractions with a sequential boost of 10 GI in 4 fractions to the tumor BED",
+              "raw_wer": 0.13043478260869565,
+              "corrected_wer": 0.13043478260869565,
+              "vocabulary_terms": [
+                "Gy",
+                "hypofractionation",
+                "boost"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "Gy",
+                "hypofractionation"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0004",
+              "category": "dose_prescription",
+              "dense_subtype": "dose",
+              "ground_truth": "Total dose of 70 Gy in 35 fractions over 7 weeks with concurrent chemotherapy.",
+              "raw_transcription": "total dose of 70 gy in 35 fractions over 7 weeks with concurrent chemotherapy",
+              "corrected_transcription": "total dose of 70 Gy in 35 fractions over 7 weeks with concurrent chemotherapy",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "Gy",
+                "chemoradiation"
+              ],
+              "terms_found": 1,
+              "terms_total": 2,
+              "terms_missing": [
+                "chemoradiation"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0005",
+              "category": "oar_constraints",
+              "dense_subtype": "oar",
+              "ground_truth": "Organs at risk included the parotids, pharyngeal constrictors, brainstem, and cervical spinal cord.",
+              "raw_transcription": "organs at risk included the parotids pharyngeal constrictors brainstem and cervical spinal cord",
+              "corrected_transcription": "organs at risk included the parotids pharyngeal constrictors brainstem and cervical spinal cord",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "OAR",
+                "brainstem",
+                "spinal cord"
+              ],
+              "terms_found": 2,
+              "terms_total": 3,
+              "terms_missing": [
+                "OAR"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0006",
+              "category": "oar_constraints",
+              "dense_subtype": "oar",
+              "ground_truth": "Dose volume constraints: V20 to both lungs less than 30 percent, mean heart dose less than 25 Gy, and maximum spinal cord dose less than 45 Gy.",
+              "raw_transcription": "dose volume constraints v20 to both lungs less than 30 mean heart dose less than 25 gy and maximum spinal cord dose less than 45 gy",
+              "corrected_transcription": "dose volume constraints V20 to both lungs less than 30 mean heart dose less than 25 Gy and maximum spinal cord dose less than 45 Gy",
+              "raw_wer": 0.037037037037037035,
+              "corrected_wer": 0.037037037037037035,
+              "vocabulary_terms": [
+                "V20",
+                "Gy",
+                "spinal cord"
+              ],
+              "terms_found": 3,
+              "terms_total": 3,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0007",
+              "category": "oar_constraints",
+              "dense_subtype": "oar",
+              "ground_truth": "Target parotid mean dose was limited to 26 Gy with a V30 of less than 50 percent.",
+              "raw_transcription": "target-parroted mean dose was limited to 26 gy with a v30 of less than 50",
+              "corrected_transcription": "target-parroted mean dose was limited to 26 Gy with a v30 of less than 50",
+              "raw_wer": 0.17647058823529413,
+              "corrected_wer": 0.17647058823529413,
+              "vocabulary_terms": [
+                "Gy",
+                "V30"
+              ],
+              "terms_found": 2,
+              "terms_total": 2,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0008",
+              "category": "oar_constraints",
+              "dense_subtype": "oar",
+              "ground_truth": "The planning target volume abuts the bowel, so we constrained the V45 to less than 195 cubic centimeters.",
+              "raw_transcription": "the planning target volume abuts the bowel so we constrained the b45 to less than 195 cubic centimeters",
+              "corrected_transcription": "the planning target volume abuts the bowel so we constrained the b45 to less than 195 cubic centimeters",
+              "raw_wer": 0.05555555555555555,
+              "corrected_wer": 0.05555555555555555,
+              "vocabulary_terms": [
+                "PTV",
+                "V45"
+              ],
+              "terms_found": 0,
+              "terms_total": 2,
+              "terms_missing": [
+                "PTV",
+                "V45"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0009",
+              "category": "treatment_summary",
+              "dense_subtype": "technique",
+              "ground_truth": "Treatment was delivered using volumetric modulated arc therapy with daily kilovoltage image guidance.",
+              "raw_transcription": "treatment was delivered using volumetric modulated arc therapy with daily kilovoltage image guidance",
+              "corrected_transcription": "treatment was delivered using volumetric modulated arc therapy with daily kilovoltage image guidance",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "VMAT",
+                "IGRT"
+              ],
+              "terms_found": 0,
+              "terms_total": 2,
+              "terms_missing": [
+                "VMAT",
+                "IGRT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0010",
+              "category": "treatment_summary",
+              "dense_subtype": "technique",
+              "ground_truth": "The plan was optimized with intensity modulated radiation therapy using seven coplanar beams.",
+              "raw_transcription": "the plan was optimized with intensity-modulated radiation therapy using seven coplanar beams",
+              "corrected_transcription": "the plan was optimized with intensity-modulated radiation therapy using seven coplanar beams",
+              "raw_wer": 0.15384615384615385,
+              "corrected_wer": 0.15384615384615385,
+              "vocabulary_terms": [
+                "IMRT"
+              ],
+              "terms_found": 0,
+              "terms_total": 1,
+              "terms_missing": [
+                "IMRT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0011",
+              "category": "treatment_summary",
+              "dense_subtype": "technique",
+              "ground_truth": "Three dimensional conformal radiation therapy was used for the whole pelvis field with a boost using IMRT.",
+              "raw_transcription": "three-dimensional conformal radiation therapy was used for the whole pelvis field with a boost using imrt",
+              "corrected_transcription": "three-dimensional conformal radiation therapy was used for the whole pelvis field with a boost using IMRT",
+              "raw_wer": 0.11764705882352941,
+              "corrected_wer": 0.11764705882352941,
+              "vocabulary_terms": [
+                "3DCRT",
+                "IMRT",
+                "boost"
+              ],
+              "terms_found": 2,
+              "terms_total": 3,
+              "terms_missing": [
+                "3DCRT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0012",
+              "category": "treatment_summary",
+              "dense_subtype": "technique",
+              "ground_truth": "Deep inspiration breath hold technique was employed to reduce cardiac dose during left breast irradiation.",
+              "raw_transcription": "deep inspiration breath hold technique was employed to reduce cardiac dose during left breast irradiation",
+              "corrected_transcription": "deep inspiration breath hold technique was employed to reduce cardiac dose during left breast irradiation",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "DIBH"
+              ],
+              "terms_found": 0,
+              "terms_total": 1,
+              "terms_missing": [
+                "DIBH"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0013",
+              "category": "treatment_summary",
+              "dense_subtype": "brachy",
+              "ground_truth": "Brachytherapy boost was administered via high dose rate iridium-192 afterloading with three fractions of 7 Gy.",
+              "raw_transcription": "brachytherapy boost was administered via high-dose-rate iridium-192 afterloading with three fractions of 7.0 gy",
+              "corrected_transcription": "brachytherapy boost was administered via high-dose-rate iridium-192 afterloading with three fractions of 7.0 Gy",
+              "raw_wer": 0.25,
+              "corrected_wer": 0.25,
+              "vocabulary_terms": [
+                "brachytherapy",
+                "HDR",
+                "Gy",
+                "boost"
+              ],
+              "terms_found": 3,
+              "terms_total": 4,
+              "terms_missing": [
+                "HDR"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0014",
+              "category": "treatment_summary",
+              "dense_subtype": "brachy",
+              "ground_truth": "Intracavitary brachytherapy was delivered using a Fletcher Suit tandem and ovoids applicator.",
+              "raw_transcription": "intracavitary brachytherapy was delivered using a fletcher suit tandem and ovoids applicator",
+              "corrected_transcription": "intracavitary brachytherapy was delivered using a fletcher suit tandem and ovoids applicator",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "brachytherapy"
+              ],
+              "terms_found": 1,
+              "terms_total": 1,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0015",
+              "category": "treatment_summary",
+              "dense_subtype": "srs_sbrt",
+              "ground_truth": "Stereotactic radiosurgery was planned with a single 18 Gy fraction to the 80 percent isodose line.",
+              "raw_transcription": "stereotactic radiosurgery was planned with a single 18-gy fraction to the 80% isodose line",
+              "corrected_transcription": "stereotactic radiosurgery was planned with a single 18-gy fraction to the 80% isodose line",
+              "raw_wer": 0.1875,
+              "corrected_wer": 0.1875,
+              "vocabulary_terms": [
+                "SRS",
+                "Gy",
+                "isodose",
+                "stereotactic"
+              ],
+              "terms_found": 3,
+              "terms_total": 4,
+              "terms_missing": [
+                "SRS"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0016",
+              "category": "treatment_summary",
+              "dense_subtype": "srs_sbrt",
+              "ground_truth": "Stereotactic body radiation therapy was delivered to the lung metastasis using 54 Gy in 3 fractions.",
+              "raw_transcription": "stereotactic body radiation therapy was delivered to the lung metastases using 54 gy in three fractions",
+              "corrected_transcription": "stereotactic body radiation therapy was delivered to the lung metastases using 54 Gy in three fractions",
+              "raw_wer": 0.125,
+              "corrected_wer": 0.125,
+              "vocabulary_terms": [
+                "SBRT",
+                "Gy",
+                "stereotactic"
+              ],
+              "terms_found": 2,
+              "terms_total": 3,
+              "terms_missing": [
+                "SBRT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0017",
+              "category": "treatment_summary",
+              "dense_subtype": "srs_sbrt",
+              "ground_truth": "The patient underwent fractionated stereotactic radiotherapy with 30 Gy in 5 fractions to the cavernous sinus.",
+              "raw_transcription": "the patient underwent fractionated stereotactic radiotherapy with 30 gi in five fractions to the cavernous sinus",
+              "corrected_transcription": "the patient underwent fractionated stereotactic radiotherapy with 30 GI in five fractions to the cavernous sinus",
+              "raw_wer": 0.125,
+              "corrected_wer": 0.125,
+              "vocabulary_terms": [
+                "SRT",
+                "Gy",
+                "stereotactic"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "SRT",
+                "Gy"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0018",
+              "category": "setup_instructions",
+              "dense_subtype": "imaging",
+              "ground_truth": "CT simulation was performed with a five millimeter slice thickness in the treatment position with thermoplastic mask immobilization.",
+              "raw_transcription": "ct simulation was performed with a 5mm slice thickness in the treatment position with thermoplastic mask immobilization",
+              "corrected_transcription": "ct simulation was performed with a 5mm slice thickness in the treatment position with thermoplastic mask immobilization",
+              "raw_wer": 0.1111111111111111,
+              "corrected_wer": 0.1111111111111111,
+              "vocabulary_terms": [],
+              "terms_found": 0,
+              "terms_total": 0,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0019",
+              "category": "setup_instructions",
+              "dense_subtype": "imaging",
+              "ground_truth": "Daily cone beam CT was used for image guidance with a threshold of 3 millimeters for translational correction.",
+              "raw_transcription": "early cone beam ct was used for image guidance with a threshold of 3 mm for translational correction",
+              "corrected_transcription": "early cone beam ct was used for image guidance with a threshold of 3 mm for translational correction",
+              "raw_wer": 0.1111111111111111,
+              "corrected_wer": 0.1111111111111111,
+              "vocabulary_terms": [
+                "CBCT",
+                "IGRT"
+              ],
+              "terms_found": 0,
+              "terms_total": 2,
+              "terms_missing": [
+                "CBCT",
+                "IGRT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0020",
+              "category": "setup_instructions",
+              "dense_subtype": "imaging",
+              "ground_truth": "PET CT was fused to the planning CT for gross tumor volume delineation.",
+              "raw_transcription": "bctt was fused to the planning ct for gross tumor volume delineation",
+              "corrected_transcription": "bctt was fused to the planning ct for gross tumor volume delineation",
+              "raw_wer": 0.15384615384615385,
+              "corrected_wer": 0.15384615384615385,
+              "vocabulary_terms": [
+                "GTV"
+              ],
+              "terms_found": 0,
+              "terms_total": 1,
+              "terms_missing": [
+                "GTV"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0021",
+              "category": "treatment_summary",
+              "dense_subtype": "chemo_rt",
+              "ground_truth": "Concurrent cisplatin was administered weekly at 40 milligrams per square meter during radiotherapy.",
+              "raw_transcription": "concurrent cisplatin was administered weekly at 40 milligrams per square meter during radiotherapy",
+              "corrected_transcription": "concurrent cisplatin was administered weekly at 40 milligrams per square meter during radiotherapy",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "chemoradiation",
+                "concurrent"
+              ],
+              "terms_found": 1,
+              "terms_total": 2,
+              "terms_missing": [
+                "chemoradiation"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0022",
+              "category": "treatment_summary",
+              "dense_subtype": "chemo_rt",
+              "ground_truth": "Neoadjuvant chemoradiation consisted of 50.4 Gy in 28 fractions with concurrent capecitabine.",
+              "raw_transcription": "neoadjuvant chemo-radiation consisted of 504 gy in 28 fractions with concurrent capecitabine",
+              "corrected_transcription": "neoadjuvant chemo-radiation consisted of 504 Gy in 28 fractions with concurrent capecitabine",
+              "raw_wer": 0.23076923076923078,
+              "corrected_wer": 0.23076923076923078,
+              "vocabulary_terms": [
+                "Gy",
+                "chemoradiation",
+                "concurrent"
+              ],
+              "terms_found": 2,
+              "terms_total": 3,
+              "terms_missing": [
+                "chemoradiation"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0023",
+              "category": "acronym_dense",
+              "dense_subtype": "acronym_dense",
+              "ground_truth": "IMRT plan delivered 60 Gy in 30 fractions to the PTV sparing the OARs including parotids and cord.",
+              "raw_transcription": "immat plan delivered 60 gy in 30 fractions to the ptv sparing the oars including parotids and cord",
+              "corrected_transcription": "immat plan delivered 60 Gy in 30 fractions to the PTV sparing the oars including parotids and cord",
+              "raw_wer": 0.05555555555555555,
+              "corrected_wer": 0.05555555555555555,
+              "vocabulary_terms": [
+                "IMRT",
+                "Gy",
+                "PTV",
+                "OAR",
+                "spinal cord"
+              ],
+              "terms_found": 2,
+              "terms_total": 5,
+              "terms_missing": [
+                "IMRT",
+                "OAR",
+                "spinal cord"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0024",
+              "category": "acronym_dense",
+              "dense_subtype": "acronym_dense",
+              "ground_truth": "VMAT plan with SIB delivered 70 Gy to the GTV and 56 Gy to the CTV in 35 fractions with daily IGRT.",
+              "raw_transcription": "the matt plan with sib delivered 70 gy to the gtv and 56 gy to the ctv in 35 fractions with daily igat",
+              "corrected_transcription": "the matt plan with SIB delivered 70 Gy to the GTV and 56 Gy to the CTV in 35 fractions with daily igat",
+              "raw_wer": 0.13636363636363635,
+              "corrected_wer": 0.13636363636363635,
+              "vocabulary_terms": [
+                "VMAT",
+                "SIB",
+                "Gy",
+                "GTV",
+                "CTV",
+                "IGRT"
+              ],
+              "terms_found": 4,
+              "terms_total": 6,
+              "terms_missing": [
+                "VMAT",
+                "IGRT"
+              ],
+              "error": false
+            }
+          ]
+        },
+        {
+          "voice": "en_US-lessac-high",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1582,
+            "avg_corrected_wer": 0.1582,
+            "terms_found": 34,
+            "terms_total": 63,
+            "term_recall": 0.5397
+          },
+          "samples": [
+            {
+              "fixture_id": "dense-0001",
+              "category": "dose_prescription",
+              "dense_subtype": "dose",
+              "ground_truth": "Prescribed dose of 54 Gy in 30 fractions to the PTV with a simultaneous integrated boost to 60 Gy for the high-risk CTV.",
+              "raw_transcription": "prescribe dose of fifty four gi in thirty fractions to the ptv with a simultaneous integrated boost to sixty g for the high-risk ctv",
+              "corrected_transcription": "prescribe dose of fifty four GI in thirty fractions to the PTV with a simultaneous integrated boost to sixty g for the high-risk CTV",
+              "raw_wer": 0.30434782608695654,
+              "corrected_wer": 0.30434782608695654,
+              "vocabulary_terms": [
+                "Gy",
+                "PTV",
+                "CTV",
+                "simultaneous integrated boost"
+              ],
+              "terms_found": 3,
+              "terms_total": 4,
+              "terms_missing": [
+                "Gy"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0002",
+              "category": "dose_prescription",
+              "dense_subtype": "dose",
+              "ground_truth": "The patient will receive 50 Gy in 25 fractions delivered via IMRT with daily image guidance.",
+              "raw_transcription": "the patient will receive fifty gi and twenty five fractions delivered via imrt with daily image guidance",
+              "corrected_transcription": "the patient will receive fifty GI and twenty five fractions delivered via IMRT with daily image guidance",
+              "raw_wer": 0.3125,
+              "corrected_wer": 0.3125,
+              "vocabulary_terms": [
+                "Gy",
+                "IMRT",
+                "IGRT"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "Gy",
+                "IGRT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0003",
+              "category": "dose_prescription",
+              "dense_subtype": "dose",
+              "ground_truth": "Hypofractionated regimen of 40.05 Gy in 15 fractions with a sequential boost of 10 Gy in 4 fractions to the tumor bed.",
+              "raw_transcription": "hypofractionated regimen of forty point zero five g in fifteen fractions with a sequential boost of ten g in four fractions to the tumor bed",
+              "corrected_transcription": "hypofractionated regimen of forty point zero five g in fifteen fractions with a sequential boost of ten g in four fractions to the tumor BED",
+              "raw_wer": 0.391304347826087,
+              "corrected_wer": 0.391304347826087,
+              "vocabulary_terms": [
+                "Gy",
+                "hypofractionation",
+                "boost"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "Gy",
+                "hypofractionation"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0004",
+              "category": "dose_prescription",
+              "dense_subtype": "dose",
+              "ground_truth": "Total dose of 70 Gy in 35 fractions over 7 weeks with concurrent chemotherapy.",
+              "raw_transcription": "total dose of 70 gy in 35 fractions over 7 weeks with concurrent chemotherapy",
+              "corrected_transcription": "total dose of 70 Gy in 35 fractions over 7 weeks with concurrent chemotherapy",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "Gy",
+                "chemoradiation"
+              ],
+              "terms_found": 1,
+              "terms_total": 2,
+              "terms_missing": [
+                "chemoradiation"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0005",
+              "category": "oar_constraints",
+              "dense_subtype": "oar",
+              "ground_truth": "Organs at risk included the parotids, pharyngeal constrictors, brainstem, and cervical spinal cord.",
+              "raw_transcription": "organs at risk included the parotids pharyngeal constrictors brainstem and cervical spinal cord",
+              "corrected_transcription": "organs at risk included the parotids pharyngeal constrictors brainstem and cervical spinal cord",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "OAR",
+                "brainstem",
+                "spinal cord"
+              ],
+              "terms_found": 2,
+              "terms_total": 3,
+              "terms_missing": [
+                "OAR"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0006",
+              "category": "oar_constraints",
+              "dense_subtype": "oar",
+              "ground_truth": "Dose volume constraints: V20 to both lungs less than 30 percent, mean heart dose less than 25 Gy, and maximum spinal cord dose less than 45 Gy.",
+              "raw_transcription": "dose volume constraints v20 to both lungs less than 30 mean heart dose less than 25 gy and maximum spinal cord dose less than 45 gy",
+              "corrected_transcription": "dose volume constraints V20 to both lungs less than 30 mean heart dose less than 25 Gy and maximum spinal cord dose less than 45 Gy",
+              "raw_wer": 0.037037037037037035,
+              "corrected_wer": 0.037037037037037035,
+              "vocabulary_terms": [
+                "V20",
+                "Gy",
+                "spinal cord"
+              ],
+              "terms_found": 3,
+              "terms_total": 3,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0007",
+              "category": "oar_constraints",
+              "dense_subtype": "oar",
+              "ground_truth": "Target parotid mean dose was limited to 26 Gy with a V30 of less than 50 percent.",
+              "raw_transcription": "target-parroted mean dose was limited to 26 gy with a v30 of less than 50",
+              "corrected_transcription": "target-parroted mean dose was limited to 26 Gy with a v30 of less than 50",
+              "raw_wer": 0.17647058823529413,
+              "corrected_wer": 0.17647058823529413,
+              "vocabulary_terms": [
+                "Gy",
+                "V30"
+              ],
+              "terms_found": 2,
+              "terms_total": 2,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0008",
+              "category": "oar_constraints",
+              "dense_subtype": "oar",
+              "ground_truth": "The planning target volume abuts the bowel, so we constrained the V45 to less than 195 cubic centimeters.",
+              "raw_transcription": "the planning target volume abuts the bowel so we constrain the v45 to less than 195 cubic centimeters",
+              "corrected_transcription": "the planning target volume abuts the bowel so we constrain the v45 to less than 195 cubic centimeters",
+              "raw_wer": 0.05555555555555555,
+              "corrected_wer": 0.05555555555555555,
+              "vocabulary_terms": [
+                "PTV",
+                "V45"
+              ],
+              "terms_found": 1,
+              "terms_total": 2,
+              "terms_missing": [
+                "PTV"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0009",
+              "category": "treatment_summary",
+              "dense_subtype": "technique",
+              "ground_truth": "Treatment was delivered using volumetric modulated arc therapy with daily kilovoltage image guidance.",
+              "raw_transcription": "treatment was delivered using volumetric modulated arc therapy with daily kilovoltage image guidance",
+              "corrected_transcription": "treatment was delivered using volumetric modulated arc therapy with daily kilovoltage image guidance",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "VMAT",
+                "IGRT"
+              ],
+              "terms_found": 0,
+              "terms_total": 2,
+              "terms_missing": [
+                "VMAT",
+                "IGRT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0010",
+              "category": "treatment_summary",
+              "dense_subtype": "technique",
+              "ground_truth": "The plan was optimized with intensity modulated radiation therapy using seven coplanar beams.",
+              "raw_transcription": "the plan was optimized with intensity-modulated radiation therapy using seven coplanar beams",
+              "corrected_transcription": "the plan was optimized with intensity-modulated radiation therapy using seven coplanar beams",
+              "raw_wer": 0.15384615384615385,
+              "corrected_wer": 0.15384615384615385,
+              "vocabulary_terms": [
+                "IMRT"
+              ],
+              "terms_found": 0,
+              "terms_total": 1,
+              "terms_missing": [
+                "IMRT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0011",
+              "category": "treatment_summary",
+              "dense_subtype": "technique",
+              "ground_truth": "Three dimensional conformal radiation therapy was used for the whole pelvis field with a boost using IMRT.",
+              "raw_transcription": "three-dimensional conformal radiation therapy was used for the whole pelvis field with a boost using imrt",
+              "corrected_transcription": "three-dimensional conformal radiation therapy was used for the whole pelvis field with a boost using IMRT",
+              "raw_wer": 0.11764705882352941,
+              "corrected_wer": 0.11764705882352941,
+              "vocabulary_terms": [
+                "3DCRT",
+                "IMRT",
+                "boost"
+              ],
+              "terms_found": 2,
+              "terms_total": 3,
+              "terms_missing": [
+                "3DCRT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0012",
+              "category": "treatment_summary",
+              "dense_subtype": "technique",
+              "ground_truth": "Deep inspiration breath hold technique was employed to reduce cardiac dose during left breast irradiation.",
+              "raw_transcription": "deep inspiration breath hold technique was employed to reduce cardiac dose during left breast irradiation",
+              "corrected_transcription": "deep inspiration breath hold technique was employed to reduce cardiac dose during left breast irradiation",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "DIBH"
+              ],
+              "terms_found": 0,
+              "terms_total": 1,
+              "terms_missing": [
+                "DIBH"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0013",
+              "category": "treatment_summary",
+              "dense_subtype": "brachy",
+              "ground_truth": "Brachytherapy boost was administered via high dose rate iridium-192 afterloading with three fractions of 7 Gy.",
+              "raw_transcription": "brachytherapy boost was administered via high-dose-rate iridium-192 after loading with three fractions of 7.0 gy",
+              "corrected_transcription": "brachytherapy boost was administered via high-dose-rate iridium-192 after loading with three fractions of 7.0 Gy",
+              "raw_wer": 0.375,
+              "corrected_wer": 0.375,
+              "vocabulary_terms": [
+                "brachytherapy",
+                "HDR",
+                "Gy",
+                "boost"
+              ],
+              "terms_found": 3,
+              "terms_total": 4,
+              "terms_missing": [
+                "HDR"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0014",
+              "category": "treatment_summary",
+              "dense_subtype": "brachy",
+              "ground_truth": "Intracavitary brachytherapy was delivered using a Fletcher Suit tandem and ovoids applicator.",
+              "raw_transcription": "intracavitary brachytherapy was delivered using a fletcher-suite tandem and ovoids applicator",
+              "corrected_transcription": "intracavitary brachytherapy was delivered using a fletcher-suite tandem and ovoids applicator",
+              "raw_wer": 0.16666666666666666,
+              "corrected_wer": 0.16666666666666666,
+              "vocabulary_terms": [
+                "brachytherapy"
+              ],
+              "terms_found": 1,
+              "terms_total": 1,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0015",
+              "category": "treatment_summary",
+              "dense_subtype": "srs_sbrt",
+              "ground_truth": "Stereotactic radiosurgery was planned with a single 18 Gy fraction to the 80 percent isodose line.",
+              "raw_transcription": "stereotactic radiosurgery was planned with a single 18-gy fraction to the 80% isodose line",
+              "corrected_transcription": "stereotactic radiosurgery was planned with a single 18-gy fraction to the 80% isodose line",
+              "raw_wer": 0.1875,
+              "corrected_wer": 0.1875,
+              "vocabulary_terms": [
+                "SRS",
+                "Gy",
+                "isodose",
+                "stereotactic"
+              ],
+              "terms_found": 3,
+              "terms_total": 4,
+              "terms_missing": [
+                "SRS"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0016",
+              "category": "treatment_summary",
+              "dense_subtype": "srs_sbrt",
+              "ground_truth": "Stereotactic body radiation therapy was delivered to the lung metastasis using 54 Gy in 3 fractions.",
+              "raw_transcription": "stereotactic body radiation therapy was delivered to the lung metastases using 54 gy in three fractions",
+              "corrected_transcription": "stereotactic body radiation therapy was delivered to the lung metastases using 54 Gy in three fractions",
+              "raw_wer": 0.125,
+              "corrected_wer": 0.125,
+              "vocabulary_terms": [
+                "SBRT",
+                "Gy",
+                "stereotactic"
+              ],
+              "terms_found": 2,
+              "terms_total": 3,
+              "terms_missing": [
+                "SBRT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0017",
+              "category": "treatment_summary",
+              "dense_subtype": "srs_sbrt",
+              "ground_truth": "The patient underwent fractionated stereotactic radiotherapy with 30 Gy in 5 fractions to the cavernous sinus.",
+              "raw_transcription": "the patient underwent fractionated stereotactic radiotherapy with thirty g y and five fractions to the cavernous sinus",
+              "corrected_transcription": "the patient underwent fractionated stereotactic radiotherapy with thirty g y and five fractions to the cavernous sinus",
+              "raw_wer": 0.3125,
+              "corrected_wer": 0.3125,
+              "vocabulary_terms": [
+                "SRT",
+                "Gy",
+                "stereotactic"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "SRT",
+                "Gy"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0018",
+              "category": "setup_instructions",
+              "dense_subtype": "imaging",
+              "ground_truth": "CT simulation was performed with a five millimeter slice thickness in the treatment position with thermoplastic mask immobilization.",
+              "raw_transcription": "ct simulation was performed with a 5mm slice thickness in the treatment position with thermoplastic mask immobilization",
+              "corrected_transcription": "ct simulation was performed with a 5mm slice thickness in the treatment position with thermoplastic mask immobilization",
+              "raw_wer": 0.1111111111111111,
+              "corrected_wer": 0.1111111111111111,
+              "vocabulary_terms": [],
+              "terms_found": 0,
+              "terms_total": 0,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0019",
+              "category": "setup_instructions",
+              "dense_subtype": "imaging",
+              "ground_truth": "Daily cone beam CT was used for image guidance with a threshold of 3 millimeters for translational correction.",
+              "raw_transcription": "daily cone beam ct was used for image guidance with a threshold of 3 mm for translational correction",
+              "corrected_transcription": "daily cone beam ct was used for image guidance with a threshold of 3 mm for translational correction",
+              "raw_wer": 0.05555555555555555,
+              "corrected_wer": 0.05555555555555555,
+              "vocabulary_terms": [
+                "CBCT",
+                "IGRT"
+              ],
+              "terms_found": 0,
+              "terms_total": 2,
+              "terms_missing": [
+                "CBCT",
+                "IGRT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0020",
+              "category": "setup_instructions",
+              "dense_subtype": "imaging",
+              "ground_truth": "PET CT was fused to the planning CT for gross tumor volume delineation.",
+              "raw_transcription": "bett was fused to the planning ct for gross tumor volume delineation",
+              "corrected_transcription": "bett was fused to the planning ct for gross tumor volume delineation",
+              "raw_wer": 0.15384615384615385,
+              "corrected_wer": 0.15384615384615385,
+              "vocabulary_terms": [
+                "GTV"
+              ],
+              "terms_found": 0,
+              "terms_total": 1,
+              "terms_missing": [
+                "GTV"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0021",
+              "category": "treatment_summary",
+              "dense_subtype": "chemo_rt",
+              "ground_truth": "Concurrent cisplatin was administered weekly at 40 milligrams per square meter during radiotherapy.",
+              "raw_transcription": "concurrent cisplatin was administered weekly at 40 milligrams per square meter during radiotherapy",
+              "corrected_transcription": "concurrent cisplatin was administered weekly at 40 milligrams per square meter during radiotherapy",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "chemoradiation",
+                "concurrent"
+              ],
+              "terms_found": 1,
+              "terms_total": 2,
+              "terms_missing": [
+                "chemoradiation"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0022",
+              "category": "treatment_summary",
+              "dense_subtype": "chemo_rt",
+              "ground_truth": "Neoadjuvant chemoradiation consisted of 50.4 Gy in 28 fractions with concurrent capecitabine.",
+              "raw_transcription": "neoadjuvant chemo-radiation consisted of 54 gi and 28 fractions with concurrent capecitabine amlodipine metoprolol clopidogrel",
+              "corrected_transcription": "neoadjuvant chemo-radiation consisted of 54 GI and 28 fractions with concurrent capecitabine amlodipine metoprolol clopidogrel",
+              "raw_wer": 0.6153846153846154,
+              "corrected_wer": 0.6153846153846154,
+              "vocabulary_terms": [
+                "Gy",
+                "chemoradiation",
+                "concurrent"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "Gy",
+                "chemoradiation"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0023",
+              "category": "acronym_dense",
+              "dense_subtype": "acronym_dense",
+              "ground_truth": "IMRT plan delivered 60 Gy in 30 fractions to the PTV sparing the OARs including parotids and cord.",
+              "raw_transcription": "immit plan delivered 60 gy in 30 fractions to the ptv sparing the oars including parotids and cord",
+              "corrected_transcription": "immit plan delivered 60 Gy in 30 fractions to the PTV sparing the oars including parotids and cord",
+              "raw_wer": 0.05555555555555555,
+              "corrected_wer": 0.05555555555555555,
+              "vocabulary_terms": [
+                "IMRT",
+                "Gy",
+                "PTV",
+                "OAR",
+                "spinal cord"
+              ],
+              "terms_found": 2,
+              "terms_total": 5,
+              "terms_missing": [
+                "IMRT",
+                "OAR",
+                "spinal cord"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "dense-0024",
+              "category": "acronym_dense",
+              "dense_subtype": "acronym_dense",
+              "ground_truth": "VMAT plan with SIB delivered 70 Gy to the GTV and 56 Gy to the CTV in 35 fractions with daily IGRT.",
+              "raw_transcription": "pmat plan with sib delivered 70 gy to the gtv and 56 gy to the ctv in 35 fractions with daily igat",
+              "corrected_transcription": "pmat plan with SIB delivered 70 Gy to the GTV and 56 Gy to the CTV in 35 fractions with daily igat",
+              "raw_wer": 0.09090909090909091,
+              "corrected_wer": 0.09090909090909091,
+              "vocabulary_terms": [
+                "VMAT",
+                "SIB",
+                "Gy",
+                "GTV",
+                "CTV",
+                "IGRT"
+              ],
+              "terms_found": 4,
+              "terms_total": 6,
+              "terms_missing": [
+                "VMAT",
+                "IGRT"
+              ],
+              "error": false
+            }
+          ]
+        }
+      ],
+      "overall": {
+        "sample_count": 48,
+        "error_count": 0,
+        "avg_raw_wer": 0.1254,
+        "avg_corrected_wer": 0.1254,
+        "terms_found": 69,
+        "terms_total": 126,
+        "term_recall": 0.5476
+      }
+    }
+  ]
+}
