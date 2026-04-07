@@ -24,6 +24,11 @@ dev = [
 phonetic = [
     "metaphone>=0.6",
 ]
+audio = [
+    "numpy>=1.24",
+    "scipy>=1.11",
+    "pyroomacoustics>=0.7",
+]
 
 [project.scripts]
 transcribe-radrx = "transcriber_radrx.cli:main"
@@ -60,5 +65,5 @@ python_version = "3.11"
 strict = true
 
 [[tool.mypy.overrides]]
-module = ["mlx_whisper", "metaphone"]
+module = ["mlx_whisper", "metaphone", "pyroomacoustics", "scipy.signal"]
 ignore_missing_imports = true
