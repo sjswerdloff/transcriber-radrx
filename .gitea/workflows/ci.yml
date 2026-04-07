@@ -1,0 +1,67 @@
+---
+name: CI Pipeline
+
+"on":
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  lint-and-format:
+    name: Lint and Format Check
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        run: |
+          git clone --depth=1 http://git/The_Kindled/transcriber-radrx.git .
+          git fetch origin ${{ github.ref }}
+          git checkout ${{ github.sha }}
+
+      - name: Check lock file is in sync
+        run: |
+          if ! uv lock --check; then
+            echo "::error::uv.lock is out of sync with pyproject.toml. Run 'uv lock' locally and commit."
+            exit 1
+          fi
+
+      - name: Install dependencies
+        run: uv sync --extra dev --extra phonetic
+
+      - name: Check formatting with ruff
+        run: uv run ruff format --check src/ tests/
+
+      - name: Lint with ruff
+        run: uv run ruff check src/ tests/
+
+      - name: Type check with mypy
+        run: uv run mypy src/
+
+  test:
+    name: Run Tests
+    runs-on: macos-latest
+    needs: lint-and-format
+    steps:
+      - name: Checkout repository
+        run: |
+          git clone --depth=1 http://git/The_Kindled/transcriber-radrx.git .
+          git fetch origin ${{ github.ref }}
+          git checkout ${{ github.sha }}
+
+      - name: Install dependencies
+        run: |
+          uv sync --extra dev --extra phonetic
+          uv pip install -e .
+
+      - name: Run tests
+        run: uv run pytest tests/ --json-report --json-report-file=results.json -q
+
+      - name: Display test summary
+        if: always()
+        run: |
+          if [ -f results.json ]; then
+            echo "Test Results:"
+            jq '.summary | "passed: \(.passed) skipped: \(.skipped)"' \
+              results.json
+            jq '.summary | "failed: \(.failed)"' results.json
+          fi
