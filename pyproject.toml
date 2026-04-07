@@ -125,3 +125,17 @@ ignore_missing_imports = true
 [[tool.mypy.overrides]]
 module = "tests.validation.audio_synthesis.*"
 disable_error_code = ["type-arg"]
+
+# medasr.py uses `# type: ignore[no-untyped-call]` on transformers'
+# AutoProcessor.from_pretrained calls. That ignore is needed when the
+# asr-medasr extras are installed (transformers ships typed stubs where
+# from_pretrained is untyped-in-typed-context). When asr-medasr is NOT
+# installed — which is the CI default, to avoid pulling transformers/
+# torch/kenlm into lint jobs — transformers becomes Any via
+# ignore_missing_imports and the ignore is "unused". We cannot satisfy
+# both environments with a static comment, so we disable the
+# warn_unused_ignores warning for this one module. Strict mode still
+# applies everywhere else.
+[[tool.mypy.overrides]]
+module = "transcriber_radrx.asr_backends.medasr"
+warn_unused_ignores = false
