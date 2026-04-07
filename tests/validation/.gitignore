@@ -1,0 +1,26 @@
+# Audio is large and generated — never commit
+audio/synthetic/**/*.wav
+audio/synthetic/**/*.flac
+audio/synthetic/**/*.mp3
+audio/synthetic/**/audio_manifest.jsonl
+
+# Restricted corpora — license unclear or not redistributable
+corpora/restricted/**/*
+!corpora/restricted/.gitkeep
+!corpora/restricted/README.md
+
+# Allow committing redistributable corpora curated subsets
+# (the acquire scripts populate full datasets which may exceed reasonable
+# repo size; we commit only curated extracts)
+corpora/redistributable/**/raw/
+corpora/redistributable/**/*.zip
+corpora/redistributable/**/*.tar.gz
+
+# But always allow READMEs and .gitkeep markers
+!corpora/redistributable/README.md
+!corpora/redistributable/**/README.md
+!corpora/redistributable/**/.gitkeep
+
+# Validation reports are run-specific
+*.validation_report.json
+validation_report*.json

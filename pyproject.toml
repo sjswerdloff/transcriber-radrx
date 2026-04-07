@@ -47,6 +47,13 @@ select = ["E", "F", "I", "W", "UP", "S", "B", "A", "C4", "SIM", "TRY", "ARG", "P
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = [
+    "validation: end-to-end validation tests requiring corpora and audio (slow)",
+    "requires_corpora: test needs acquired corpus data",
+    "requires_audio: test needs generated synthetic audio",
+]
+# Default test run excludes validation suite
+addopts = "-m 'not validation'"
 
 [tool.mypy]
 python_version = "3.11"
