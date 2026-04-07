@@ -1,0 +1,177 @@
+{
+  "whisper_model": "mlx-community/whisper-large-v3-turbo",
+  "voice_model": "/Users/stuartswerdloff/PythonProjects/PiperTTS/piper-voices/en/en_US/amy/medium/en_US-amy-medium.onnx",
+  "vocabulary": "data/rt_vocabulary.txt",
+  "sample_count": 5,
+  "seed": 42,
+  "phonetic_off": {
+    "summary": {
+      "sample_count": 5,
+      "avg_raw_wer": 0.0133,
+      "avg_corrected_wer": 0.0133,
+      "total_corrections_applied": 0,
+      "total_trap_violations": 0,
+      "by_category": {
+        "homograph_trap": {
+          "n": 5,
+          "avg_raw_wer": 0.0133,
+          "avg_corrected_wer": 0.0133
+        }
+      }
+    },
+    "samples": [
+      {
+        "fixture_id": "trap-0021",
+        "category": "homograph_trap",
+        "ground_truth": "The lungs are at risk so we limited the V20 to less than 30 percent.",
+        "raw_transcription": " The lungs are at risk so we limited the V20 to less than 30%.",
+        "corrected_transcription": " The lungs are at risk so we limited the V20 to less than 30%.",
+        "raw_wer": 0.06666666666666667,
+        "corrected_wer": 0.06666666666666667,
+        "num_corrections": 0,
+        "correction_methods": [],
+        "trap_violations": [],
+        "enable_phonetic": false
+      },
+      {
+        "fixture_id": "trap-0004",
+        "category": "homograph_trap",
+        "ground_truth": "Our team has reviewed the case in tumor board.",
+        "raw_transcription": " Our team has reviewed the case in tumor board.",
+        "corrected_transcription": " Our team has reviewed the case in tumor board.",
+        "raw_wer": 0.0,
+        "corrected_wer": 0.0,
+        "num_corrections": 0,
+        "correction_methods": [],
+        "trap_violations": [],
+        "enable_phonetic": false
+      },
+      {
+        "fixture_id": "trap-0001",
+        "category": "homograph_trap",
+        "ground_truth": "Our patient is supportive of treatment and wishes to proceed.",
+        "raw_transcription": " Our patient is supportive of treatment and wishes to proceed.",
+        "corrected_transcription": " Our patient is supportive of treatment and wishes to proceed.",
+        "raw_wer": 0.0,
+        "corrected_wer": 0.0,
+        "num_corrections": 0,
+        "correction_methods": [],
+        "trap_violations": [],
+        "enable_phonetic": false
+      },
+      {
+        "fixture_id": "trap-0009",
+        "category": "homograph_trap",
+        "ground_truth": "Dietary support has been arranged for the patient.",
+        "raw_transcription": " Dietary support has been arranged for the patient.",
+        "corrected_transcription": " Dietary support has been arranged for the patient.",
+        "raw_wer": 0.0,
+        "corrected_wer": 0.0,
+        "num_corrections": 0,
+        "correction_methods": [],
+        "trap_violations": [],
+        "enable_phonetic": false
+      },
+      {
+        "fixture_id": "trap-0008",
+        "category": "homograph_trap",
+        "ground_truth": "The family is providing emotional support throughout therapy.",
+        "raw_transcription": " The family is providing emotional support throughout therapy.",
+        "corrected_transcription": " The family is providing emotional support throughout therapy.",
+        "raw_wer": 0.0,
+        "corrected_wer": 0.0,
+        "num_corrections": 0,
+        "correction_methods": [],
+        "trap_violations": [],
+        "enable_phonetic": false
+      }
+    ]
+  },
+  "phonetic_on": {
+    "summary": {
+      "sample_count": 5,
+      "avg_raw_wer": 0.0133,
+      "avg_corrected_wer": 0.0583,
+      "total_corrections_applied": 2,
+      "total_trap_violations": 0,
+      "by_category": {
+        "homograph_trap": {
+          "n": 5,
+          "avg_raw_wer": 0.0133,
+          "avg_corrected_wer": 0.0583
+        }
+      }
+    },
+    "samples": [
+      {
+        "fixture_id": "trap-0021",
+        "category": "homograph_trap",
+        "ground_truth": "The lungs are at risk so we limited the V20 to less than 30 percent.",
+        "raw_transcription": " The lungs are at risk so we limited the V20 to less than 30%.",
+        "corrected_transcription": " The lungs are at risk so we limited the V20 to less than 30%.",
+        "raw_wer": 0.06666666666666667,
+        "corrected_wer": 0.06666666666666667,
+        "num_corrections": 0,
+        "correction_methods": [],
+        "trap_violations": [],
+        "enable_phonetic": true
+      },
+      {
+        "fixture_id": "trap-0004",
+        "category": "homograph_trap",
+        "ground_truth": "Our team has reviewed the case in tumor board.",
+        "raw_transcription": " Our team has reviewed the case in tumor board.",
+        "corrected_transcription": " Our team has reviewed the case in tumor board.",
+        "raw_wer": 0.0,
+        "corrected_wer": 0.0,
+        "num_corrections": 0,
+        "correction_methods": [],
+        "trap_violations": [],
+        "enable_phonetic": true
+      },
+      {
+        "fixture_id": "trap-0001",
+        "category": "homograph_trap",
+        "ground_truth": "Our patient is supportive of treatment and wishes to proceed.",
+        "raw_transcription": " Our patient is supportive of treatment and wishes to proceed.",
+        "corrected_transcription": " Our patient is supportive of treatment and wishes to breast.",
+        "raw_wer": 0.0,
+        "corrected_wer": 0.1,
+        "num_corrections": 1,
+        "correction_methods": [
+          "phonetic"
+        ],
+        "trap_violations": [],
+        "enable_phonetic": true
+      },
+      {
+        "fixture_id": "trap-0009",
+        "category": "homograph_trap",
+        "ground_truth": "Dietary support has been arranged for the patient.",
+        "raw_transcription": " Dietary support has been arranged for the patient.",
+        "corrected_transcription": " Dietary support has been arranged for the patient.",
+        "raw_wer": 0.0,
+        "corrected_wer": 0.0,
+        "num_corrections": 0,
+        "correction_methods": [],
+        "trap_violations": [],
+        "enable_phonetic": true
+      },
+      {
+        "fixture_id": "trap-0008",
+        "category": "homograph_trap",
+        "ground_truth": "The family is providing emotional support throughout therapy.",
+        "raw_transcription": " The family is providing emotional support throughout therapy.",
+        "corrected_transcription": " The family is providing emotional support thyroid therapy.",
+        "raw_wer": 0.0,
+        "corrected_wer": 0.125,
+        "num_corrections": 1,
+        "correction_methods": [
+          "phonetic"
+        ],
+        "trap_violations": [],
+        "enable_phonetic": true
+      }
+    ]
+  }
+}
