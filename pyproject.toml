@@ -9,6 +9,10 @@ authors = [
     {name = "The Kindled", email = "stuart@sjstargetedsolutions.co.nz"},
 ]
 dependencies = [
+    # mlx-whisper is currently a hard dependency because it is the baseline
+    # ASR backend and most users will want it. A future PR may move this
+    # into an `asr-whisper-mlx` extra once the backend registry is the
+    # primary entry point.
     "mlx-whisper>=0.4.0",
 ]
 
@@ -32,6 +36,19 @@ audio = [
 validation = [
     "jiwer>=4.0",
 ]
+# Google MedASR backend. The ainergiz/medasr-mlx inference code is vendored
+# under src/transcriber_radrx/asr_backends/_medasr_mlx_lib/ (see VENDOR.md).
+# Beam-search decoding requires kenlm which is a C extension; if the install
+# fails on your platform, use decode_mode="greedy" which skips kenlm.
+asr-medasr = [
+    "numpy>=1.24",
+    "scipy>=1.11",
+    "soundfile>=0.12",
+    "transformers>=4.46",
+    "huggingface-hub>=0.25",
+    "pyctcdecode>=0.5",
+    "kenlm>=0.3",
+]
 
 [project.scripts]
 transcribe-radrx = "transcriber_radrx.cli:main"
@@ -46,12 +63,23 @@ packages = ["src/transcriber_radrx"]
 [tool.ruff]
 line-length = 127
 target-version = "py311"
+# Vendored third-party code — not our style. See VENDOR.md.
+# force-exclude is required so pre-commit's explicit file list still
+# honors the exclude (otherwise extend-exclude only affects traversal).
+extend-exclude = [
+    "src/transcriber_radrx/asr_backends/_medasr_mlx_lib",
+]
+force-exclude = true
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "W", "UP", "S", "B", "A", "C4", "SIM", "TRY", "ARG", "PTH"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**" = ["S101"]
+# Fixture generators contain literal clinical sentences that cannot be
+# meaningfully wrapped — they are realistic dictation patterns.
+"tests/validation/scripts/generate_dense_clinical.py" = ["E501"]
+"tests/validation/scripts/generate_homograph_traps.py" = ["E501"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -66,7 +94,34 @@ addopts = "-m 'not validation'"
 [tool.mypy]
 python_version = "3.11"
 strict = true
+# Vendored third-party code — exclude from type checking. Re-enable if
+# we ever fork or modify it in place (which we do not).
+exclude = [
+    "src/transcriber_radrx/asr_backends/_medasr_mlx_lib/",
+]
 
 [[tool.mypy.overrides]]
-module = ["mlx_whisper", "metaphone", "pyroomacoustics", "scipy.signal"]
+module = [
+    "mlx_whisper",
+    "metaphone",
+    "pyroomacoustics",
+    "scipy.signal",
+    "mlx",
+    "mlx.core",
+    "mlx.nn",
+    "huggingface_hub",
+    "pyctcdecode",
+    "kenlm",
+    "soundfile",
+    "transformers",
+    "transcriber_radrx.asr_backends._medasr_mlx_lib.*",
+]
 ignore_missing_imports = true
+
+# Vivian's audio_synthesis code predates the numpy 1.26 pin from asr-medasr
+# and uses bare `np.ndarray` annotations. New mypy versions + new numpy
+# stubs flag these as "missing type arguments". Not my code to refactor —
+# disabling the warning here keeps CI green without touching her modules.
+[[tool.mypy.overrides]]
+module = "tests.validation.audio_synthesis.*"
+disable_error_code = ["type-arg"]
