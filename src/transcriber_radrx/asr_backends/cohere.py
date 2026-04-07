@@ -81,6 +81,7 @@ class CohereBackend(ASRBackend):
         self._model: Any = None
         self._processor: Any = None
         self._prompt_warning_logged = False
+        self._system_prompt_warned = False
 
     def load(self) -> None:
         """Download weights (if not cached) and load the transformers model.
@@ -143,6 +144,7 @@ class CohereBackend(ASRBackend):
         *,
         language: str = "en",
         initial_prompt: str | None = None,
+        system_prompt: str | None = None,
     ) -> str:
         """Transcribe one 16 kHz mono WAV file with Cohere Transcribe.
 
@@ -152,6 +154,9 @@ class CohereBackend(ASRBackend):
             language: Language code passed to the processor (e.g. "en").
             initial_prompt: Ignored with a log message on first use.
                 Cohere Transcribe does not document a prompt mechanism.
+            system_prompt: Ignored with a log message on first use.
+                Cohere Transcribe is a Conformer-Transformer ASR, not an
+                instruction-following audio-LLM.
 
         Returns:
             Raw transcription text.
@@ -166,6 +171,12 @@ class CohereBackend(ASRBackend):
                 self.name,
             )
             self._prompt_warning_logged = True
+        if system_prompt is not None and not self._system_prompt_warned:
+            logger.info(
+                "[%s] system_prompt ignored (Cohere Transcribe is not an instruction-following audio-LLM)",
+                self.name,
+            )
+            self._system_prompt_warned = True
 
         self.load()
 
@@ -240,9 +251,19 @@ class CohereBackend(ASRBackend):
         return str(decoded[0]).strip()
 
     def unload(self) -> None:
-        """Release model + processor references. Idempotent."""
+        """Release model + processor and force GC. Idempotent.
+
+        See voxtral.unload() / granite.unload() for the OOM rationale:
+        Python GC is not deterministic for large model objects, so we
+        force gc.collect() before emptying the torch device cache to
+        ensure the next backend's load() starts with the previous
+        model's memory fully reclaimed.
+        """
+        import gc
+
         self._model = None
         self._processor = None
+        gc.collect()
         try:
             import torch
 

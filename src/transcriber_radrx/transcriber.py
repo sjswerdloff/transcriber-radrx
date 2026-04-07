@@ -116,6 +116,7 @@ def transcribe_with_backend(
     vocabulary_path: Path | None = None,
     language: str = "en",
     enable_phonetic_correction: bool = False,
+    system_prompt: str | None = None,
 ) -> TranscriptionResult:
     """Transcribe one audio file using a specified ASR backend.
 
@@ -131,6 +132,15 @@ def transcribe_with_backend(
             and ignore the prompt.
         language: Language code.
         enable_phonetic_correction: Enable phonetic corrector tier.
+        system_prompt: Optional instruction-following directive for
+            audio-LLM backends (Granite-Speech, Voxtral, Phi-4-multimodal).
+            This is DIFFERENT from `initial_prompt`: the latter is a
+            Whisper-style soft decoder bias built from `vocabulary_path`,
+            the former is a chat-template system instruction that lets
+            instructable models apply domain rules (e.g. "preserve Gy
+            as Gy, preserve PTV/CTV/IMRT, use numeric digits for doses").
+            Classical ASRs (Whisper, MedASR, Cohere) ignore it with a
+            log warning.
 
     Returns:
         TranscriptionResult with raw and corrected text.
@@ -153,6 +163,7 @@ def transcribe_with_backend(
         audio_path,
         language=language,
         initial_prompt=initial_prompt,
+        system_prompt=system_prompt,
     )
 
     corrected_text, corrections = apply_corrections(

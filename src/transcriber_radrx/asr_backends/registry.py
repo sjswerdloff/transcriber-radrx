@@ -37,10 +37,24 @@ def _make_cohere(**kwargs: object) -> ASRBackend:
     return CohereBackend(**kwargs)  # type: ignore[arg-type]
 
 
+def _make_granite_speech(**kwargs: object) -> ASRBackend:
+    from transcriber_radrx.asr_backends.granite import GraniteSpeechBackend
+
+    return GraniteSpeechBackend(**kwargs)  # type: ignore[arg-type]
+
+
+def _make_voxtral(**kwargs: object) -> ASRBackend:
+    from transcriber_radrx.asr_backends.voxtral import VoxtralBackend
+
+    return VoxtralBackend(**kwargs)  # type: ignore[arg-type]
+
+
 BACKENDS: dict[str, BackendFactory] = {
     "mlx_whisper": _make_mlx_whisper,
     "medasr": _make_medasr,
     "cohere": _make_cohere,
+    "granite_speech": _make_granite_speech,
+    "voxtral": _make_voxtral,
 }
 
 

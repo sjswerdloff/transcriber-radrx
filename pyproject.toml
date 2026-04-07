@@ -68,6 +68,40 @@ asr-cohere = [
     # placement across MPS/CUDA/CPU.
     "accelerate>=1.0",
 ]
+# IBM Granite-Speech backend. Speech-LLM (instruction-following audio
+# model): Conformer-style audio encoder bolted onto the Granite LLM
+# decoder, used via AutoProcessor + AutoModelForSpeechSeq2Seq with a
+# chat-template system prompt. peft is required because the audio
+# adapter ships as a PEFT adapter layer on top of the base Granite.
+# torchaudio is used by the processor for audio loading.
+asr-granite = [
+    "numpy>=1.24",
+    "scipy>=1.11",
+    "soundfile>=0.12",
+    "transformers>=4.52",
+    "torch>=2.2",
+    "peft>=0.13",
+    "accelerate>=1.0",
+    "huggingface-hub>=0.25",
+]
+# Mistral Voxtral backend (audio-LLM). Uses VoxtralForConditionalGeneration
+# registered in transformers>=5.2. This is the instruction-following
+# variant (Mini 3B / Small 24B) for the RT dictation track, NOT the
+# streaming ASR-only Voxtral Mini 4B Realtime variant (which needs vLLM
+# or a community MLX port).
+asr-voxtral = [
+    "numpy>=1.24",
+    "scipy>=1.11",
+    "soundfile>=0.12",
+    "transformers>=5.2",
+    "torch>=2.2",
+    "torchaudio>=2.2",
+    "accelerate>=1.0",
+    "huggingface-hub>=0.25",
+    # Voxtral uses mistral-common for its audio-aware tokenization in
+    # some code paths (notably the apply_transcription_request path).
+    "mistral-common>=1.5",
+]
 
 [project.scripts]
 transcribe-radrx = "transcriber_radrx.cli:main"
@@ -133,6 +167,10 @@ module = [
     "kenlm",
     "soundfile",
     "transformers",
+    "torchaudio",
+    "peft",
+    "librosa",
+    "accelerate",
     "transcriber_radrx.asr_backends._medasr_mlx_lib.*",
 ]
 ignore_missing_imports = true
@@ -168,4 +206,19 @@ warn_unused_ignores = false
 # disable warn_unused_ignores for just this module.
 [[tool.mypy.overrides]]
 module = "transcriber_radrx.asr_backends.cohere"
+warn_unused_ignores = false
+
+# granite.py: same dual-environment type: ignore pattern as medasr
+# and cohere. CI does not install asr-granite extras, so transformers
+# and torch resolve to Any via ignore_missing_imports and the ignore
+# comments become "unused". Disable warn_unused_ignores for this
+# module specifically.
+[[tool.mypy.overrides]]
+module = "transcriber_radrx.asr_backends.granite"
+warn_unused_ignores = false
+
+# voxtral.py: same dual-environment type: ignore pattern as the other
+# audio-LLM backends. CI does not install asr-voxtral extras.
+[[tool.mypy.overrides]]
+module = "transcriber_radrx.asr_backends.voxtral"
 warn_unused_ignores = false
