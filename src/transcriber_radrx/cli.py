@@ -1,6 +1,6 @@
 """Command-line interface for transcriber-radrx.
 
-Authors: vivian-1a61bc9a
+Authors: vivian-1a61bc9a, silas-397300f6
 """
 
 from __future__ import annotations
@@ -25,7 +25,8 @@ def main(argv: list[str] | None = None) -> None:
         "--vocabulary",
         type=Path,
         default=None,
-        help="Path to RT vocabulary file for initial_prompt biasing",
+        help="Path to RT vocabulary file. Used for both Whisper initial_prompt "
+        "biasing AND post-processing correction dictionary.",
     )
     parser.add_argument(
         "--language",
@@ -33,10 +34,11 @@ def main(argv: list[str] | None = None) -> None:
         help="Language code (default: en)",
     )
     parser.add_argument(
-        "--corrections",
-        type=Path,
-        default=None,
-        help="Path to correction dictionary for post-processing",
+        "--enable-phonetic",
+        action="store_true",
+        help="Enable phonetic correction tier (DEFAULT: off). "
+        "Phonetic matching can produce false positives — only enable when "
+        "verified safe for the target vocabulary.",
     )
 
     args = parser.parse_args(argv)
@@ -48,19 +50,15 @@ def main(argv: list[str] | None = None) -> None:
         model=args.model,
         vocabulary_path=args.vocabulary,
         language=args.language,
+        enable_phonetic_correction=args.enable_phonetic,
     )
-
-    if args.corrections:
-        from transcriber_radrx.corrector import CorrectionDictionary
-
-        corrector = CorrectionDictionary(str(args.corrections))
-        corrected_text, corrections = corrector.correct(result.text)
-        result.corrected_text = corrected_text
-        result.corrections = [(c.original, c.corrected) for c in corrections]
 
     print(result.corrected_text)
 
     if result.corrections:
         print("\n--- Corrections applied ---", file=sys.stderr)
-        for original, corrected in result.corrections:
-            print(f"  {original} → {corrected}", file=sys.stderr)
+        for c in result.corrections:
+            print(
+                f"  {c.original} → {c.corrected} (method={c.method}, score={c.score:.2f}, offset={c.offset})",
+                file=sys.stderr,
+            )

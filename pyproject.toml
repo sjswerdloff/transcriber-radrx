@@ -16,6 +16,7 @@ dependencies = [
 dev = [
     "pytest>=8.0",
     "pytest-cov>=5.0",
+    "pre-commit>=4.0",
     "ruff>=0.8.0",
     "mypy>=1.13",
 ]
@@ -49,3 +50,7 @@ testpaths = ["tests"]
 [tool.mypy]
 python_version = "3.11"
 strict = true
+
+[[tool.mypy.overrides]]
+module = ["mlx_whisper", "metaphone"]
+ignore_missing_imports = true
