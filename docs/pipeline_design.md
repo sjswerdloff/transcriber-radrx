@@ -169,43 +169,93 @@ passes in a single invocation, producing side-by-side WER comparisons.
 This is how we empirically verify the safety default is the right
 default.
 
-## First Empirical Results (2026-04-07)
+## Empirical Results (2026-04-07)
 
-Best-case scenario: 5 samples, clean-tier audio, Whisper large-v3-turbo
+Two validation runs on clean-tier TTS audio, Whisper large-v3-turbo
 with vocabulary biasing.
 
-| Metric | phonetic OFF (default) | phonetic ON |
-|--------|------------------------|-------------|
-| Average raw WER | 0.0133 | 0.0133 |
-| Average corrected WER | 0.0133 | 0.0583 |
-| Corrections applied | 0 | 2 |
-| New phonetic false positives discovered | — | 2 |
+### First run: 5 samples, single voice (en_US-amy-medium)
 
-**About the 1.33% WER number:**
+5 homograph-trap fixtures, seed=42. Average raw WER: **1.33%**. The
+non-zero portion was a single formatting difference (Whisper emitted
+`30%` where ground truth said `30 percent`) — true lexical WER is 0.
 
-- This is a **best-case ceiling**, not a realistic field estimate
-- Audio was clean TTS (no acoustic degradation, no background noise, no
-  accent variation, no disfluency)
-- Sentences were homograph-trap fixtures (simple English, minimal complex
-  medical vocabulary — the point was to stress test the corrector, not
-  Whisper)
-- The non-zero WER came from a single format difference: Whisper emitted
-  `30%` where the ground truth said `30 percent`. True lexical WER on
-  these samples is 0.
-- Against typical ASR WER in the 5-7% range on clinical dictation, this
-  is an optimistic ceiling
-- **The realistic WER range** will emerge once we run against:
-  - Acoustic-tier audio (room reverb, distance mic)
-  - Noisy-tier audio (linac hum, speech babble)
-  - Dense RT vocabulary (dose prescriptions, OAR constraints with
-    numeric values)
-  - Larger, more representative samples
+This was a stress-test ceiling on the easiest possible content — simple
+English sentences designed to exercise the corrector's safety guards,
+not to challenge Whisper. It is **not** a field estimate. The honest use
+of the number is "best-case on clean audio with minimal medical vocabulary."
 
-The value of this first run was not the WER number — it was the
-**discovery of two new phonetic false positives** (`proceed`→`breast`,
-`throughout`→`thyroid`) that the corrector's original design would have
-introduced into clinical text. The validation suite found real bugs on
-its very first run. That is the design goal.
+The value of the run was not the WER — it was discovering two new
+phonetic false positives (`proceed → breast`, `throughout → thyroid`)
+that the corrector's original design would have introduced into
+clinical text.
+
+### Second run: 10 samples × 16 voices (8 UK + 8 US, gender balanced)
+
+Same 10 fixtures across all voices (5 homograph traps + 5 ROND samples).
+VCTK excluded. Default pipeline (phonetic OFF). Representative numbers:
+
+| Voice | WER (phonetic OFF) |
+|-------|-------------------:|
+| en_US-hfc_male-medium | **3.60%** |
+| en_GB-semaine-medium | **3.64%** |
+| en_US-amy-medium | 4.02% |
+| en_US-ryan-high | 4.30% |
+| en_US-lessac-high | 5.13% |
+| en_GB-northern_english_male-medium | 5.47% |
+| en_GB-alan-medium | 6.04% |
+| en_GB-southern_english_female-low | 7.10% |
+| en_GB-aru-medium | 7.71% |
+| en_US-kristin-medium | 8.54% |
+| en_GB-cori-high | 9.22% |
+| en_GB-jenny_dioco-medium | **14.06%** |
+| en_US-ljspeech-high | **14.64%** |
+
+**Range: 3.60% to 14.64% — a 4x spread across voices on the same fixtures.**
+
+Key findings from the multi-voice run:
+
+1. **Voice quality tier does not predict ASR accuracy.** The two worst-
+   performing voices are both "high" quality (ljspeech, jenny_dioco). The
+   only "low" tier voice (southern_english_female) lands mid-pack.
+   LJSpeech and Jenny are well-known distinctive TTS voices that Whisper
+   does not handle as robustly as plainer ones.
+
+2. **The corrector is effectively a no-op on clean audio under the
+   default configuration.** Exactly 1 correction fired across all 160
+   transcriptions (16 voices × 10 samples), and even that was case-only
+   (the B-1 bug) — invisible to normalized WER. Raw WER equals corrected
+   WER under phonetic OFF for every voice. The corrector's real value
+   is expected in noisy / acoustic-degraded conditions, which are still
+   pending MUSAN acquisition.
+
+3. **Phonetic matching adds ~4% WER on every voice when enabled.**
+   Systematic regression, not a per-voice quirk. Third independent
+   empirical confirmation that `enable_phonetic=False` is the right
+   default. The phonetic tier is retained in the code but no path
+   currently turns it on, and the accumulating evidence argues against
+   ever doing so without a fundamentally different algorithm.
+
+4. **Two additional corrector bugs surfaced empirically:** an acronym
+   case-insensitive registration bug (`art → ART`), and multi-word
+   vocabulary entries producing space-containing replacements
+   (`structures → structure set`). Both documented in the multi-voice
+   findings report for a follow-up fix PR.
+
+### How to quote these numbers honestly
+
+**Don't say:** "We achieve 1.33% WER on clinical dictation."
+**Do say:** "On clean TTS audio across 16 single-speaker voices,
+Whisper large-v3-turbo with RT vocabulary biasing produces a WER range
+of 3.6% to 14.6%. The correction dictionary adds no measurable
+improvement at this stage — its value is expected to appear once we
+validate against acoustically degraded audio."
+
+The realistic field number will emerge once we run against:
+- Acoustic-tier audio (linac vault reverb, distance mic simulation)
+- Noisy-tier audio (linac hum, background speech, equipment noise)
+- Dense RT vocabulary content (dose prescriptions, OAR constraints)
+- Real clinical dictation samples from MTSamples
 
 ## Open Questions / Future Work
 
