@@ -134,7 +134,7 @@ class CohereBackend(ASRBackend):
         except Exception as e:
             msg = f"Failed to load Cohere Transcribe weights from {self.model_id}: {e}"
             raise ASRBackendError(msg) from e
-        model.eval()
+        model.eval()  # type: ignore[no-untyped-call]
         self._model = model
 
     def transcribe_wav(

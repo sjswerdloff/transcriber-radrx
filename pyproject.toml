@@ -158,3 +158,14 @@ disable_error_code = ["type-arg"]
 [[tool.mypy.overrides]]
 module = "transcriber_radrx.asr_backends.medasr"
 warn_unused_ignores = false
+
+# cohere.py has the same dual-environment problem as medasr.py:
+# `# type: ignore[no-untyped-call]` on AutoProcessor.from_pretrained and
+# `# type: ignore[attr-defined]` on torch.backends.mps / torch.mps are
+# needed when the asr-cohere extras are installed (typed stubs present)
+# but become "unused" in CI where the extras are NOT installed and
+# transformers/torch are Any via ignore_missing_imports. Same fix:
+# disable warn_unused_ignores for just this module.
+[[tool.mypy.overrides]]
+module = "transcriber_radrx.asr_backends.cohere"
+warn_unused_ignores = false
