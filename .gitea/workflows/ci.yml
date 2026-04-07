@@ -28,11 +28,8 @@ jobs:
       - name: Install dependencies
         run: uv sync --extra dev --extra phonetic
 
-      - name: Check formatting with ruff
-        run: uv run ruff format --check src/ tests/
-
-      - name: Lint with ruff
-        run: uv run ruff check src/ tests/
+      - name: Run pre-commit hooks
+        run: uv run pre-commit run --all-files
 
       - name: Type check with mypy
         run: uv run mypy src/
