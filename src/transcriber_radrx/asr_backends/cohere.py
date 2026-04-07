@@ -81,6 +81,7 @@ class CohereBackend(ASRBackend):
         self._model: Any = None
         self._processor: Any = None
         self._prompt_warning_logged = False
+        self._system_prompt_warned = False
 
     def load(self) -> None:
         """Download weights (if not cached) and load the transformers model.
@@ -143,6 +144,7 @@ class CohereBackend(ASRBackend):
         *,
         language: str = "en",
         initial_prompt: str | None = None,
+        system_prompt: str | None = None,
     ) -> str:
         """Transcribe one 16 kHz mono WAV file with Cohere Transcribe.
 
@@ -152,6 +154,9 @@ class CohereBackend(ASRBackend):
             language: Language code passed to the processor (e.g. "en").
             initial_prompt: Ignored with a log message on first use.
                 Cohere Transcribe does not document a prompt mechanism.
+            system_prompt: Ignored with a log message on first use.
+                Cohere Transcribe is a Conformer-Transformer ASR, not an
+                instruction-following audio-LLM.
 
         Returns:
             Raw transcription text.
@@ -166,6 +171,12 @@ class CohereBackend(ASRBackend):
                 self.name,
             )
             self._prompt_warning_logged = True
+        if system_prompt is not None and not self._system_prompt_warned:
+            logger.info(
+                "[%s] system_prompt ignored (Cohere Transcribe is not an instruction-following audio-LLM)",
+                self.name,
+            )
+            self._system_prompt_warned = True
 
         self.load()
 

@@ -42,6 +42,14 @@ class ASRBackend(Protocol):
         - `initial_prompt` is a soft-bias string (Whisper-style) if the
           backend supports it. Backends that don't may ignore it, or
           raise UnsupportedFeatureError if the caller insists.
+        - `system_prompt` is an instruction-following directive for
+          audio-LLM backends (Granite-Speech, Voxtral, Phi-4-multimodal,
+          etc.). It is DIFFERENT from `initial_prompt`: `initial_prompt`
+          is a soft decoder bias (Whisper-style), `system_prompt` is a
+          chat-template system instruction. Classical ASRs that cannot
+          be instructed (Whisper, MedASR, Cohere Transcribe) log a
+          warning on first use and ignore it. Audio-LLM backends fold
+          it into their chat template.
         - `unload()` frees model memory. Called between model comparisons
           in the bake-off runner to keep peak memory bounded.
 
@@ -63,14 +71,19 @@ class ASRBackend(Protocol):
         *,
         language: str = "en",
         initial_prompt: str | None = None,
+        system_prompt: str | None = None,
     ) -> str:
         """Transcribe one 16 kHz mono WAV file.
 
         Args:
             audio_path: Path to a mono 16 kHz WAV file.
             language: Language code (most backends default to English).
-            initial_prompt: Optional vocabulary biasing prompt. Ignored by
-                backends that do not support it unless strict=True.
+            initial_prompt: Optional vocabulary biasing prompt (Whisper-
+                style soft bias). Ignored by backends that do not support
+                it unless strict=True.
+            system_prompt: Optional instruction-following directive for
+                audio-LLM backends. Classical ASRs ignore with a warning.
+                Audio-LLMs fold it into their chat template.
 
         Returns:
             Raw transcription text, unmodified.

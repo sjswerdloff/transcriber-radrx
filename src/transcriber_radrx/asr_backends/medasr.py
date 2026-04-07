@@ -103,6 +103,7 @@ class MedASRBackend(ASRBackend):
         self._processor: Any = None
         self._decoder: Any = None
         self._model_dir: Path | None = None
+        self._system_prompt_warned = False
 
     def load(self) -> None:
         """Download the weights (if not cached) and load the MLX model.
@@ -178,6 +179,7 @@ class MedASRBackend(ASRBackend):
         *,
         language: str = "en",
         initial_prompt: str | None = None,
+        system_prompt: str | None = None,
     ) -> str:
         """Transcribe one 16 kHz mono WAV file.
 
@@ -187,6 +189,8 @@ class MedASRBackend(ASRBackend):
             language: Ignored — MedASR is English-only.
             initial_prompt: Ignored with a warning on first use. CTC
                 models do not support Whisper-style prompting.
+            system_prompt: Ignored with a warning on first use. MedASR
+                is a CTC model, not an instruction-following audio-LLM.
 
         Returns:
             Raw transcription text from the CTC decoder.
@@ -206,6 +210,12 @@ class MedASRBackend(ASRBackend):
                 "[%s] initial_prompt ignored (CTC has no prompting channel)",
                 self.name,
             )
+        if system_prompt is not None and not self._system_prompt_warned:
+            logger.info(
+                "[%s] system_prompt ignored (MedASR is a CTC model, not an instruction-following audio-LLM)",
+                self.name,
+            )
+            self._system_prompt_warned = True
 
         self.load()
 

@@ -43,6 +43,7 @@ class MlxWhisperBackend(ASRBackend):
         """
         self.model_id = model_id
         self._loaded = False
+        self._system_prompt_warned = False
 
     def load(self) -> None:
         """Lazily import mlx_whisper and mark the backend ready.
@@ -66,11 +67,25 @@ class MlxWhisperBackend(ASRBackend):
         *,
         language: str = "en",
         initial_prompt: str | None = None,
+        system_prompt: str | None = None,
     ) -> str:
-        """Transcribe one WAV file with mlx_whisper."""
+        """Transcribe one WAV file with mlx_whisper.
+
+        Whisper is not an instruction-following model, so `system_prompt`
+        is ignored with a one-time log warning. If you want to bias
+        Whisper toward specific vocabulary, use `initial_prompt` instead.
+        """
         if not audio_path.exists():
             msg = f"Audio file not found: {audio_path}"
             raise FileNotFoundError(msg)
+
+        if system_prompt is not None and not self._system_prompt_warned:
+            logger.info(
+                "[%s] system_prompt ignored (Whisper is not instruction-following; "
+                "use initial_prompt for soft vocabulary biasing)",
+                self.name,
+            )
+            self._system_prompt_warned = True
 
         self.load()
         import mlx_whisper

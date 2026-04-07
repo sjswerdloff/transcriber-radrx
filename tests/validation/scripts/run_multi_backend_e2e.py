@@ -150,8 +150,19 @@ def _run_backend_pass(
     fixtures: list[TextFixture],
     manifest_entries: Sequence[dict[str, object]],
     vocabulary_path: Path,
+    *,
+    system_prompt: str | None = None,
 ) -> list[dict[str, object]]:
-    """Run one transcription pass over the fixture set with a loaded backend."""
+    """Run one transcription pass over the fixture set with a loaded backend.
+
+    Args:
+        backend: Loaded ASR backend instance.
+        fixtures: Fixture set to transcribe.
+        manifest_entries: Audio manifest from piper synthesis.
+        vocabulary_path: Vocabulary file for biasing + correction.
+        system_prompt: Optional instruction-following directive for
+            audio-LLM backends. Classical ASRs ignore it.
+    """
     results: list[dict[str, object]] = []
     for fixture in fixtures:
         audio_path = _find_audio_for_fixture(fixture.id, manifest_entries)
@@ -165,6 +176,7 @@ def _run_backend_pass(
                 backend,
                 vocabulary_path=vocabulary_path,
                 enable_phonetic_correction=False,
+                system_prompt=system_prompt,
             )
         except Exception:  # noqa: BLE001
             logger.exception(
@@ -385,8 +397,38 @@ def main(argv: list[str] | None = None) -> int:  # noqa: PLR0915
         type=Path,
         default=None,
     )
+    parser.add_argument(
+        "--system-prompt",
+        type=str,
+        default=None,
+        help=(
+            "Instruction-following directive for audio-LLM backends "
+            "(Granite-Speech, Voxtral, etc.). Classical ASRs (Whisper, "
+            "MedASR, Cohere) ignore it with a log warning. Example: "
+            "'Transcribe this radiation oncology dictation verbatim. "
+            "Preserve Gy as Gy. Preserve PTV, CTV, IMRT, VMAT exactly. "
+            "Use numeric digits for doses.'"
+        ),
+    )
+    parser.add_argument(
+        "--system-prompt-file",
+        type=Path,
+        default=None,
+        help=(
+            "Read the system prompt from a file instead of passing it "
+            "on the command line. Useful for multi-line prompts or when "
+            "the prompt contains shell-unfriendly characters."
+        ),
+    )
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args(argv)
+
+    # Resolve system prompt: file takes precedence if both are given.
+    system_prompt: str | None = None
+    if args.system_prompt_file is not None:
+        system_prompt = args.system_prompt_file.read_text().strip()
+    elif args.system_prompt is not None:
+        system_prompt = args.system_prompt
 
     logging.basicConfig(
         level=logging.DEBUG if args.verbose else logging.INFO,
@@ -481,6 +523,7 @@ def main(argv: list[str] | None = None) -> int:  # noqa: PLR0915
                     sampled,
                     manifest_entries,
                     args.vocabulary,
+                    system_prompt=system_prompt,
                 )
                 summary = _summarize_backend_voice(results)
                 voice_reports.append(
@@ -503,6 +546,7 @@ def main(argv: list[str] | None = None) -> int:  # noqa: PLR0915
             "sample_count": len(sampled),
             "dense_only": args.dense_only,
             "seed": args.seed,
+            "system_prompt": system_prompt,
             "fixture_ids": [f.id for f in sampled],
             "voices": [v.display_name for v in voices],
             "backends": [s.label for s in backend_specs],
