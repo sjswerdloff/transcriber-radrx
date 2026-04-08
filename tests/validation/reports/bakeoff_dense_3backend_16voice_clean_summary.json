@@ -1,0 +1,677 @@
+{
+  "vocabulary": "/Users/stuartswerdloff/ai/ClaudeInstanceHomeOffices/silas-397300f6/kindled_projects/transcriber-radrx/data/rt_vocabulary.txt",
+  "sample_count": 24,
+  "dense_only": true,
+  "seed": 42,
+  "system_prompt": null,
+  "noise": null,
+  "fixture_ids": [
+    "dense-0001",
+    "dense-0002",
+    "dense-0003",
+    "dense-0004",
+    "dense-0005",
+    "dense-0006",
+    "dense-0007",
+    "dense-0008",
+    "dense-0009",
+    "dense-0010",
+    "dense-0011",
+    "dense-0012",
+    "dense-0013",
+    "dense-0014",
+    "dense-0015",
+    "dense-0016",
+    "dense-0017",
+    "dense-0018",
+    "dense-0019",
+    "dense-0020",
+    "dense-0021",
+    "dense-0022",
+    "dense-0023",
+    "dense-0024"
+  ],
+  "voices": [
+    "en_GB-alan-medium",
+    "en_GB-alba-medium",
+    "en_GB-aru-medium",
+    "en_GB-cori-high",
+    "en_GB-jenny_dioco-medium",
+    "en_GB-northern_english_male-medium",
+    "en_GB-semaine-medium",
+    "en_GB-southern_english_female-low",
+    "en_US-amy-medium",
+    "en_US-kristin-medium",
+    "en_US-lessac-high",
+    "en_US-ljspeech-high",
+    "en_US-hfc_male-medium",
+    "en_US-joe-medium",
+    "en_US-norman-medium",
+    "en_US-ryan-high"
+  ],
+  "backends": [
+    "mlx_whisper",
+    "medasr",
+    "cohere"
+  ],
+  "results": [
+    {
+      "backend": "mlx_whisper",
+      "by_voice": [
+        {
+          "voice": "en_GB-alan-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1175,
+            "avg_corrected_wer": 0.1175,
+            "terms_found": 23,
+            "terms_total": 63,
+            "term_recall": 0.3651
+          }
+        },
+        {
+          "voice": "en_GB-alba-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.124,
+            "avg_corrected_wer": 0.124,
+            "terms_found": 25,
+            "terms_total": 63,
+            "term_recall": 0.3968
+          }
+        },
+        {
+          "voice": "en_GB-aru-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1478,
+            "avg_corrected_wer": 0.1478,
+            "terms_found": 18,
+            "terms_total": 63,
+            "term_recall": 0.2857
+          }
+        },
+        {
+          "voice": "en_GB-cori-high",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1617,
+            "avg_corrected_wer": 0.1617,
+            "terms_found": 22,
+            "terms_total": 63,
+            "term_recall": 0.3492
+          }
+        },
+        {
+          "voice": "en_GB-jenny_dioco-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1147,
+            "avg_corrected_wer": 0.1147,
+            "terms_found": 21,
+            "terms_total": 63,
+            "term_recall": 0.3333
+          }
+        },
+        {
+          "voice": "en_GB-northern_english_male-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1654,
+            "avg_corrected_wer": 0.1654,
+            "terms_found": 24,
+            "terms_total": 63,
+            "term_recall": 0.381
+          }
+        },
+        {
+          "voice": "en_GB-semaine-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1577,
+            "avg_corrected_wer": 0.1577,
+            "terms_found": 24,
+            "terms_total": 63,
+            "term_recall": 0.381
+          }
+        },
+        {
+          "voice": "en_GB-southern_english_female-low",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1676,
+            "avg_corrected_wer": 0.1676,
+            "terms_found": 22,
+            "terms_total": 63,
+            "term_recall": 0.3492
+          }
+        },
+        {
+          "voice": "en_US-amy-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1263,
+            "avg_corrected_wer": 0.1263,
+            "terms_found": 21,
+            "terms_total": 63,
+            "term_recall": 0.3333
+          }
+        },
+        {
+          "voice": "en_US-kristin-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1666,
+            "avg_corrected_wer": 0.1666,
+            "terms_found": 21,
+            "terms_total": 63,
+            "term_recall": 0.3333
+          }
+        },
+        {
+          "voice": "en_US-lessac-high",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1429,
+            "avg_corrected_wer": 0.1429,
+            "terms_found": 25,
+            "terms_total": 63,
+            "term_recall": 0.3968
+          }
+        },
+        {
+          "voice": "en_US-ljspeech-high",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1408,
+            "avg_corrected_wer": 0.1408,
+            "terms_found": 25,
+            "terms_total": 63,
+            "term_recall": 0.3968
+          }
+        },
+        {
+          "voice": "en_US-hfc_male-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1261,
+            "avg_corrected_wer": 0.1261,
+            "terms_found": 23,
+            "terms_total": 63,
+            "term_recall": 0.3651
+          }
+        },
+        {
+          "voice": "en_US-joe-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1672,
+            "avg_corrected_wer": 0.1672,
+            "terms_found": 19,
+            "terms_total": 63,
+            "term_recall": 0.3016
+          }
+        },
+        {
+          "voice": "en_US-norman-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1671,
+            "avg_corrected_wer": 0.1671,
+            "terms_found": 21,
+            "terms_total": 63,
+            "term_recall": 0.3333
+          }
+        },
+        {
+          "voice": "en_US-ryan-high",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1263,
+            "avg_corrected_wer": 0.1263,
+            "terms_found": 22,
+            "terms_total": 63,
+            "term_recall": 0.3492
+          }
+        }
+      ],
+      "overall": {
+        "sample_count": 384,
+        "error_count": 0,
+        "avg_raw_wer": 0.145,
+        "avg_corrected_wer": 0.145,
+        "terms_found": 356,
+        "terms_total": 1008,
+        "term_recall": 0.3532
+      }
+    },
+    {
+      "backend": "medasr",
+      "by_voice": [
+        {
+          "voice": "en_GB-alan-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1943,
+            "avg_corrected_wer": 0.1943,
+            "terms_found": 25,
+            "terms_total": 63,
+            "term_recall": 0.3968
+          }
+        },
+        {
+          "voice": "en_GB-alba-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.2374,
+            "avg_corrected_wer": 0.2374,
+            "terms_found": 26,
+            "terms_total": 63,
+            "term_recall": 0.4127
+          }
+        },
+        {
+          "voice": "en_GB-aru-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.2763,
+            "avg_corrected_wer": 0.2763,
+            "terms_found": 15,
+            "terms_total": 63,
+            "term_recall": 0.2381
+          }
+        },
+        {
+          "voice": "en_GB-cori-high",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.245,
+            "avg_corrected_wer": 0.245,
+            "terms_found": 26,
+            "terms_total": 63,
+            "term_recall": 0.4127
+          }
+        },
+        {
+          "voice": "en_GB-jenny_dioco-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.2421,
+            "avg_corrected_wer": 0.2421,
+            "terms_found": 21,
+            "terms_total": 63,
+            "term_recall": 0.3333
+          }
+        },
+        {
+          "voice": "en_GB-northern_english_male-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.2322,
+            "avg_corrected_wer": 0.2322,
+            "terms_found": 24,
+            "terms_total": 63,
+            "term_recall": 0.381
+          }
+        },
+        {
+          "voice": "en_GB-semaine-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.2725,
+            "avg_corrected_wer": 0.2725,
+            "terms_found": 25,
+            "terms_total": 63,
+            "term_recall": 0.3968
+          }
+        },
+        {
+          "voice": "en_GB-southern_english_female-low",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.6118,
+            "avg_corrected_wer": 0.6118,
+            "terms_found": 11,
+            "terms_total": 63,
+            "term_recall": 0.1746
+          }
+        },
+        {
+          "voice": "en_US-amy-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1827,
+            "avg_corrected_wer": 0.1827,
+            "terms_found": 23,
+            "terms_total": 63,
+            "term_recall": 0.3651
+          }
+        },
+        {
+          "voice": "en_US-kristin-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.216,
+            "avg_corrected_wer": 0.216,
+            "terms_found": 25,
+            "terms_total": 63,
+            "term_recall": 0.3968
+          }
+        },
+        {
+          "voice": "en_US-lessac-high",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.207,
+            "avg_corrected_wer": 0.207,
+            "terms_found": 26,
+            "terms_total": 63,
+            "term_recall": 0.4127
+          }
+        },
+        {
+          "voice": "en_US-ljspeech-high",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.21,
+            "avg_corrected_wer": 0.21,
+            "terms_found": 28,
+            "terms_total": 63,
+            "term_recall": 0.4444
+          }
+        },
+        {
+          "voice": "en_US-hfc_male-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1904,
+            "avg_corrected_wer": 0.1904,
+            "terms_found": 25,
+            "terms_total": 63,
+            "term_recall": 0.3968
+          }
+        },
+        {
+          "voice": "en_US-joe-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.2371,
+            "avg_corrected_wer": 0.2371,
+            "terms_found": 22,
+            "terms_total": 63,
+            "term_recall": 0.3492
+          }
+        },
+        {
+          "voice": "en_US-norman-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.2008,
+            "avg_corrected_wer": 0.2008,
+            "terms_found": 25,
+            "terms_total": 63,
+            "term_recall": 0.3968
+          }
+        },
+        {
+          "voice": "en_US-ryan-high",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.2157,
+            "avg_corrected_wer": 0.2157,
+            "terms_found": 23,
+            "terms_total": 63,
+            "term_recall": 0.3651
+          }
+        }
+      ],
+      "overall": {
+        "sample_count": 384,
+        "error_count": 0,
+        "avg_raw_wer": 0.2482,
+        "avg_corrected_wer": 0.2482,
+        "terms_found": 370,
+        "terms_total": 1008,
+        "term_recall": 0.3671
+      }
+    },
+    {
+      "backend": "cohere",
+      "by_voice": [
+        {
+          "voice": "en_GB-alan-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1313,
+            "avg_corrected_wer": 0.1313,
+            "terms_found": 23,
+            "terms_total": 63,
+            "term_recall": 0.3651
+          }
+        },
+        {
+          "voice": "en_GB-alba-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1286,
+            "avg_corrected_wer": 0.1286,
+            "terms_found": 25,
+            "terms_total": 63,
+            "term_recall": 0.3968
+          }
+        },
+        {
+          "voice": "en_GB-aru-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1894,
+            "avg_corrected_wer": 0.1894,
+            "terms_found": 17,
+            "terms_total": 63,
+            "term_recall": 0.2698
+          }
+        },
+        {
+          "voice": "en_GB-cori-high",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.3625,
+            "avg_corrected_wer": 0.3625,
+            "terms_found": 13,
+            "terms_total": 63,
+            "term_recall": 0.2063
+          }
+        },
+        {
+          "voice": "en_GB-jenny_dioco-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.12,
+            "avg_corrected_wer": 0.12,
+            "terms_found": 24,
+            "terms_total": 63,
+            "term_recall": 0.381
+          }
+        },
+        {
+          "voice": "en_GB-northern_english_male-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1867,
+            "avg_corrected_wer": 0.1867,
+            "terms_found": 23,
+            "terms_total": 63,
+            "term_recall": 0.3651
+          }
+        },
+        {
+          "voice": "en_GB-semaine-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.2633,
+            "avg_corrected_wer": 0.2633,
+            "terms_found": 18,
+            "terms_total": 63,
+            "term_recall": 0.2857
+          }
+        },
+        {
+          "voice": "en_GB-southern_english_female-low",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.2329,
+            "avg_corrected_wer": 0.2329,
+            "terms_found": 21,
+            "terms_total": 63,
+            "term_recall": 0.3333
+          }
+        },
+        {
+          "voice": "en_US-amy-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1184,
+            "avg_corrected_wer": 0.1184,
+            "terms_found": 22,
+            "terms_total": 63,
+            "term_recall": 0.3492
+          }
+        },
+        {
+          "voice": "en_US-kristin-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.2301,
+            "avg_corrected_wer": 0.2301,
+            "terms_found": 20,
+            "terms_total": 63,
+            "term_recall": 0.3175
+          }
+        },
+        {
+          "voice": "en_US-lessac-high",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.189,
+            "avg_corrected_wer": 0.189,
+            "terms_found": 21,
+            "terms_total": 63,
+            "term_recall": 0.3333
+          }
+        },
+        {
+          "voice": "en_US-ljspeech-high",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1333,
+            "avg_corrected_wer": 0.1333,
+            "terms_found": 24,
+            "terms_total": 63,
+            "term_recall": 0.381
+          }
+        },
+        {
+          "voice": "en_US-hfc_male-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1389,
+            "avg_corrected_wer": 0.1389,
+            "terms_found": 24,
+            "terms_total": 63,
+            "term_recall": 0.381
+          }
+        },
+        {
+          "voice": "en_US-joe-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1939,
+            "avg_corrected_wer": 0.1939,
+            "terms_found": 17,
+            "terms_total": 63,
+            "term_recall": 0.2698
+          }
+        },
+        {
+          "voice": "en_US-norman-medium",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1651,
+            "avg_corrected_wer": 0.1651,
+            "terms_found": 24,
+            "terms_total": 63,
+            "term_recall": 0.381
+          }
+        },
+        {
+          "voice": "en_US-ryan-high",
+          "summary": {
+            "sample_count": 24,
+            "error_count": 0,
+            "avg_raw_wer": 0.1207,
+            "avg_corrected_wer": 0.1207,
+            "terms_found": 21,
+            "terms_total": 63,
+            "term_recall": 0.3333
+          }
+        }
+      ],
+      "overall": {
+        "sample_count": 384,
+        "error_count": 0,
+        "avg_raw_wer": 0.1815,
+        "avg_corrected_wer": 0.1815,
+        "terms_found": 337,
+        "terms_total": 1008,
+        "term_recall": 0.3343
+      }
+    }
+  ]
+}
