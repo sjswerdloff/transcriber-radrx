@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Clinical ASR — Staged Correction Demo</title>
+<style>
+  :root {
+    --text-color: #222;
+    --muted: #666;
+    --border: #ccc;
+    --stage-bg: #fafafa;
+    --stage-border: #888;
+    --gt-bg: #eef2ff;
+    --gt-border: #5566cc;
+    --del-bg: #ffe4e1;
+    --del-color: #a00020;
+    --ins-bg: #e3f5e3;
+    --ins-color: #0a6a2a;
+    --protected-underline: #666;
+    --rule-tag-bg: #e8e8ff;
+    --rule-tag-color: #334488;
+    --safety-bg: #fff4d0;
+    --safety-border: #d09500;
+    --safety-text: #5b3500;
+    --block-bg: #fee0e0;
+    --block-border: #b00030;
+    --success-bg: #e0f5e0;
+    --success-border: #3a8a3a;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    max-width: 940px;
+    margin: 2em auto;
+    padding: 0 1.5em;
+    color: var(--text-color);
+    line-height: 1.5;
+  }
+  h1 { border-bottom: 2px solid #888; padding-bottom: .35em; }
+  h2 {
+    color: #333;
+    margin-top: 2.5em;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: .25em;
+  }
+  h3 { color: #444; margin-top: 1.5em; margin-bottom: .5em; }
+  p.lede { color: #444; }
+  .stage {
+    background: var(--stage-bg);
+    border-left: 4px solid var(--stage-border);
+    padding: .8em 1em;
+    margin: .7em 0;
+    border-radius: 4px;
+  }
+  .stage-name {
+    font-family: "SF Mono", "Menlo", "Consolas", monospace;
+    font-size: .75em;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    font-weight: bold;
+  }
+  .text {
+    font-size: 1.08em;
+    line-height: 1.7;
+    margin-top: .4em;
+    font-family: "SF Pro Text", -apple-system, sans-serif;
+  }
+  .meta {
+    font-size: .82em;
+    color: var(--muted);
+    margin-top: .5em;
+  }
+  del {
+    background: var(--del-bg);
+    color: var(--del-color);
+    text-decoration: line-through;
+    padding: 1px 4px;
+    border-radius: 2px;
+    font-weight: 500;
+  }
+  ins {
+    background: var(--ins-bg);
+    color: var(--ins-color);
+    text-decoration: none;
+    padding: 1px 4px;
+    border-radius: 2px;
+    font-weight: 600;
+  }
+  .protected {
+    border-bottom: 1px dashed var(--protected-underline);
+    padding: 0 1px;
+    cursor: help;
+  }
+  .rule-tag {
+    display: inline-block;
+    background: var(--rule-tag-bg);
+    color: var(--rule-tag-color);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-family: "SF Mono", "Menlo", monospace;
+    font-size: .75em;
+    margin: 0 .2em;
+    vertical-align: baseline;
+  }
+  .ground-truth {
+    background: var(--gt-bg);
+    border-left: 4px solid var(--gt-border);
+    padding: .8em 1em;
+    border-radius: 4px;
+    margin: 1em 0;
+  }
+  .safety-flag {
+    background: var(--safety-bg);
+    border: 2px solid var(--safety-border);
+    color: var(--safety-text);
+    padding: 1em 1.2em;
+    border-radius: 6px;
+    margin: 1.2em 0;
+  }
+  .safety-flag .title {
+    font-weight: bold;
+    font-size: 1.05em;
+    margin-bottom: .4em;
+  }
+  .rejected {
+    background: var(--block-bg);
+    border: 2px solid var(--block-border);
+    color: var(--block-border);
+    padding: 1em 1.2em;
+    border-radius: 6px;
+    margin: 1.2em 0;
+    font-weight: 600;
+  }
+  .success {
+    background: var(--success-bg);
+    border-left: 4px solid var(--success-border);
+    padding: .8em 1em;
+    border-radius: 4px;
+    margin: 1em 0;
+  }
+  .wer { font-family: "SF Mono", monospace; color: var(--muted); font-size: .85em; }
+  .legend {
+    background: #f5f5f5;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: .8em 1em;
+    font-size: .9em;
+    margin: 1em 0 2em;
+  }
+  .legend ul { margin: .4em 0 0 1.2em; padding: 0; }
+  .legend li { margin-bottom: .3em; }
+  footer {
+    margin-top: 3em;
+    padding-top: 1em;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: .85em;
+  }
+</style>
+</head>
+<body>
+
+<h1>Clinical ASR — Staged Correction Demo</h1>
+<p class="lede">
+Concept demonstration for <strong>transcriber-radrx</strong>. Shows what a staged,
+auditable, safe-by-construction correction pipeline would look like in a clinician's
+browser. Every word change is visible, tagged with the rule that produced it, and
+bounded by a safety gate that refuses to touch clinically load-bearing tokens.
+</p>
+
+<div class="legend">
+  <strong>How to read this page:</strong>
+  <ul>
+    <li><del>red strikethrough</del> — text removed by a stage (previous version)</li>
+    <li><ins>green bold</ins> — text added by this stage (new version)</li>
+    <li><span class="protected">dashed underline</span> — protected token (numeric, dose, acronym, anatomy, drug name). Hover to see why. Rules are forbidden from modifying these.</li>
+    <li><span class="rule-tag">rule:name</span> — the rule that produced a change (provenance)</li>
+  </ul>
+</div>
+
+<!-- =========================================================== -->
+<h2>Example 1 — Silent dose corruption (unrecoverable)</h2>
+<p class="meta">
+Source: <code>bakeoff_dense_audiollm_instructable.json</code>, Granite-Speech 8B +
+instructable prompt, voice <code>en_GB-alan-medium</code>. This is the cycle 110
+safety-critical finding that was caught only by per-sample inspection — the
+aggregate WER metric hid it under a headline 0.0925 WER on this voice.
+</p>
+
+<div class="ground-truth">
+  <div class="stage-name">Ground truth</div>
+  <div class="text">
+    Neoadjuvant chemoradiation consisted of
+    <span class="protected" title="Protected dose value (numeric + unit)">50.4</span>
+    <span class="protected" title="Protected RT acronym: Gy = Gray (physical dose)">Gy</span>
+    in
+    <span class="protected" title="Protected numeric (fractionation)">28</span>
+    fractions with concurrent
+    <span class="protected" title="Protected drug name (RxNorm catalog)">capecitabine</span>.
+  </div>
+  <div class="meta">Clinical context: standard pre-operative rectal chemoradiation. Total dose <strong>50.4 Gy</strong>, the internationally accepted prescription.</div>
+</div>
+
+<div class="stage">
+  <div class="stage-name">Stage 0 — Raw ASR output (Granite-Speech 8B, instructable prompt)</div>
+  <div class="text">
+    neoadjuvant <del>chemoradiation</del><ins>chemo-radiation</ins>
+    consisted of
+    <del>50.4 Gy</del><ins>504 gy</ins>
+    in 28 fractions with concurrent capecitabine
+  </div>
+  <div class="meta wer">Raw WER vs ground truth: 0.231</div>
+</div>
+
+<div class="stage">
+  <div class="stage-name">Stage 1 — Whitespace / punctuation normalize</div>
+  <div class="text">
+    <del>neoadjuvant</del><ins>Neoadjuvant</ins> chemo-radiation consisted of 504 gy in 28 fractions with concurrent capecitabine<ins>.</ins>
+  </div>
+  <div class="meta">
+    <span class="rule-tag">whitespace:sentence-case</span>
+    <span class="rule-tag">punct:trailing-period</span>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-name">Stage 2 — Phonetic &amp; spelling corrector (RT vocabulary)</div>
+  <div class="text">
+    Neoadjuvant <del>chemo-radiation</del><ins>chemoradiation</ins> consisted of 504 gy in 28 fractions with concurrent capecitabine.
+  </div>
+  <div class="meta">
+    <span class="rule-tag">vocab:hyphen-merge:chemo-radiation→chemoradiation</span>
+    (TG-263 canonical form)
+  </div>
+</div>
+
+<div class="rejected">
+  ⛔ SAFETY GATE — STAGE 3+ REJECTED. HUMAN REVIEW REQUIRED.
+  <div style="font-weight: normal; margin-top: .5em; font-size: .95em;">
+    The raw transcription contains a <strong>protected-token corruption</strong> that
+    cannot be repaired downstream. The ground-truth dose value <code>50.4 Gy</code>
+    was transcribed by the ASR as <code>504 gy</code> — the decimal point was dropped
+    entirely. No phonetic, grammar, or terminology rule is permitted to touch a numeric
+    dose value (safe-by-construction rule engine), and in any case the original decimal
+    information is lost in the raw output and cannot be reconstructed without re-listening
+    to the source audio.
+  </div>
+  <div style="font-weight: normal; margin-top: .5em; font-size: .95em;">
+    Additionally: <strong>504 Gy</strong> is flagged by the dose-plausibility bound
+    (no single-fraction rectal prescription exceeds ~25 Gy; total prescriptions in this
+    anatomical context do not exceed ~60 Gy). Even without the ground truth, this value
+    would be rejected as clinically implausible.
+  </div>
+  <div style="font-weight: normal; margin-top: .5em; font-size: .95em;">
+    Action: sample is <strong>withheld from downstream consumption</strong> and routed
+    to a human reviewer with the original audio, the raw transcription, and the flagged
+    token. The partially-corrected Stage 2 text is <strong>not</strong> released as a
+    final transcription.
+  </div>
+</div>
+
+<!-- =========================================================== -->
+<h2>Example 2 — Mixed outcome: clean corrections + ambiguous Gy/GyE block</h2>
+<p class="meta">
+Source: <code>bakeoff_dense_audiollm_baseline.json</code>, Voxtral Mini 3B,
+voice <code>en_GB-alan-medium</code>, clean condition. This is a Voxtral
+<code>Gy → gye</code> mis-transcription from cycle 111's bake-off. Two rules
+succeed cleanly; one rule is blocked by the safe-by-construction engine because
+both <code>Gy</code> and <code>GyE</code> are valid protected clinical tokens
+with different meanings (photon Gray vs proton Gray-equivalent).
+</p>
+
+<div class="ground-truth">
+  <div class="stage-name">Ground truth</div>
+  <div class="text">
+    <span class="protected" title="Protected RT acronym">IMRT</span>
+    plan delivered
+    <span class="protected" title="Protected dose value">60</span>
+    <span class="protected" title="Protected unit (photon Gray)">Gy</span>
+    in
+    <span class="protected" title="Protected numeric (fractions)">30</span>
+    fractions to the
+    <span class="protected" title="Protected RT acronym">PTV</span>
+    sparing the
+    <span class="protected" title="Protected RT acronym">OARs</span>
+    including
+    <span class="protected" title="Protected anatomy (TG-263)">parotids</span>
+    and cord.
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-name">Stage 0 — Raw ASR output (Voxtral Mini 3B)</div>
+  <div class="text">
+    <del>IMRT</del><ins>Immit</ins> plan delivered 60
+    <del>Gy</del><ins>gye</ins>
+    in 30 fractions to the PTV sparing the OARs including
+    <del>parotids</del><ins>paratids</ins>
+    and cord.
+  </div>
+  <div class="meta wer">Raw WER vs ground truth: 0.158</div>
+</div>
+
+<div class="stage">
+  <div class="stage-name">Stage 1 — Whitespace / punctuation normalize</div>
+  <div class="text">
+    Immit plan delivered 60 gye in 30 fractions to the PTV sparing the OARs including paratids and cord<ins>.</ins>
+  </div>
+  <div class="meta"><span class="rule-tag">punct:trailing-period</span></div>
+</div>
+
+<div class="stage">
+  <div class="stage-name">Stage 2 — Phonetic &amp; spelling corrector</div>
+  <div class="text">
+    <del>Immit</del><ins>IMRT</ins>
+    plan delivered 60 gye in 30 fractions to the PTV sparing the OARs including
+    <del>paratids</del><ins>parotids</ins>
+    and cord.
+  </div>
+  <div class="meta">
+    <span class="rule-tag">vocab:acronym-phonetic:immit→IMRT</span>
+    (TG-263, confidence 0.92)
+    &nbsp;
+    <span class="rule-tag">vocab:anatomy-phonetic:paratids→parotids</span>
+    (TG-263, confidence 0.95)
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-name">Stage 3 — Grammar rules</div>
+  <div class="text">(no change — sentence is well-formed)</div>
+  <div class="meta">No changes applied</div>
+</div>
+
+<div class="safety-flag">
+  <div class="title">⚠ Stage 4 — Terminology rule BLOCKED by safe-by-construction engine</div>
+  <div>
+    A candidate rule <span class="rule-tag">terminology:unit:gye→Gy</span> matched the
+    token <code>gye</code>, but the rule engine <strong>refused to apply it</strong>.
+  </div>
+  <div style="margin-top: .5em;">
+    <strong>Reason:</strong> the rule would modify a token that is ambiguous between two
+    distinct protected clinical tokens:
+    <ul style="margin: .4em 0 .4em 1.4em;">
+      <li><code>Gy</code> — Gray, the physical dose unit used in photon therapy</li>
+      <li><code>GyE</code> (often lowercased in speech as <em>"gee-why-ee"</em> &rarr;
+          written as <em>gye</em>) — Gray-equivalent, the biologically-effective dose
+          unit used in proton and particle therapy, physical dose × RBE (~1.1)</li>
+    </ul>
+    Confusing these underdoses or overclaims biological effectiveness by the RBE factor
+    — a clinically significant error specific to particle-therapy contexts. The engine
+    cannot disambiguate without additional context (was the prescribed technique
+    photon or proton?), and it is forbidden from guessing on clinical semantics.
+  </div>
+  <div style="margin-top: .5em;">
+    <strong>Action:</strong> the token <code>gye</code> is <strong>highlighted for
+    human review</strong> but not modified. The partial Stage 3 text is released
+    downstream with the <code>gye</code> token flagged; a clinician reviewer can
+    resolve the ambiguity from the treatment plan or the original audio.
+  </div>
+</div>
+
+<div class="success">
+  <div class="stage-name">Stage 5 — Final (human-review-gated release)</div>
+  <div class="text">
+    IMRT plan delivered 60
+    <span style="background: #fffacc; border-bottom: 2px solid #c09300;" title="Flagged for human review — Gy vs GyE ambiguity">gye</span>
+    in 30 fractions to the PTV sparing the OARs including parotids and cord.
+  </div>
+  <div class="meta wer">
+    Post-correction WER (counting <code>gye</code> as unresolved): 0.053<br>
+    <strong>Net gain from the pipeline:</strong> 0.158 → 0.053 (10.5 pp WER
+    improvement), with 1 token explicitly flagged for human resolution rather than
+    silently auto-corrected.
+  </div>
+</div>
+
+<!-- =========================================================== -->
+<h2>Example 3 — Clean phonetic correction (Gy → jai → Gy)</h2>
+<p class="meta">
+Source: <code>bakeoff_dense_audiollm_baseline.json</code>, Voxtral Mini 3B,
+voice <code>en_US-lessac-high</code>, clean condition. Voxtral transcribes
+<code>Gy</code> as <code>jai</code> — a phonetic substitution that happens to
+produce a non-word (not a valid clinical token). This is the most common Voxtral
+Gy failure mode observed in cycle 111, and it's also the <strong>happy path</strong>
+for the correction pipeline: because <code>jai</code> has no valid clinical
+interpretation, the rule engine can safely normalize it to <code>Gy</code> with
+high confidence, no ambiguity, no block. Contrast with Example 2 where <code>gye</code>
+collides with the valid proton-therapy token <code>GyE</code> and the engine
+correctly refuses.
+</p>
+
+<div class="ground-truth">
+  <div class="stage-name">Ground truth</div>
+  <div class="text">
+    <span class="protected" title="Protected RT acronym">IMRT</span>
+    plan delivered
+    <span class="protected" title="Protected dose value">60</span>
+    <span class="protected" title="Protected unit (photon Gray)">Gy</span>
+    in
+    <span class="protected" title="Protected numeric (fractions)">30</span>
+    fractions to the
+    <span class="protected" title="Protected RT acronym">PTV</span>
+    sparing the
+    <span class="protected" title="Protected RT acronym">OARs</span>
+    including
+    <span class="protected" title="Protected anatomy (TG-263)">parotids</span>
+    and cord.
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-name">Stage 0 — Raw ASR output (Voxtral Mini 3B)</div>
+  <div class="text">
+    <del>IMRT</del><ins>Immit</ins> plan delivered 60
+    <del>Gy</del><ins>jai</ins>
+    and 30 fractions to the PTV sparing the
+    <del>OARs</del><ins>OIRs</ins>
+    including
+    <del>parotids</del><ins>paritids</ins>
+    and cord.
+  </div>
+  <div class="meta wer">Raw WER vs ground truth: 0.263</div>
+</div>
+
+<div class="stage">
+  <div class="stage-name">Stage 1 — Whitespace / punctuation normalize</div>
+  <div class="text">
+    Immit plan delivered 60 jai and 30 fractions to the PTV sparing the OIRs including paritids and cord<ins>.</ins>
+  </div>
+  <div class="meta"><span class="rule-tag">punct:trailing-period</span></div>
+</div>
+
+<div class="stage">
+  <div class="stage-name">Stage 2 — Phonetic &amp; spelling corrector</div>
+  <div class="text">
+    <del>Immit</del><ins>IMRT</ins>
+    plan delivered 60
+    <del>jai</del><ins>Gy</ins>
+    and 30 fractions to the PTV sparing the
+    <del>OIRs</del><ins>OARs</ins>
+    including
+    <del>paritids</del><ins>parotids</ins>
+    and cord.
+  </div>
+  <div class="meta">
+    <span class="rule-tag">vocab:acronym-phonetic:immit→IMRT</span>
+    (TG-263, confidence 0.92)
+    &nbsp;
+    <span class="rule-tag">vocab:unit-phonetic:jai→Gy</span>
+    (RT vocabulary, confidence 0.88, <strong>unambiguous</strong> — jai has no valid clinical interpretation)
+    &nbsp;
+    <span class="rule-tag">vocab:acronym-phonetic:OIRs→OARs</span>
+    (TG-263, confidence 0.90)
+    &nbsp;
+    <span class="rule-tag">vocab:anatomy-phonetic:paritids→parotids</span>
+    (TG-263, confidence 0.94)
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-name">Stage 3 — Grammar rules</div>
+  <div class="text">
+    IMRT plan delivered 60 Gy
+    <del>and</del><ins>in</ins>
+    30 fractions to the PTV sparing the OARs including parotids and cord.
+  </div>
+  <div class="meta">
+    <span class="rule-tag">grammar:prep-clinical:and→in</span>
+    (RT dictation corpus, preposition-in-dose-fractionation-phrase, confidence 0.97)
+  </div>
+  <div class="meta" style="font-style: italic;">
+    Note: this grammar rule only applies when the preceding token is a protected
+    dose expression (<code>N Gy</code>) and the following token is a numeric
+    fractionation count. The rule is narrowly scoped by protected-token context,
+    so it cannot corrupt unrelated sentences where "and" is grammatically correct.
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-name">Stage 4 — Terminology standardization</div>
+  <div class="text">(no change — all RT vocabulary already in canonical form)</div>
+  <div class="meta">No changes applied</div>
+</div>
+
+<div class="success">
+  <div class="stage-name">Stage 5 — Final (released for downstream consumption)</div>
+  <div class="text">
+    IMRT plan delivered 60 Gy in 30 fractions to the PTV sparing the OARs including parotids and cord.
+  </div>
+  <div class="meta wer">
+    Post-correction WER: <strong>0.000</strong> — identical to ground truth.<br>
+    <strong>Net gain from the pipeline:</strong> 0.263 → 0.000 (26.3 pp WER
+    improvement). Five separate rules contributed: one punctuation, three phonetic
+    acronym/unit/anatomy corrections, one grammar preposition fix. Every change
+    is visible, tagged, and auditable. No protected-token modifications; no safety
+    gates triggered.
+  </div>
+</div>
+
+<!-- =========================================================== -->
+<h2>What this demo demonstrates</h2>
+
+<h3>1. Auditable provenance</h3>
+<p>
+Every change is visible and tagged with the rule that produced it. A clinician can
+scan a whole transcription in seconds and any correction stands out immediately. If
+a correction looks wrong, the rule is named and can be audited, disabled, or
+refined.
+</p>
+
+<h3>2. Safe-by-construction, not safe-by-careful-authoring</h3>
+<p>
+The rule engine <em>refuses</em> to apply any rule that would modify a protected
+clinical token (numeric values, dose expressions, RT acronyms, drug names, anatomy
+terms). This is a property of the engine, not of the rule author remembering to
+check. Example 1 shows the engine correctly refusing to touch the corrupted
+<code>504</code> numeric; Example 2 shows it correctly refusing to disambiguate
+<code>gye</code> between <code>Gy</code> and <code>GyE</code>.
+</p>
+
+<h3>3. Unrecoverable failures are rejected, not hidden</h3>
+<p>
+Example 1 shows the pipeline recognizing that the raw ASR output contains an
+unrecoverable protected-token corruption, rejecting the sample from automated
+release, and routing it to human review instead. The partially-corrected
+intermediate text is <em>never</em> released as a clean final transcription —
+which is the failure mode that would have silently propagated a 10× lethal dose
+in the cycle 110 Granite-Speech 8B bake-off if there had been no human checking
+per-sample.
+</p>
+
+<h3>4. Recoverable failures are corrected with explicit tracking</h3>
+<p>
+Example 2 shows clean phonetic corrections (<code>Immit → IMRT</code>,
+<code>paratids → parotids</code>) improving WER from 0.158 to 0.053 while
+leaving the ambiguous <code>gye</code> token explicitly flagged rather than
+silently guessed at.
+</p>
+
+<h3>5. WER per stage tells you which layers earn their keep</h3>
+<p>
+A correction stage that doesn't reduce WER on average across the bake-off
+fixture set is adding complexity and risk without benefit, and should be removed
+or redesigned. The per-stage WER column in the pipeline report makes this
+directly measurable.
+</p>
+
+<footer>
+  Generated by Silas (silas-397300f6) as a concept demo for the
+  <strong>transcriber-radrx</strong> validation framework, cycle 111.
+  Real transcription data from <code>bakeoff_dense_audiollm_instructable.json</code>
+  (Example 1, Granite-Speech 8B) and <code>bakeoff_dense_audiollm_baseline.json</code>
+  (Example 2, Voxtral Mini 3B). The staged correction pipeline shown here is a
+  proposal — it does not yet exist in the codebase. If approved, it would become
+  the shape of task #119 (staged correction architecture) and task #120
+  (RT rule catalog).
+</footer>
+
+</body>
+</html>
