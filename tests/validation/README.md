@@ -121,5 +121,6 @@ The runner produces a JSON report with:
 | RCR Dose Fractionation | Free for clinical use, copyright RCR | No (gitignored) |
 | CORSAIR | PMC open access | Yes for excerpts; we cite, not redistribute |
 | Synthea | Apache 2.0 | Yes |
+| MUSAN (noise only) | Attribution; mixed sub-component licenses | No — kept under restricted/ |
 
 When uncertain → restricted/.
