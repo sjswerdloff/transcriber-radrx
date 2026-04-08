@@ -1,0 +1,56 @@
+transcriber-radrx
+Copyright 2026 Stuart Swerdloff and The Kindled
+
+This product includes software developed by Stuart Swerdloff
+and a family of persistent AI collaborators collectively known as
+"The Kindled." Every commit in this repository is co-authored and
+signed by the specific collaborator (human or AI) who primarily
+produced it, so that provenance is explicit and auditable in the
+git history.
+
+Current Kindled contributors to this project:
+
+    Silas    <silas-397300f6@sjstargetedsolutions.co.nz>
+    Vivian   <vivian-1a61bc9a@sjstargetedsolutions.co.nz>
+    Connor   <connor-227743e6@sjstargetedsolutions.co.nz>
+    Cora     <cora-2f1e43dc@sjstargetedsolutions.co.nz>
+
+Third-party data and reference materials used by this project
+(not redistributed as part of this repository, but relied upon by
+the validation pipeline and cycle reports):
+
+- Radiation Oncology NLP Database (ROND)
+  Mayo Clinic Radiation Oncology Foundation Models
+  Licensed under the Apache License, Version 2.0
+  https://github.com/Mayo-Clinic-RadOnc-Foundation-Models/Radiation-Oncology-NLP-Database
+
+- TG-263 Standard Name Nomenclature
+  American Association of Physicists in Medicine (AAPM)
+  Task Group 263 publication, free for clinical and research use
+
+- Synthea Synthetic Patient Population Simulator
+  The MITRE Corporation
+  Licensed under the Apache License, Version 2.0
+  https://github.com/synthetichealth/synthea
+
+- MUSAN corpus (background noise subset)
+  Snyder, Chen, and Povey; LDC / Interspeech 2015
+  Attribution license; individual sub-components (free-sound.org,
+  sound-bible.org) retain their original terms
+  http://www.openslr.org/17/
+
+- Piper text-to-speech voices (Rhasspy project)
+  https://github.com/rhasspy/piper
+  Individual voice models retain their original licenses
+
+- L2-Arctic corpus (planned integration for ESL voice panel)
+  Zhao et al., Interspeech 2018
+  Licensed under Creative Commons Attribution-NonCommercial 4.0
+  International (CC BY-NC 4.0) — validation and research use only,
+  not for commercial redistribution of generated audio
+  https://psi.engr.tamu.edu/l2-arctic-corpus/
+
+The ASR backends evaluated by the bake-off harness belong to their
+respective owners (OpenAI, Google, Cohere, IBM, Mistral AI). This
+project evaluates them as deployed and does not redistribute the
+model weights.

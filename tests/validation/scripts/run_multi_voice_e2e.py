@@ -31,6 +31,8 @@ from pathlib import Path
 
 from tests.validation.audio_synthesis.piper_tts import (
     load_fixtures,
+    resolve_piper_bin,
+    resolve_piper_voices_root,
     synthesize_fixtures,
 )
 from tests.validation.scripts.run_end_to_end import (
@@ -276,14 +278,17 @@ def main(argv: list[str] | None = None) -> int:  # noqa: PLR0915
     parser.add_argument(
         "--piper-voices-root",
         type=Path,
-        default=Path("/Users/stuartswerdloff/PythonProjects/PiperTTS/piper-voices"),
-        help="Root directory of the piper-voices tree.",
+        default=resolve_piper_voices_root(),
+        help=(
+            "Root directory of the piper-voices tree. Defaults to "
+            "$PIPER_VOICES_ROOT, then ./piper-voices, then ~/piper-voices."
+        ),
     )
     parser.add_argument(
         "--piper-bin",
         type=Path,
-        default=Path("/Users/stuartswerdloff/.pyenv/versions/piper311/bin/piper"),
-        help="Path to piper binary.",
+        default=resolve_piper_bin(),
+        help=("Path to piper binary. Defaults to $PIPER_BIN, then 'piper' on $PATH (shutil.which)."),
     )
     parser.add_argument(
         "--whisper-model",
@@ -337,6 +342,26 @@ def main(argv: list[str] | None = None) -> int:  # noqa: PLR0915
         level=logging.DEBUG if args.verbose else logging.INFO,
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
     )
+
+    # Validate external dependencies before doing any work.
+    if args.piper_voices_root is None:
+        print(
+            "ERROR: could not locate a piper-voices tree. Set "
+            "$PIPER_VOICES_ROOT or pass --piper-voices-root. See the "
+            "'External dependencies' section of the repository README "
+            "for installation instructions.",
+            file=sys.stderr,
+        )
+        return 1
+    if args.piper_bin is None:
+        print(
+            "ERROR: could not locate a piper binary. Install piper-tts "
+            "('pip install piper-tts' or 'brew install piper-tts'), or "
+            "set $PIPER_BIN, or pass --piper-bin. See the 'External "
+            "dependencies' section of the repository README.",
+            file=sys.stderr,
+        )
+        return 1
 
     # Filter DEFAULT_VOICES to the requested subset, if any
     requested_voices = DEFAULT_VOICES

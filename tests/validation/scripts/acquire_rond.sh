@@ -10,6 +10,17 @@
 set -euo pipefail
 
 REPO_ROOT="$(git rev-parse --show-toplevel)"
+
+# Source local environment if present (copied from env.example.sh).
+# All shell scripts in this repository follow this convention so that
+# machine-specific paths (PIPER_VOICES_ROOT, PIPER_BIN, etc.) are
+# picked up from a single source of truth. See README.md §
+# "Quick setup: env.example.sh" for the copy-and-source workflow.
+if [ -f "${REPO_ROOT}/env.sh" ]; then
+    # shellcheck disable=SC1091
+    source "${REPO_ROOT}/env.sh"
+fi
+
 DEST="${REPO_ROOT}/tests/validation/corpora/redistributable/rond/raw"
 
 if [ -d "${DEST}/.git" ]; then

@@ -23,6 +23,8 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import os
+import shutil
 import subprocess
 import sys
 import wave
@@ -43,6 +45,109 @@ PIPER_SAMPLE_RATE = 22050
 TARGET_SAMPLE_RATE = 16000
 TARGET_CHANNELS = 1
 TARGET_BIT_DEPTH = 16
+
+
+def _looks_like_piper_voices_tree(candidate: Path) -> bool:
+    """Return True if ``candidate`` looks like a populated piper-voices tree.
+
+    The rhasspy/piper-voices repository layout is
+    ``{root}/{lang-group}/{language}/{name}/{quality}/...onnx`` — for
+    example ``{root}/en/en_US/amy/medium/en_US-amy-medium.onnx``. This
+    function checks that ``candidate`` is a directory with an ``en/``
+    subdirectory that itself contains at least one language subdirectory
+    (e.g. ``en_US`` or ``en_GB``). That is a cheap, layout-aware check
+    that rejects a directory that happens to be named ``piper-voices``
+    but does not actually contain the expected English voice tree.
+    """
+    if not candidate.is_dir():
+        return False
+    en_dir = candidate / "en"
+    if not en_dir.is_dir():
+        return False
+    return any(child.is_dir() and child.name.startswith("en_") for child in en_dir.iterdir())
+
+
+def resolve_piper_voices_root() -> Path | None:
+    """Locate the piper-voices tree on the current machine.
+
+    Resolution order (first candidate that looks like a populated
+    piper-voices tree wins):
+
+    1. ``$PIPER_VOICES_ROOT`` environment variable, if set and pointing
+       at a directory containing the expected ``en/en_*/`` layout.
+    2. ``./piper-voices`` in the current working directory (a common
+       location when the rhasspy/piper-voices repo has been cloned
+       alongside the project).
+    3. ``~/piper-voices`` in the user's home directory.
+
+    Layout assumption: candidates are expected to match the
+    rhasspy/piper-voices HuggingFace / GitHub layout, i.e.
+    ``{root}/en/en_US/amy/medium/en_US-amy-medium.onnx``. Candidates
+    that are directories but do not contain the expected ``en/en_*/``
+    layout are rejected with a debug log so that a stray directory
+    named ``piper-voices`` does not mask a real voice tree further
+    down the resolution order.
+
+    This function contains no developer-specific absolute paths.
+    Contributors whose voices are installed at a non-standard location
+    must either set ``$PIPER_VOICES_ROOT``, create a symlink, or pass
+    ``--piper-voices-root`` on the CLI.
+
+    Returns:
+        The resolved voices-root Path, or None if no candidate matches.
+        A None return should be treated as a configuration error by
+        the caller (argparse default + explicit error message).
+    """
+    candidates: list[Path] = []
+    env_value = os.environ.get("PIPER_VOICES_ROOT")
+    if env_value:
+        candidates.append(Path(env_value).expanduser())
+    candidates.extend(
+        [
+            Path.cwd() / "piper-voices",
+            Path.home() / "piper-voices",
+        ],
+    )
+    for candidate in candidates:
+        if _looks_like_piper_voices_tree(candidate):
+            return candidate
+        if candidate.is_dir():
+            logger.debug(
+                "Candidate %s exists but does not contain the expected en/en_*/ layout; skipping.",
+                candidate,
+            )
+    return None
+
+
+def resolve_piper_bin() -> Path | None:
+    """Locate the piper binary on the current machine.
+
+    Resolution order (first existing path wins):
+
+    1. ``$PIPER_BIN`` environment variable, if set and pointing at an
+       existing file.
+    2. ``piper`` on the user's ``$PATH`` (via ``shutil.which``). This
+       finds the binary installed by ``pip install piper-tts``, by
+       ``uv pip install piper-tts``, or by package managers like
+       Homebrew.
+
+    This function contains no developer-specific absolute paths.
+    Contributors whose piper binary is installed at a non-standard
+    location must either set ``$PIPER_BIN``, put the binary on
+    ``$PATH``, or pass ``--piper-bin`` on the CLI.
+
+    Returns:
+        The resolved piper binary Path, or None if none exists.
+    """
+    env_value = os.environ.get("PIPER_BIN")
+    if env_value:
+        env_path = Path(env_value).expanduser()
+        if env_path.is_file():
+            return env_path
+    which_path = shutil.which("piper")
+    if which_path:
+        return Path(which_path)
+    return None
 
 
 @dataclass(frozen=True)

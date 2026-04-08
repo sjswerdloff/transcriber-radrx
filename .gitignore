@@ -8,3 +8,8 @@ dist/
 .ruff_cache/
 coverage.json
 results.json
+
+# Local environment variables (machine-specific piper paths etc.).
+# Copy env.example.sh to env.sh and edit for your machine, or set
+# $PIPER_VOICES_ROOT / $PIPER_BIN in your shell profile directly.
+env.sh
