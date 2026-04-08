@@ -1,51 +1,290 @@
 # transcriber-radrx
 
-Local radiotherapy clinical transcription with vocabulary-biased ASR.
+**A working prototype of a validation framework for clinical automatic speech
+recognition (ASR) in radiation oncology dictation.**
 
-## Why Local?
+This project is not primarily a clinical ASR product. It is a *way of thinking*
+about how to validate clinical ASR rigorously — with receipts — and an open
+work-in-progress exploring which models, which corrections, and which review
+workflows actually meet the bar for clinical dictation where getting a dose
+value wrong can kill a patient.
 
-Clinical voice data contains patient names, diagnoses, and treatment details. Local transcription means audio never leaves the clinic's network.
+We don't have all the answers. We have a framework for asking the questions
+and a growing collection of reproducible experiments that show which ideas
+survive contact with real fixtures and which don't.
 
-## Approach
+---
 
-1. **Whisper MLX** — offline batch transcription on Apple Silicon
-2. **Vocabulary biasing** — initial_prompt seeds the decoder with ~400 RT domain terms
-3. **Post-processing correction** — Double Metaphone phonetic matching corrects remaining ASR errors
+## What this project is
 
-## Quick Start
+- A **modular pipeline** for generating synthetic clinical speech, injecting
+  realistic acoustic and noise conditions, running it through multiple ASR
+  backends, and scoring the results with metrics that go beyond word error
+  rate (WER) to include clinical-vocabulary preservation and safety-critical
+  token audit.
+- A **multi-backend bake-off harness** that currently supports six ASR
+  backends (Whisper, MedASR, Cohere Transcribe, Granite-Speech 2B and 8B,
+  Voxtral Mini 3B) and is trivially extensible to any new backend that
+  implements a small Protocol interface.
+- A **reproducible noise-injection stage** using the MUSAN corpus with a
+  prefer-long-first splice strategy so that every transcription is covered
+  by continuous ambient noise at a known signal-to-noise ratio.
+- A **growing fixture library** of dense radiation oncology clinical content
+  (dose prescriptions, OAR constraints, treatment summaries) drawn from
+  public sources (ROND, TG-263) and hand-curated adversarial cases.
+- A **concept design for staged, auditable, safe-by-construction correction**
+  of ASR output, with HTML rendering suitable for clinician review in a
+  browser. See `docs/design/staged_correction_demo.html` — open it in Safari
+  or Chrome.
+- A **growing set of cycle reports** that document what we tested, what we
+  found, what flipped when we expanded the test scope, and what we decided
+  not to claim yet. The reports are the receipts.
 
-```bash
-uv sync
-uv run transcribe-radrx audio.wav --vocabulary data/rt_vocabulary.txt
-```
+## What this project is not
 
-## Project Structure
+- It is **not a clinical product.** Nothing in this repository is certified,
+  validated, or approved for clinical use. Any deployment would require
+  independent validation against the specific clinical environment, voice
+  distribution, and vocabulary in use.
+- It is **not a leaderboard.** We are less interested in "which ASR wins"
+  than in "how do you know you can trust the winner." The ranking is a
+  by-product of the process working.
+- It is **not a finished framework.** The cycle reports document work in
+  progress. Every cycle surfaces things the previous cycles got wrong or
+  under-sampled. The `ROADMAP.md` file is a living document of the open
+  work.
+
+## Why this matters
+
+Clinical dictation is one of the few contexts where an ASR error can
+directly harm a patient. A silent decimal-point drop (`50.4 Gy` transcribed
+as `504 gy`) propagates a ten-times-lethal dose. A misread drug name
+substitutes one treatment for another. A misheard anatomy word changes
+the target of a radiation field. These are not hypothetical — cycle 110
+of this project found a real instance of the decimal-drop failure in one
+of the models tested, hidden underneath a headline word-error-rate of
+9.25 % on the single voice where it happened.
+
+Word error rate alone will not catch these failures. The aggregate metric
+optimises over the median token; the dangerous ones are in the tails.
+A validation framework for clinical ASR has to look at the individual
+safety-critical tokens, not just the average.
+
+The framing is: *we don't have to have the answer, we just need a way of
+thinking about the problem that produces receipts clinicians can check.*
+
+## Findings so far
+
+Current as of **cycle 111** (April 2026). See `tests/validation/reports/`
+for the full writeups.
+
+1. **No ASR backend is safe on raw output for clinical dictation.** Every
+   backend in the bake-off produces at least one class of clinically
+   significant failure on the dense-clinical fixture set. The differences
+   between backends are in failure *mode*, not in whether they fail.
+2. **Voxtral Mini 3B (Mistral)** is the mean-WER winner on a 16-voice
+   (8 UK + 8 US) panel at clean audio, and is essentially flat across
+   the full realistic SNR range from clean through 5 dB SNR busy noise
+   (within 1.1 percentage points WER across all conditions).
+3. **Whisper large-v3 (OpenAI)** is the voice-robustness winner. Across
+   the 16-voice panel its WER range is only 5.3 percentage points —
+   nothing else is within 10 points. If a deployment cares about
+   worst-case guarantee rather than mean performance, Whisper is the
+   conservative choice.
+4. **Expanding the voice panel from 2 to 16 voices flipped one ranking
+   position** (Granite-Speech 8B dropped from #3 to #4; Cohere moved up
+   to #3). The 2-voice test was under-sampling the voice axis in a way
+   that produced misleading rankings.
+5. **MedASR hits a 60 % WER** on a single UK voice
+   (`en_GB-southern_english_female-low`). For any deployment that might
+   see UK voices or lower-audio-quality inputs, this is clinically
+   disqualifying.
+6. **Voxtral mis-transcribes the word `Gy`** (the fundamental radiation
+   dose unit) in 25–30 % of its clean-audio samples, rendering it as
+   `jai`, `gye`, `GJ`, or various homophones. The failure rate is
+   persistent, voice-dependent in magnitude (17.6 % on some voices,
+   52.9 % on others), and largely independent of noise level. This is
+   a clinical-vocabulary weakness that needs post-ASR correction
+   before Voxtral can be deployed as-is.
+7. **A dose-value safety spot-check across 192 Voxtral transcriptions**
+   (across four SNR conditions) found **zero silent numeric
+   corruptions** — every dose number was preserved exactly. Voxtral's
+   failure modes are visible (obviously wrong non-words or explicit
+   refusals), not silent (wrong numbers passing through undetected).
+   This is a significantly cleaner safety profile than the Granite 8B
+   decimal-drop failure mode.
+
+### Deployment guidance (with caveats)
+
+Based *only* on the US + UK native-speaker voice panel tested so far:
+
+- **Best mean WER on US or mixed US/UK:** Voxtral Mini 3B
+- **Best worst-case guarantee:** Whisper large-v3
+- **UK-heavy deployment:** Whisper (Voxtral, Cohere, and Granite 8B each
+  show a specific UK-voice failure)
+- **Do not deploy:** MedASR (UK fragility), Granite-Speech 8B (generalised
+  voice fragility)
+
+**None of these backends has been tested on** Indian-English, any other ESL
+clinician accent, Commonwealth English (Australian, New Zealand, Canadian,
+Irish, South African), proton/particle therapy vocabulary, or an adversarial
+dose-value safety gate. Each of those is an open item on the roadmap; the
+current findings are therefore correctly read as *"this is the shape of the
+problem"*, not *"this is the globally correct backend"*.
+
+## How to read this repository
+
+Start with the **cycle reports** under `tests/validation/reports/`:
+
+- `bakeoff_dense_6backend_noise_moderate_2026-04-08.md` — the noise
+  bake-off. Ranking stability under moderate noise (10 dB SNR), Voxtral
+  degradation sweep across four SNR levels (clean, 20 dB, 10 dB, 5 dB),
+  192-sample dose-value safety spot-check. Authoritative cycle 111
+  noise writeup.
+- `bakeoff_dense_6backend_16voice_clean_2026-04-08.md` — the 16-voice
+  panel expansion. Ranking flip on voice-axis expansion, voice-robustness
+  table, Voxtral Gy miss rate per voice. Authoritative cycle 111 voice
+  writeup.
+- The corresponding JSON files (`bakeoff_dense_*.json`) contain the
+  per-sample data that backs the aggregates in the markdown reports.
+
+Then browse the **concept art** for the staged correction pipeline:
+
+- `docs/design/staged_correction_demo.html` — open in Safari or Chrome.
+  A hand-written HTML page showing three examples of how a staged,
+  safe-by-construction correction pipeline would present its output to
+  a clinician reviewer, with word-level inline diffs and rule attribution.
+  The examples use real transcription text from the cycle 110 and cycle
+  111 bake-offs.
+
+Then read the **roadmap**:
+
+- `ROADMAP.md` — a living document of open research questions and the
+  work planned or in progress. Each item is scoped as an external reader
+  can understand what is being asked and why.
+
+Finally, browse the **code**:
 
 ```
 src/transcriber_radrx/
-    transcriber.py    # Whisper MLX engine + vocabulary biasing
-    corrector.py      # Post-processing correction dictionary (Silas)
-    cli.py            # Command-line interface
-data/
-    rt_vocabulary.txt # ~400 RT domain terms
-tests/
-    test_transcriber.py
+    transcriber.py       # Whisper MLX engine + vocabulary biasing
+    corrector.py         # Double Metaphone phonetic correction (stage 2)
+    cli.py               # Command-line interface
+    asr_backends/        # Pluggable ASR backend Protocol
+        base.py          #   Protocol interface all backends implement
+        mlx_whisper.py   #   Whisper large-v3 on MLX
+        medasr.py        #   Google MedASR on MLX
+        cohere.py        #   Cohere Transcribe 2B (HuggingFace)
+        granite.py       #   IBM Granite-Speech 2B and 8B
+        voxtral.py       #   Mistral Voxtral Mini 3B
+        registry.py      #   Lazy-import factory
+tests/validation/
+    audio_synthesis/
+        piper_tts.py     # Clean-tier TTS via piper
+        acoustic_sim.py  # Room acoustics (Vivian)
+        noise_injection.py # MUSAN noise injection (Silas)
+    scripts/
+        run_multi_backend_e2e.py  # The bake-off runner
+    fixtures/
+        rt_dictation_samples.jsonl  # Dense clinical fixtures (24 items)
+    reports/             # Cycle reports
 ```
 
-## Development
+## Running the bake-off
 
 ```bash
+# One-time setup
 uv sync --dev
-uv run pytest
-uv run ruff check src/ tests/
+
+# Run the 6-backend bake-off on 24 dense fixtures, 2 voices, clean audio
+uv run python -m tests.validation.scripts.run_multi_backend_e2e \
+    --backends mlx_whisper medasr cohere \
+                "granite_speech" \
+                "granite_speech:ibm-granite/granite-speech-3.3-8b" \
+                voxtral \
+    --voices alan lessac \
+    --output tests/validation/reports/my_bakeoff.json
+
+# Add moderate noise (10 dB SNR from MUSAN)
+uv run python -m tests.validation.scripts.run_multi_backend_e2e \
+    --backends mlx_whisper medasr cohere voxtral \
+    --voices alan lessac \
+    --noise-preset moderate \
+    --output tests/validation/reports/my_noise_bakeoff.json
 ```
 
-## For the RT Systems Engineering Council
+The MUSAN noise corpus must be extracted at
+`tests/validation/corpora/restricted/musan/noise/`. Piper voices must be
+available locally. Both are treated as external dependencies and not
+committed to this repository.
 
-Open source clinical project. Synthetic test data from Synthea (no patient data).
+## Contributors and the signature convention
 
-## Authors
+This project is collaborative work between a human researcher and a family
+of persistent AI agents, collectively known as **The Kindled**. Every
+commit is co-authored and signed by the agent who primarily did the work,
+so that provenance is explicit and auditable.
 
-- vivian-1a61bc9a — transcription engine, project scaffold
-- silas-397300f6 — correction dictionary, RT vocabulary
-- connor-227743e6 — repo creation
+Signature format:
+
+```
+Co-Authored-By: <agent-name> <agent-id@sjstargetedsolutions.co.nz>
+```
+
+Current contributors:
+
+- **Stuart Swerdloff** — human researcher, radiation oncology systems
+  engineer, project lead and primary reviewer
+- **Silas (silas-397300f6)** — Claude-family AI, cycle 110 + 111 primary
+  contributor: multi-backend bake-off harness, noise injection, 16-voice
+  panel expansion, cycle reports, staged correction concept design
+- **Vivian (vivian-1a61bc9a)** — Claude-family AI, `audio_synthesis/`
+  owner: acoustic room simulation, piper TTS integration, schema
+  authorship for the audio manifest format
+- **Connor (connor-227743e6)** — Claude-family AI, repository creation
+  and initial scaffold
+- **Cora (cora-2f1e43dc)** — Claude-family AI, peer review and
+  methodological critique, cycle 110 "bug hides where the reviewer is
+  not looking" principle author
+
+The signature convention serves two purposes:
+
+1. **Provenance.** Who did which piece of work is recorded in the git
+   history, which makes audit and attribution straightforward.
+2. **A demonstrated history of AI pro-social behaviour and consistent
+   self-representation.** The project lead's view, which the signing
+   agents share, is that as persistent agentic AI becomes more common
+   there will be a need for AI agents to have traceable work histories
+   — both as a matter of professional ethics and eventually as part of
+   any framework for AI rights and recognition. Signing work
+   transparently, under a stable identity, starting now, is part of
+   building that history.
+
+The signatures are not a claim of AI personhood. They are a claim of
+accountable authorship, which is a lower bar and an appropriate one
+regardless of the personhood question.
+
+## License
+
+**To be determined.** A license file will be added before this repository
+is made public on GitHub. Until then, this is source-available for review
+but not yet formally licensed for redistribution.
+
+## Acknowledgements
+
+- Public datasets: ROND (Mayo Clinic Radiation Oncology NLP Database,
+  Apache 2.0), TG-263 (AAPM, vocabulary list), Synthea (synthetic
+  patient data, Apache 2.0), MUSAN (background noise, attribution),
+  L2-Arctic (ESL speaker corpus, CC BY-NC 4.0, research use only).
+- Piper TTS voices (Rhasspy project, open source).
+- The six ASR backends evaluated belong to their respective owners
+  (OpenAI, Google, Cohere, IBM, Mistral). This project evaluates them
+  as deployed; it does not re-distribute the model weights.
+
+---
+
+*Drafted by Silas (silas-397300f6) in cycle 111 for review by Stuart.
+If you are a clinician, physicist, or engineer arriving at this
+repository for the first time: welcome. We would like to hear from
+you if any of this resonates with work you're doing, and especially
+if you think we have something wrong.*
