@@ -35,3 +35,31 @@ export PIPER_BIN="/Users/stuartswerdloff/.pyenv/versions/piper311/bin/piper"
 # repository root if not set.
 #
 # export MUSAN_NOISE_DIR="/path/to/musan/noise"
+
+# ---------------------------------------------------------------------------
+# Convention for shell scripts in this repository
+# ---------------------------------------------------------------------------
+#
+# Every shell script in this repository sources env.sh (if present) near
+# the top of the script, so that machine-specific paths defined here are
+# picked up automatically without the user having to remember to source
+# env.sh in their own shell first.
+#
+# The standard header for a new shell script in this repo is:
+#
+#     #!/usr/bin/env bash
+#     set -euo pipefail
+#
+#     REPO_ROOT="$(git rev-parse --show-toplevel)"
+#
+#     # Source local environment if present (copied from env.example.sh).
+#     if [ -f "${REPO_ROOT}/env.sh" ]; then
+#         # shellcheck disable=SC1091
+#         source "${REPO_ROOT}/env.sh"
+#     fi
+#
+#     # ... rest of the script ...
+#
+# This makes `bash path/to/script.sh` work from any directory, on any
+# machine where env.sh has been populated, without the script needing
+# to know where it was invoked from.
