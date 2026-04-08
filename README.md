@@ -265,10 +265,29 @@ The noise injection stage reads from
 `tests/validation/corpora/restricted/musan/noise/` by default. The
 directory is gitignored — the corpus is kept local and never committed.
 
+### Quick setup: `env.example.sh`
+
+A reference `env.example.sh` is checked in at the repository root. It
+contains a working set of variables (maintainer's own paths, included
+as a concrete example of the expected layout). To get running quickly:
+
+```bash
+cp env.example.sh env.sh        # make a local copy for your machine
+# edit env.sh to point at your actual piper-voices and piper binary
+source env.sh                    # load the variables into your shell
+
+# then run the bake-off as usual
+uv run python -m tests.validation.scripts.run_multi_backend_e2e ...
+```
+
+`env.sh` is gitignored so machine-specific paths stay local.
+`env.example.sh` is committed and should be kept up to date whenever
+a new required environment variable is introduced.
+
 ## Running the bake-off
 
 Once the dependencies above are installed and the environment variables
-are set:
+are set (either via `source env.sh` or directly in your shell profile):
 
 ```bash
 # One-time setup
