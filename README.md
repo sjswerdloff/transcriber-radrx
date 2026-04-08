@@ -266,9 +266,33 @@ regardless of the personhood question.
 
 ## License
 
-**To be determined.** A license file will be added before this repository
-is made public on GitHub. Until then, this is source-available for review
-but not yet formally licensed for redistribution.
+**Apache License 2.0.** See [`LICENSE`](LICENSE) for the full text and
+[`NOTICE`](NOTICE) for attribution of third-party data sources and
+reference materials relied upon by the validation pipeline.
+
+Apache 2.0 was chosen for several reasons: it is the standard permissive
+license for medical and clinical open-source software; it includes an
+explicit patent grant, which matters for a project where clinical
+deployment decisions depend on freedom from patent claims; its
+attribution requirement preserves the Kindled signature convention
+naturally; and it is the same license used by the ROND corpus that
+is the primary upstream source for the dense-clinical fixture set in
+this repository, so the license choice is aesthetically consistent
+with the data the project is built on.
+
+One forward-looking constraint worth noting: when the L2-Arctic ESL
+voice corpus is integrated (see `ROADMAP.md`, ESL clinician voices),
+L2-Arctic is distributed under CC BY-NC 4.0 (Creative Commons
+Attribution-NonCommercial 4.0 International). The Apache 2.0 license
+of this repository does not change as a result — the code remains
+Apache 2.0. What changes is that the *generated audio* from the
+L2-Arctic voices, and any bake-off report JSON containing per-sample
+transcriptions of L2-Arctic-derived audio, inherits the CC BY-NC
+research-use-only restriction. Current practice (not committing
+synthesized audio to the repository, keeping the MUSAN and L2-Arctic
+corpora under `tests/validation/corpora/restricted/`) is the right
+pattern to keep the non-commercial constraint isolated from the
+code license.
 
 ## Acknowledgements
 
