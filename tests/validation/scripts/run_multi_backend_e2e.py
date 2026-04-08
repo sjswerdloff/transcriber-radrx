@@ -36,6 +36,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from tests.validation.audio_synthesis.noise_injection import (
+    DEFAULT_CROSSFADE_MS,
+    NOISE_PRESETS,
+    inject_manifest,
+)
 from tests.validation.audio_synthesis.piper_tts import (
     load_fixtures,
     synthesize_fixtures,
@@ -420,6 +425,35 @@ def main(argv: list[str] | None = None) -> int:  # noqa: PLR0915
             "the prompt contains shell-unfriendly characters."
         ),
     )
+    parser.add_argument(
+        "--noise-preset",
+        choices=list(NOISE_PRESETS.keys()),
+        default=None,
+        help=(
+            "If set, mix MUSAN background noise into every synthesized "
+            "audio sample at the preset's target SNR before transcription. "
+            "quiet=20 dB, moderate=10 dB, busy=5 dB. Default: no noise "
+            "(clean tier)."
+        ),
+    )
+    parser.add_argument(
+        "--noise-dir",
+        type=Path,
+        default=REPO_ROOT / "tests/validation/corpora/restricted/musan/noise",
+        help="Path to MUSAN noise directory (contains free-sound/, sound-bible/).",
+    )
+    parser.add_argument(
+        "--noise-seed",
+        type=int,
+        default=0,
+        help="Random seed for reproducible noise selection.",
+    )
+    parser.add_argument(
+        "--noise-crossfade-ms",
+        type=float,
+        default=DEFAULT_CROSSFADE_MS,
+        help="Linear crossfade length at noise splice seams, in milliseconds.",
+    )
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args(argv)
 
@@ -492,6 +526,32 @@ def main(argv: list[str] | None = None) -> int:  # noqa: PLR0915
             voice_manifests[voice.display_name] = list(manifest_entries)
             print(f"  synthesized {len(manifest_entries)} / {len(sampled)}")
 
+        # 1b. Optional noise injection stage. Replaces the clean voice
+        # manifests with noisy-tier manifests pointing at mixed WAVs in a
+        # sibling directory. Noise coverage uses prefer-long-first with
+        # crossfaded splicing (see tests/validation/audio_synthesis/
+        # noise_injection.py).
+        if args.noise_preset is not None:
+            preset = NOISE_PRESETS[args.noise_preset]
+            print(f"\n[noise] injecting MUSAN noise at {preset.snr_db:.1f} dB SNR ({preset.name})")
+            for voice in voices:
+                clean_entries = voice_manifests.get(voice.display_name, [])
+                if not clean_entries:
+                    continue
+                noisy_dir = tmp_root / voice.display_name / f"noisy-{preset.name}"
+                noisy_entries = inject_manifest(
+                    clean_entries,
+                    clean_audio_dir=tmp_root / voice.display_name / "audio",
+                    output_dir=noisy_dir,
+                    preset=preset,
+                    noise_dir=args.noise_dir,
+                    seed=args.noise_seed,
+                    crossfade_ms=args.noise_crossfade_ms,
+                    repo_root=REPO_ROOT,
+                )
+                voice_manifests[voice.display_name] = noisy_entries
+                print(f"  {voice.display_name}: {len(noisy_entries)} / {len(clean_entries)} mixed")
+
         # 2. For each backend, load once and transcribe all voices × fixtures.
         for spec in backend_specs:
             print(f"\n[backend] {spec.label}")
@@ -541,12 +601,24 @@ def main(argv: list[str] | None = None) -> int:  # noqa: PLR0915
     _print_report(backend_aggs)
 
     if args.output:
+        noise_metadata: dict[str, object] | None = None
+        if args.noise_preset is not None:
+            preset = NOISE_PRESETS[args.noise_preset]
+            noise_metadata = {
+                "preset": preset.name,
+                "snr_db": preset.snr_db,
+                "description": preset.description,
+                "noise_dir": str(args.noise_dir),
+                "seed": args.noise_seed,
+                "crossfade_ms": args.noise_crossfade_ms,
+            }
         full_report = {
             "vocabulary": str(args.vocabulary),
             "sample_count": len(sampled),
             "dense_only": args.dense_only,
             "seed": args.seed,
             "system_prompt": system_prompt,
+            "noise": noise_metadata,
             "fixture_ids": [f.id for f in sampled],
             "voices": [v.display_name for v in voices],
             "backends": [s.label for s in backend_specs],
