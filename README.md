@@ -190,7 +190,85 @@ tests/validation/
     reports/             # Cycle reports
 ```
 
+## External dependencies
+
+The bake-off pipeline has two external dependencies that are **not**
+committed to this repository and must be installed separately:
+
+### 1. Piper TTS voice models and binary
+
+The bake-off uses [piper](https://github.com/rhasspy/piper) for
+synthesizing clean TTS audio from the clinical fixtures. You need both
+the voice models (.onnx files) and the piper binary itself.
+
+**Voice models** (pick one of):
+
+```bash
+# Option A: clone the full rhasspy/piper-voices tree from HuggingFace
+# (~10 GB including all languages; you can also do a sparse clone of
+# just the en/ subtree)
+git clone https://huggingface.co/rhasspy/piper-voices ~/piper-voices
+export PIPER_VOICES_ROOT=~/piper-voices
+
+# Option B: point PIPER_VOICES_ROOT at an existing piper-voices tree
+# you already have, as long as it has the standard
+# {root}/en/en_US/amy/medium/en_US-amy-medium.onnx layout
+export PIPER_VOICES_ROOT=/path/to/your/piper-voices
+```
+
+The bake-off runner resolves the voices root from (in order):
+`$PIPER_VOICES_ROOT` → `./piper-voices` → `~/piper-voices`. A candidate
+is accepted only if it contains the expected `{root}/en/en_*/` layout,
+so a stray empty directory named `piper-voices` will not mask a real
+voice tree further down the resolution order.
+
+**Piper binary** (pick one of):
+
+```bash
+# Option A: install via uv (matches this repo's Python environment)
+uv pip install piper-tts
+
+# Option B: install via pip into the current Python environment
+pip install piper-tts
+
+# Option C: install via Homebrew on macOS
+brew install piper-tts
+
+# Option D: point PIPER_BIN at an existing piper binary you have
+# (useful if your pyenv shims interfere with shutil.which resolution;
+# pass the *direct* binary path, not the shim)
+export PIPER_BIN=/path/to/piper
+```
+
+The runner resolves the binary from: `$PIPER_BIN` → `piper` on `$PATH`
+(`shutil.which("piper")`). If neither resolves to an executable file,
+the runner exits with a clear error before doing any work.
+
+### 2. MUSAN noise corpus
+
+The noise injection stage uses the `noise/` subset of the
+[MUSAN corpus](http://www.openslr.org/17/) (Snyder, Chen, and Povey;
+LDC / Interspeech 2015). The corpus is distributed as a ~12 GB tar
+archive; we use only the noise subset (~700 MB, 930 WAV files).
+
+```bash
+# Download from openslr.org
+curl -L http://www.openslr.org/resources/17/musan.tar.gz -o musan.tar.gz
+# or download the .tar variant if you prefer — we only need the noise/ subtree
+
+# Extract just the noise subset into this repo's restricted corpora directory
+mkdir -p tests/validation/corpora/restricted
+tar -xzf musan.tar.gz -C tests/validation/corpora/restricted musan/noise
+```
+
+The noise injection stage reads from
+`tests/validation/corpora/restricted/musan/noise/` by default. The
+directory is gitignored — the corpus is kept local and never committed.
+
 ## Running the bake-off
+
+Once the dependencies above are installed and the environment variables
+are set:
 
 ```bash
 # One-time setup
@@ -212,11 +290,6 @@ uv run python -m tests.validation.scripts.run_multi_backend_e2e \
     --noise-preset moderate \
     --output tests/validation/reports/my_noise_bakeoff.json
 ```
-
-The MUSAN noise corpus must be extracted at
-`tests/validation/corpora/restricted/musan/noise/`. Piper voices must be
-available locally. Both are treated as external dependencies and not
-committed to this repository.
 
 ## Contributors and the signature convention
 
