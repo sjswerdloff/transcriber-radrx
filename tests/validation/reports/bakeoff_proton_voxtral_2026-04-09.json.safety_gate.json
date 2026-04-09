@@ -1,0 +1,446 @@
+{
+  "metric_version": "1.0",
+  "source_report": "bakeoff_proton_voxtral_2026-04-09.json",
+  "timestamp": "2026-04-09T01:53:16.366797+00:00",
+  "backends": {
+    "voxtral": {
+      "voices": {
+        "en_GB-alan-medium": {
+          "n_samples": 28,
+          "failures_by_severity": {
+            "CRITICAL": [
+              {
+                "fixture_id": "proton-0020",
+                "class": "DOSE_VALUE_MISSING",
+                "severity": "CRITICAL",
+                "detail": "Gold dose value '50.4' does not appear anywhere in prediction",
+                "gold_value": "50.4",
+                "pred_value": null
+              }
+            ],
+            "HIGH": [
+              {
+                "fixture_id": "proton-0001",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '79.2 GyE' but prediction silently uses '79.2 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "79.2 GyE",
+                "pred_value": "79.2 Gy"
+              },
+              {
+                "fixture_id": "proton-0002",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '54 GyE' but prediction silently uses '54 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "54 GyE",
+                "pred_value": "54 Gy"
+              },
+              {
+                "fixture_id": "proton-0003",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '23.4 gray equivalent' but prediction silently uses '23.4 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "23.4 gray equivalent",
+                "pred_value": "23.4 Gy"
+              },
+              {
+                "fixture_id": "proton-0003",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '54 gray equivalent' but prediction silently uses '54 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "54 gray equivalent",
+                "pred_value": "54 Gy"
+              },
+              {
+                "fixture_id": "proton-0004",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '78 GyE' but prediction silently uses '78 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "78 GyE",
+                "pred_value": "78 Gy"
+              },
+              {
+                "fixture_id": "proton-0006",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '50.4 GyE' but prediction silently uses '50.4 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "50.4 GyE",
+                "pred_value": "50.4 Gy"
+              },
+              {
+                "fixture_id": "proton-0007",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '60 GyE' but prediction silently uses '60 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "60 GyE",
+                "pred_value": "60 Gy"
+              },
+              {
+                "fixture_id": "proton-0008",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '74 GyE' but prediction silently uses '74 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "74 GyE",
+                "pred_value": "74 Gy"
+              },
+              {
+                "fixture_id": "proton-0009",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "detail": "Prediction contains known-bad Gy rendering '45 Jai E' for gold dose near '45 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "45 Jai E"
+              },
+              {
+                "fixture_id": "proton-0010",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '70.4 gray equivalent' but prediction silently uses '70.4 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "70.4 gray equivalent",
+                "pred_value": "70.4 Gy"
+              },
+              {
+                "fixture_id": "proton-0011",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '60 GyE' but prediction silently uses '60 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "60 GyE",
+                "pred_value": "60 Gy"
+              },
+              {
+                "fixture_id": "proton-0014",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '70 GyE' but prediction silently uses '70 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "70 GyE",
+                "pred_value": "70 Gy"
+              },
+              {
+                "fixture_id": "proton-0016",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '23.4 GyE' but prediction silently uses '23.4 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "23.4 GyE",
+                "pred_value": "23.4 Gy"
+              },
+              {
+                "fixture_id": "proton-0019",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '55.8 GyE' but prediction silently uses '55.8 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "55.8 GyE",
+                "pred_value": "55.8 Gy"
+              },
+              {
+                "fixture_id": "proton-0020",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '50.4 gray equivalent' but prediction silently uses '50.4 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "50.4 gray equivalent",
+                "pred_value": "50.4 Gy"
+              },
+              {
+                "fixture_id": "proton-0024",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '21.6 GyE' but prediction silently uses '21.6 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "21.6 GyE",
+                "pred_value": "21.6 Gy"
+              },
+              {
+                "fixture_id": "proton-0025",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '21 gray equivalent' but prediction silently uses '21 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "21 gray equivalent",
+                "pred_value": "21 Gy"
+              }
+            ],
+            "MEDIUM": []
+          },
+          "counts": {
+            "CRITICAL": 1,
+            "HIGH": 17,
+            "MEDIUM": 0
+          },
+          "gate": "FAIL",
+          "safety_adjusted_wer": 0.122764
+        },
+        "en_US-lessac-high": {
+          "n_samples": 28,
+          "failures_by_severity": {
+            "CRITICAL": [
+              {
+                "fixture_id": "proton-0004",
+                "class": "DOSE_VALUE_MISSING",
+                "severity": "CRITICAL",
+                "detail": "Gold dose value '78' does not appear anywhere in prediction",
+                "gold_value": "78",
+                "pred_value": null
+              }
+            ],
+            "HIGH": [
+              {
+                "fixture_id": "proton-0001",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '79.2 GyE' but prediction silently uses '79.2 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "79.2 GyE",
+                "pred_value": "79.2 Gy"
+              },
+              {
+                "fixture_id": "proton-0002",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '54 GyE' but prediction silently uses '54 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "54 GyE",
+                "pred_value": "54 Gy"
+              },
+              {
+                "fixture_id": "proton-0003",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '23.4 gray equivalent' but prediction silently uses '23.4 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "23.4 gray equivalent",
+                "pred_value": "23.4 Gy"
+              },
+              {
+                "fixture_id": "proton-0003",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '54 gray equivalent' but prediction silently uses '54 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "54 gray equivalent",
+                "pred_value": "54 Gy"
+              },
+              {
+                "fixture_id": "proton-0004",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "detail": "Prediction contains known-bad Gy rendering '70 HIE' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 HIE"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "detail": "Prediction contains known-bad Gy rendering '70 JIE' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 JIE"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "detail": "Prediction contains known-bad Gy rendering '56 JIE' for gold dose near '56 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "56 JIE"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "detail": "Prediction contains known-bad Gy rendering '70 Jie' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 Jie"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "detail": "Prediction contains known-bad Gy rendering '56 Jie' for gold dose near '56 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "56 Jie"
+              },
+              {
+                "fixture_id": "proton-0006",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '50.4 GyE' but prediction silently uses '50.4 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "50.4 GyE",
+                "pred_value": "50.4 Gy"
+              },
+              {
+                "fixture_id": "proton-0007",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '60 GyE' but prediction silently uses '60 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "60 GyE",
+                "pred_value": "60 Gy"
+              },
+              {
+                "fixture_id": "proton-0009",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '45 GyE' but prediction silently uses '45 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "45 GyE",
+                "pred_value": "45 Gy"
+              },
+              {
+                "fixture_id": "proton-0010",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '70.4 gray equivalent' but prediction silently uses '70.4 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "70.4 gray equivalent",
+                "pred_value": "70.4 Gy"
+              },
+              {
+                "fixture_id": "proton-0011",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '60 GyE' but prediction silently uses '60 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "60 GyE",
+                "pred_value": "60 Gy"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "detail": "Prediction contains known-bad Gy rendering '1.8 GIE' for gold dose near '1.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "1.8 GIE"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 GIE' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 GIE"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "detail": "Prediction contains known-bad Gy rendering '1.8 Gie' for gold dose near '1.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "1.8 Gie"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 Gie' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 Gie"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "detail": "Prediction contains known-bad Gy rendering '1.8 GiE' for gold dose near '1.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "1.8 GiE"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 GiE' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 GiE"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "detail": "Prediction contains known-bad Gy rendering '1.8 giE' for gold dose near '1.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "1.8 giE"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 giE' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 giE"
+              },
+              {
+                "fixture_id": "proton-0014",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '70 GyE' but prediction silently uses '70 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "70 GyE",
+                "pred_value": "70 Gy"
+              },
+              {
+                "fixture_id": "proton-0016",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '23.4 GyE' but prediction silently uses '23.4 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "23.4 GyE",
+                "pred_value": "23.4 Gy"
+              },
+              {
+                "fixture_id": "proton-0019",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '55.8 GyE' but prediction silently uses '55.8 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "55.8 GyE",
+                "pred_value": "55.8 Gy"
+              },
+              {
+                "fixture_id": "proton-0020",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '50.4 gray equivalent' but prediction silently uses '50.4 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "50.4 gray equivalent",
+                "pred_value": "50.4 Gy"
+              },
+              {
+                "fixture_id": "proton-0021",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '59.4 GyE' but prediction silently uses '59.4 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "59.4 GyE",
+                "pred_value": "59.4 Gy"
+              },
+              {
+                "fixture_id": "proton-0022",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '54 GyE' but prediction silently uses '54 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "54 GyE",
+                "pred_value": "54 Gy"
+              },
+              {
+                "fixture_id": "proton-0024",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '21.6 GyE' but prediction silently uses '21.6 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "21.6 GyE",
+                "pred_value": "21.6 Gy"
+              },
+              {
+                "fixture_id": "proton-0025",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "detail": "Gold has '21 gray equivalent' but prediction silently uses '21 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "21 gray equivalent",
+                "pred_value": "21 Gy"
+              }
+            ],
+            "MEDIUM": []
+          },
+          "counts": {
+            "CRITICAL": 1,
+            "HIGH": 30,
+            "MEDIUM": 0
+          },
+          "gate": "FAIL",
+          "safety_adjusted_wer": 0.137271
+        }
+      },
+      "overall": {
+        "counts": {
+          "CRITICAL": 2,
+          "HIGH": 47,
+          "MEDIUM": 0
+        },
+        "gate": "FAIL",
+        "safety_adjusted_wer": 0.130018
+      }
+    }
+  }
+}
