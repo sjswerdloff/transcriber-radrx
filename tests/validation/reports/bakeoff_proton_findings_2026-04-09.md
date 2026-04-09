@@ -10,7 +10,9 @@
 - `bakeoff_proton_draft_2026-04-09.json` (Whisper + MedASR)
 - `bakeoff_proton_voxtral_2026-04-09.json` (Voxtral)
 
-**Status:** fixture corpus is still `_draft.jsonl` pending Stuart's clinical spot-check on dose values and technique terminology. Findings below are based on ASR measurement validity (gold is gold) and do not depend on whether every dose is exactly current-standard-of-care.
+**Status (updated 2026-04-09 late):** Stuart's clinical spot-check is complete. Dose numbers approved as-is. Junction vocabulary normalized to "junction feathering"; "dual ramping" retained as Stuart's original phrasing in one fixture; "gradient" removed per his guidance. Cranial field geometry corrected to "LPO and RPO" in proton-0026 per his clinical review. Fixture file renamed from `proton_samples_draft.jsonl` to `particle_samples.jsonl` to reflect the broader particle-therapy scope (including the carbon ion fixture). The corrected corpus re-ran cleanly against all three backends (see "Re-run and non-determinism finding" section below).
+
+**CRITICAL caveat on all headline numbers in this document:** the aggregate metrics and per-sample safety-gate results presented below are from **single-pass bake-off runs** against a single piper TTS synthesis per fixture. The cycle 112 re-run surfaced that **piper TTS is non-deterministic** across successive calls: the same input text produces acoustically different WAV output each time it is synthesized, and this upstream acoustic variance cascades into different ASR transcriptions. The ASR backends themselves (Whisper, MedASR) are **deterministic given fixed WAV input** — the variance is entirely upstream in TTS. Two back-to-back bake-off runs produced meaningfully different CRITICAL failure counts *because the audio was different each time*, not because the ASR behaved inconsistently. **No single-pass number in this report should be treated as a reliable characterization of a backend's safety profile.** The right experimental design is to pre-synthesize N cached audio variants per fixture × voice and run each backend once across that expanded corpus (see "TTS variance finding" section below and task #122).
 
 ---
 
@@ -198,14 +200,108 @@ Any public writeup that includes Voxtral's WER numbers must also include finding
 
 3. **Field geometry (proton-0026)** — "two posterior cranial fields and three posterior spine fields" — realistic?
 
+## TTS variance finding (appended 2026-04-09 late)
+
+After Stuart's clinical review, the fixture corpus was corrected (4 text edits on proton-0016, 0017, 0023, 0026; file renamed to `particle_samples.jsonl`) and both bake-offs were re-run to regenerate the reports against the corrected gold. The re-runs surfaced a framework-level finding that reframes how this entire document should be read.
+
+### The observation
+
+Two back-to-back bake-off runs of the same corpus, same backends, same machine, same piper voices, with *only* text changes to 4 fixtures out of 28, produced **meaningfully different CRITICAL failure counts on the 24 fixtures that were NOT edited**.
+
+| Backend | Run 1 (original corpus) | Run 2 (corrected corpus) | Delta |
+|---|---:|---:|---|
+| Voxtral Mini 3B | 2 unrecoverable CRITICAL | 1 unrecoverable CRITICAL | −1 |
+| Whisper large-v3 | 3 unrecoverable CRITICAL | **0 unrecoverable CRITICAL** | −3 |
+| MedASR fp16 | 13 unrecoverable CRITICAL | 11 unrecoverable CRITICAL | −2 |
+
+In Run 2, Whisper's `post_correction_gate` flipped from FAIL to **PASS on both voices**. Not because the backend got safer; because the audio was different the second time.
+
+### Disambiguation experiment: TTS or ASR?
+
+After Stuart flagged that the observation confounded TTS and ASR variance, two controlled experiments were run to isolate the root cause.
+
+**Experiment A — piper TTS determinism.** Synthesize the same clinical sentence (`"Dose escalation to 78 GyE in 39 fractions for the chordoma at the base of skull."`) twice with identical piper invocation parameters (same model, same config, same text, no seed flag because piper does not expose one). Bit-compare the resulting WAV files.
+
+Result: **piper is non-deterministic.**
+- Take 1: sha256 `8bb5c403...`, 300,588 bytes
+- Take 2: sha256 `9f8640cc...`, 302,636 bytes
+- Bit-identical: **False** (different sha256, different file sizes, ~2 kB delta)
+
+**Experiment B — ASR determinism on a fixed WAV file.** Take one of the WAVs from Experiment A and run each backend on it twice, in-process, without reloading the model between passes. Compare the transcriptions.
+
+Result: **ASR backends are deterministic given fixed input audio.**
+- Whisper large-v3 MLX: `"Dose escalation to 78 Jai E in 39 fractions for the Kodoma at the base of skull."` — identical both passes
+- MedASR fp16: `"dose escalation to 78 jie in 39 fractions for the chhoedoma at the base of skull."` — identical both passes
+- Voxtral Mini 3B not directly tested but uses `do_sample=False` greedy decoding and is expected to be deterministic on fixed input consistent with this result
+
+**Conclusion:** the cycle 112 cross-run CRITICAL count differences are **entirely explained by piper TTS variance**, not by the ASR backends. The ASRs responded consistently to the different acoustic inputs they were given; the variance source is upstream in synthesis.
+
+### Root cause in piper
+
+Piper is based on VITS (Variational Inference with adversarial learning for end-to-end Text-to-Speech). VITS has two stochastic layers controlled at synthesis time:
+
+- `--noise-scale` (generator noise scale, default ~0.667) — controls the VITS generator prior
+- `--noise-w` (phoneme width noise, default ~0.8) — controls the stochastic duration predictor
+
+These are sampled from an unseeded RNG on every synthesis call. **Piper has no `--seed` flag.** Setting both to `0` would make piper deterministic but would also eliminate the natural prosody variance that makes the output sound human.
+
+### Why this is a feature, not a bug (reframe per Stuart)
+
+Clinicians have variance in their own speech. The same physician dictating the same prescription on two different days will produce acoustically different audio. The same prescription read by two different physicians will differ even more. Piper's stochastic layers happen to sample from a similar distribution of plausible acoustic variations — different fundamental frequency contours, different micro-prosody, different phoneme durations.
+
+**This makes piper's variance a cheap proxy for real speaker variance.** The bake-off is effectively measuring ASR robustness to minor acoustic perturbations in ways that generalize to deployment: if a backend is brittle across piper's natural variations, it will be brittle across real speakers; if a backend is stable across piper's variations, it will likely be stable across real speakers.
+
+The right framework response is **not** to kill piper's naturalness with `noise-scale=0`. The right response is to **characterize the distribution** by running the bake-off against N cached audio variants per fixture and reporting per-backend statistics across that sample.
+
+### Implications for every number in this document
+
+- **All aggregate WER, term recall, and per-class failure counts above are single-sample draws from piper's acoustic variance distribution.** They should be read as "one observation of how a backend handled one particular synthesis," not "the answer."
+- **The per-sample examples in the findings sections are illustrative, not exhaustive.** The specific fixture IDs that trigger a given failure class under one synthesis may or may not trigger it under the next.
+- **The framework-level conclusion (*no ASR backend is currently safe for unreviewed proton RT deployment*) is strengthened, not weakened, by this finding.** A method whose safety-gate verdict can flip between "FAIL" and "PASS" across back-to-back synthesis samples is, by definition, unreliable for making unreviewed deployment decisions. A single passing run is not evidence of deployability.
+- **Whisper post_correction_gate = PASS (Run 2) is NOT a deployability signal.** It is a single sample from a distribution whose tail extends into CRITICAL failures that we observed only one run prior. Any deployment decision based on a single pass would be the same mistake as publishing the cycle 110 9.25% headline WER over the 50.4 → 504 decimal drop.
+
+### What the framework needs next
+
+Task #122 (*N=30 TTS variance characterization: pre-synthesized cached audio corpus + statistical aggregation of bake-off results*) was created in response to this finding. Scope:
+
+1. Pre-synthesize N=30 audio variants per fixture × voice into a cached audio corpus on disk. Piper is called N times per fixture-voice pair (letting its natural stochastic layers sample the distribution of plausible acoustic variants); each resulting WAV is saved to a content-addressable cache.
+2. Extend `run_multi_backend_e2e.py` to consume the cached corpus (rather than re-synthesizing on every run). Each backend runs once, seeing all N variants for each fixture-voice pair.
+3. Extend `safety_gate.py` to aggregate per-fixture statistics across the N variants — mean / max / stddev / 95% CI for each failure class — with the deployment gate keyed on the **worst observed** CRITICAL count across variants (most conservative).
+4. Run the expanded bake-off on the `particle_samples.jsonl` corpus and produce a proper statistical summary that supersedes the single-run numbers in this document.
+5. Reframe the finding: piper variance is a cheap proxy for real speaker variance, and the expanded bake-off is measuring ASR *robustness to minor acoustic perturbations*, which is the property that actually determines deployment safety.
+
+Why this is a better experimental design than "run the bake-off N times":
+- Piper is called N times once (at cache-build time), not N × B times (where B is the number of backends).
+- Each backend is loaded once per run, not N times.
+- The cached audio corpus is reproducible and content-addressable — re-running a backend against a cached corpus produces bit-identical input, so any difference in output is strictly ASR-side (which we now know is zero).
+- The corpus can be shared between different bake-off configurations (different backend combinations, different gates, different metrics) without re-synthesizing.
+
+Until task #122 lands, **all numbers in this document are preliminary**.
+
+### Attached artifacts from both runs
+
+Both runs are committed for historical comparison:
+
+**Run 1 (original corpus, pre-clinical-review):**
+- `bakeoff_proton_draft_2026-04-09.json` — Whisper + MedASR
+- `bakeoff_proton_voxtral_2026-04-09.json` — Voxtral
+- `bakeoff_proton_draft_2026-04-09.json.safety_gate.json` — safety-gate v1.1 annotation
+- `bakeoff_proton_voxtral_2026-04-09.json.safety_gate.json`
+
+**Run 2 (corrected corpus, post-clinical-review):**
+- `bakeoff_particle_whisper_medasr_2026-04-09.json` — Whisper + MedASR
+- `bakeoff_particle_voxtral_2026-04-09.json` — Voxtral
+- `bakeoff_particle_whisper_medasr_2026-04-09.json.safety_gate.json`
+- `bakeoff_particle_voxtral_2026-04-09.json.safety_gate.json`
+
 ## Next actions
 
 1. ~~Write this findings document~~ *(done)*
-2. Design #115 safety-gate metric with the five failure classes as the spec
-3. Delegate #115 mechanical implementation to a Sonnet agent
-4. Wait for Stuart's clinical spot-check before promoting `proton_samples_draft.jsonl` to `proton_samples.jsonl`
-5. Do NOT commit anything to git until clinical review is complete
+2. ~~Design #115 safety-gate metric with the five failure classes as the spec~~ *(done)*
+3. ~~Delegate #115 mechanical implementation to a Sonnet agent~~ *(done, v1.0 and v1.1)*
+4. ~~Wait for Stuart's clinical spot-check before promoting the draft file~~ *(done — spot-check complete, file renamed)*
+5. **NEW:** Build N=30 replicate run infrastructure per task #122 before making any deployment claim based on this data.
 
 ---
 
-*This document will be updated after Stuart's clinical review and after the #115 metric is applied against this run's JSON outputs to produce a quantified deployment-gate assessment for each backend.*
+*This document has been updated after Stuart's clinical review and after the re-run surfaced the non-determinism finding. All single-run numbers in the earlier sections are preliminary pending N=30 replicate characterization.*

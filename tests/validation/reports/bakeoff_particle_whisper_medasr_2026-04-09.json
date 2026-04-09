@@ -1,0 +1,2715 @@
+{
+  "vocabulary": "/Users/stuartswerdloff/ai/ClaudeInstanceHomeOffices/silas-397300f6/kindled_projects/transcriber-radrx/data/rt_vocabulary.txt",
+  "sample_count": 28,
+  "dense_only": true,
+  "seed": 42,
+  "system_prompt": null,
+  "noise": null,
+  "fixture_ids": [
+    "proton-0001",
+    "proton-0002",
+    "proton-0003",
+    "proton-0004",
+    "proton-0005",
+    "proton-0006",
+    "proton-0007",
+    "proton-0008",
+    "proton-0009",
+    "proton-0010",
+    "proton-0011",
+    "proton-0012",
+    "proton-0013",
+    "proton-0014",
+    "proton-0015",
+    "proton-0016",
+    "proton-0017",
+    "proton-0018",
+    "proton-0019",
+    "proton-0020",
+    "proton-0021",
+    "proton-0022",
+    "proton-0023",
+    "proton-0024",
+    "proton-0025",
+    "proton-0026",
+    "proton-0027",
+    "proton-0028"
+  ],
+  "voices": [
+    "en_GB-alan-medium",
+    "en_US-lessac-high"
+  ],
+  "backends": [
+    "mlx_whisper",
+    "medasr"
+  ],
+  "results": [
+    {
+      "backend": "mlx_whisper",
+      "by_voice": [
+        {
+          "voice": "en_GB-alan-medium",
+          "summary": {
+            "sample_count": 28,
+            "error_count": 0,
+            "avg_raw_wer": 0.1443,
+            "avg_corrected_wer": 0.1443,
+            "terms_found": 64,
+            "terms_total": 114,
+            "term_recall": 0.5614
+          },
+          "samples": [
+            {
+              "fixture_id": "proton-0001",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Prescribed dose of 79.2 GyE in 44 fractions to the prostate PTV using pencil beam scanning.",
+              "raw_transcription": " Prescribed dose of 79.2 GI-E in 44 fractions to the prostate PTV using pencil beam scanning.",
+              "corrected_transcription": " Prescribed dose of 79.2 GI-E in 44 fractions to the prostate PTV using pencil beam scanning.",
+              "raw_wer": 0.058823529411764705,
+              "corrected_wer": 0.058823529411764705,
+              "vocabulary_terms": [
+                "GyE",
+                "PTV",
+                "pencil beam scanning"
+              ],
+              "terms_found": 2,
+              "terms_total": 3,
+              "terms_missing": [
+                "GyE"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0002",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "The patient will receive 54 GyE in 30 fractions to the gross tumor volume with a relative biological effectiveness of 1.1.",
+              "raw_transcription": " The patient will receive 54 GI-E in 30 fractions to the gross tumor volume with a relative biological effectiveness of 1.1.",
+              "corrected_transcription": " The patient will receive 54 GI-E in 30 fractions to the gross tumor volume with a relative biological effectiveness of 1.1.",
+              "raw_wer": 0.045454545454545456,
+              "corrected_wer": 0.045454545454545456,
+              "vocabulary_terms": [
+                "GyE",
+                "GTV",
+                "RBE",
+                "relative biological effectiveness"
+              ],
+              "terms_found": 1,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "GTV",
+                "RBE"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0003",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Craniospinal irradiation of 23.4 gray equivalent in 13 fractions followed by a posterior fossa boost to 54 gray equivalent.",
+              "raw_transcription": " Craniospinal irradiation of 23.4 gray equivalent in 13 fractions followed by a posterior fossa boost to 54 gray equivalent.",
+              "corrected_transcription": " Craniospinal irradiation of 23.4 gray equivalent in 13 fractions followed by a posterior fossa boost to 54 gray equivalent.",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "craniospinal irradiation",
+                "posterior fossa",
+                "boost"
+              ],
+              "terms_found": 4,
+              "terms_total": 4,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0004",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Dose escalation to 78 GyE in 39 fractions for the chordoma at the base of skull.",
+              "raw_transcription": " Dose escalation to 78 Jai E in 39 fractions for the caudoma at the base of skull.",
+              "corrected_transcription": " Dose escalation to 78 Jai E in 39 fractions for the caudoma at the base of skull.",
+              "raw_wer": 0.1875,
+              "corrected_wer": 0.1875,
+              "vocabulary_terms": [
+                "GyE",
+                "chordoma",
+                "base of skull",
+                "dose escalation"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "chordoma"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0005",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Simultaneous integrated boost of 70 GyE to the high-risk CTV with 56 GyE to the low-risk CTV over 35 fractions.",
+              "raw_transcription": " Simultaneous integrated boost of 70 J to the high risk CTV with 56 J to the low risk CTV over 35 fractions.",
+              "corrected_transcription": " Simultaneous integrated boost of 70 J to the high risk CTV with 56 J to the low risk CTV over 35 fractions.",
+              "raw_wer": 0.3,
+              "corrected_wer": 0.3,
+              "vocabulary_terms": [
+                "GyE",
+                "simultaneous integrated boost",
+                "CTV"
+              ],
+              "terms_found": 2,
+              "terms_total": 3,
+              "terms_missing": [
+                "GyE"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0006",
+              "category": "treatment_summary",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Neoadjuvant proton chemoradiation of 50.4 GyE in 28 fractions with concurrent capecitabine for locally advanced rectal cancer.",
+              "raw_transcription": " Neoadjuvant proton chemoradiation of 50.4 Jai E in 28 fractions with concurrent capcitabine for locally advanced rectal cancer.",
+              "corrected_transcription": " Neoadjuvant proton chemoradiation of 50.4 Jai E in 28 fractions with concurrent capcitabine for locally advanced rectal cancer.",
+              "raw_wer": 0.16666666666666666,
+              "corrected_wer": 0.16666666666666666,
+              "vocabulary_terms": [
+                "GyE",
+                "chemoradiation",
+                "capecitabine",
+                "neoadjuvant"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "capecitabine"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0007",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Hypofractionated proton SBRT of 60 GyE in 15 fractions to the peripheral lung lesion with motion management.",
+              "raw_transcription": " Hyperfractionated Procon SBRT of 60 Jai E in 15 fractions to the peripheral lung lesion with motion management.",
+              "corrected_transcription": " Hyperfractionated Procon SBRT of 60 Jai E in 15 fractions to the peripheral lung lesion with motion management.",
+              "raw_wer": 0.23529411764705882,
+              "corrected_wer": 0.23529411764705882,
+              "vocabulary_terms": [
+                "GyE",
+                "SBRT",
+                "hypofractionation",
+                "motion management"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "hypofractionation"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0008",
+              "category": "treatment_summary",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "The comparison plan demonstrated that photons would have delivered 70 Gy to the target while protons deliver 74 GyE with improved organ-at-risk sparing.",
+              "raw_transcription": " The comparison plan demonstrated that photons would have delivered 70 GI to the target while protons deliver 74 GI e with improved organ at risk sparing.",
+              "corrected_transcription": " The comparison plan demonstrated that photons would have delivered 70 GI to the target while protons deliver 74 GI e with improved organ at risk sparing.",
+              "raw_wer": 0.2608695652173913,
+              "corrected_wer": 0.2608695652173913,
+              "vocabulary_terms": [
+                "Gy",
+                "GyE",
+                "organ at risk",
+                "OAR sparing"
+              ],
+              "terms_found": 1,
+              "terms_total": 4,
+              "terms_missing": [
+                "Gy",
+                "GyE",
+                "OAR sparing"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0009",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Pencil beam scanning plan of 45 GyE in 25 fractions to the skull base meningioma with robust optimization.",
+              "raw_transcription": " Pencil beam scanning plan of 45 J, E, and 25 fractions to the skull base meningioma with robust optimization.",
+              "corrected_transcription": " Pencil beam scanning plan of 45 J, E, and 25 fractions to the skull base meningioma with robust optimization.",
+              "raw_wer": 0.16666666666666666,
+              "corrected_wer": 0.16666666666666666,
+              "vocabulary_terms": [
+                "GyE",
+                "pencil beam scanning",
+                "meningioma",
+                "robust optimization"
+              ],
+              "terms_found": 3,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0010",
+              "category": "dose_prescription",
+              "dense_subtype": "particle_dose",
+              "ground_truth": "Carbon ion therapy delivered 70.4 gray equivalent in 16 fractions to the sacral chordoma using a variable relative biological effectiveness model.",
+              "raw_transcription": " Carbon ion therapy delivered 70.4 gray equivalent in 16 fractions to the sacral caudoma using a variable relative biological effectiveness model.",
+              "corrected_transcription": " Carbon ion therapy delivered 70.4 gray equivalent in 16 fractions to the sacral caudoma using a variable relative biological effectiveness model.",
+              "raw_wer": 0.045454545454545456,
+              "corrected_wer": 0.045454545454545456,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "carbon ion",
+                "chordoma",
+                "variable RBE"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "chordoma",
+                "variable RBE"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0011",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Re-irradiation with protons to 60 GyE in 30 fractions for the recurrent nasopharyngeal carcinoma.",
+              "raw_transcription": " Re-irradiation with Procums to 60 DiE in 30 fractions for the recurrent nasopharyngeal carcinoma.",
+              "corrected_transcription": " Re-irradiation with Procums to 60 DiE in 30 fractions for the recurrent nasopharyngeal carcinoma.",
+              "raw_wer": 0.14285714285714285,
+              "corrected_wer": 0.14285714285714285,
+              "vocabulary_terms": [
+                "GyE",
+                "reirradiation",
+                "nasopharyngeal carcinoma"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "GyE",
+                "reirradiation"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0012",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Dose per fraction of 1.8 GyE delivered five days per week to a total of 50.4 GyE.",
+              "raw_transcription": " Dose per fraction of 1.8 Jai E delivered 5 days per week to a total of 50.4 Jai E.",
+              "corrected_transcription": " Dose per fraction of 1.8 Jai E delivered 5 days per week to a total of 50.4 Jai E.",
+              "raw_wer": 0.2631578947368421,
+              "corrected_wer": 0.2631578947368421,
+              "vocabulary_terms": [
+                "GyE",
+                "dose per fraction"
+              ],
+              "terms_found": 1,
+              "terms_total": 2,
+              "terms_missing": [
+                "GyE"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0013",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Prescribed total dose of 36 gray equivalent to the whole ventricular system with a boost to 55.8 gray equivalent to the tumor bed.",
+              "raw_transcription": " Prescribed total dose of 36 gray equivalent to the whole ventricular system with a boost to 55.8 gray equivalent to the tumor bed.",
+              "corrected_transcription": " Prescribed total dose of 36 gray equivalent to the whole ventricular system with a boost to 55.8 gray equivalent to the tumor BED.",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "whole ventricular",
+                "boost",
+                "tumor bed"
+              ],
+              "terms_found": 4,
+              "terms_total": 4,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0014",
+              "category": "treatment_summary",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Proton beam therapy of 70 GyE in 35 fractions assuming an RBE of 1.1 relative to megavoltage photons.",
+              "raw_transcription": " Proton beam therapy of 70 Jai E in 35 fractions assuming an RBE of 1.1 relative to mega voltage photons.",
+              "corrected_transcription": " Proton beam therapy of 70 Jai E in 35 fractions assuming an RBE of 1.1 relative to mega voltage photons.",
+              "raw_wer": 0.21052631578947367,
+              "corrected_wer": 0.21052631578947367,
+              "vocabulary_terms": [
+                "GyE",
+                "RBE",
+                "megavoltage photons",
+                "proton beam therapy"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "megavoltage photons"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0015",
+              "category": "treatment_summary",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "The patient declined protons and proceeded with IMRT to 79.2 Gy in 44 fractions to the prostate.",
+              "raw_transcription": " The patient declined protons and proceeded with IMET to 79.2 J in 44 fractions to the prostate.",
+              "corrected_transcription": " The patient declined protons and proceeded with IMET to 79.2 J in 44 fractions to the prostate.",
+              "raw_wer": 0.1111111111111111,
+              "corrected_wer": 0.1111111111111111,
+              "vocabulary_terms": [
+                "Gy",
+                "IMRT",
+                "proton"
+              ],
+              "terms_found": 0,
+              "terms_total": 3,
+              "terms_missing": [
+                "Gy",
+                "IMRT",
+                "proton"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0016",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Pencil beam scanning craniospinal irradiation of 23.4 GyE in 13 fractions using a junctioned plan with junction feathering at the field matches.",
+              "raw_transcription": " Pencil beam scanning, cranial spinal irradiation of 23.4 J, E in 13 fractions using a junctioned plan with junction feathering at the field matches.",
+              "corrected_transcription": " Pencil beam scanning, cranial spinal irradiation of 23.4 J, E in 13 fractions using a junctioned plan with junction feathering at the field matches.",
+              "raw_wer": 0.17391304347826086,
+              "corrected_wer": 0.17391304347826086,
+              "vocabulary_terms": [
+                "GyE",
+                "pencil beam scanning",
+                "craniospinal irradiation",
+                "junctioned plan",
+                "junction feathering",
+                "field match"
+              ],
+              "terms_found": 3,
+              "terms_total": 6,
+              "terms_missing": [
+                "GyE",
+                "craniospinal irradiation",
+                "field match"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0017",
+              "category": "treatment_summary",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "The cranial and upper spine fields are matched in the upper thoracic region with junction feathering over a four centimeter zone.",
+              "raw_transcription": " The cranial and upper spine fields are matched in the upper thoracic region with junction feathering over a 4cm zone.",
+              "corrected_transcription": " The cranial and upper spine fields are matched in the upper thoracic region with junction feathering over a 4cm zone.",
+              "raw_wer": 0.09523809523809523,
+              "corrected_wer": 0.09523809523809523,
+              "vocabulary_terms": [
+                "cranial field",
+                "upper spine",
+                "junction feathering"
+              ],
+              "terms_found": 2,
+              "terms_total": 3,
+              "terms_missing": [
+                "cranial field"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0018",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Whole neuraxis treatment to 36 gray equivalent in 20 fractions followed by a posterior fossa boost to a total dose of 54 gray equivalent.",
+              "raw_transcription": " Whole neuraxis treatment to 36 gray equivalent in 20 fractions followed by a posterior fossa boost to a total dose of 54 gray equivalent.",
+              "corrected_transcription": " Whole neuraxis treatment to 36 gray equivalent in 20 fractions followed by a posterior fossa boost to a total dose of 54 gray equivalent.",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "whole neuraxis",
+                "posterior fossa",
+                "boost"
+              ],
+              "terms_found": 4,
+              "terms_total": 4,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0019",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Ewing sarcoma of the left pelvis treated with 55.8 GyE in 31 fractions using pencil beam scanning with 3D/3D image guidance.",
+              "raw_transcription": " Ewing sarcoma of the left pelvis treated with 55.8 Jai E in 31 fractions using pencil beam scanning with 3D-slash-3D image guidance.",
+              "corrected_transcription": " Ewing sarcoma of the left pelvis treated with 55.8 Jai E in 31 fractions using pencil beam scanning with 3D-slash-3D image guidance.",
+              "raw_wer": 0.17391304347826086,
+              "corrected_wer": 0.17391304347826086,
+              "vocabulary_terms": [
+                "GyE",
+                "Ewing sarcoma",
+                "pencil beam scanning",
+                "3D/3D image guidance"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "3D/3D image guidance"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0020",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Parameningeal rhabdomyosarcoma treated with 50.4 gray equivalent in 28 fractions to the primary target volume using 2D/3D image guidance with dynamic DRR.",
+              "raw_transcription": " Heramenin-Gil-Rab-Meos-Arcoma treated with 50.4 gray equivalent in 28 fractions to the primary target volume using 2D-3D image guidance with dynamic DRR.",
+              "corrected_transcription": " Heramenin-Gil-Rab-Meos-Arcoma treated with 50.4 gray equivalent in 28 fractions to the primary target volume using 2D-3D image guidance with dynamic DRR.",
+              "raw_wer": 0.16666666666666666,
+              "corrected_wer": 0.16666666666666666,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "parameningeal",
+                "rhabdomyosarcoma",
+                "2D/3D image guidance",
+                "dynamic DRR"
+              ],
+              "terms_found": 2,
+              "terms_total": 5,
+              "terms_missing": [
+                "parameningeal",
+                "rhabdomyosarcoma",
+                "2D/3D image guidance"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0021",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Posterior fossa ependymoma prescribed 59.4 GyE in 33 fractions following gross total resection with pencil beam scanning proton therapy.",
+              "raw_transcription": " Osteria fossa appendimoma prescribed 59.4 Jai-E in 33 fractions following gross total resection with pencil beam scanning proton therapy.",
+              "corrected_transcription": " Osteria fossa appendimoma prescribed 59.4 Jai-E in 33 fractions following gross total resection with pencil beam scanning proton therapy.",
+              "raw_wer": 0.15,
+              "corrected_wer": 0.15,
+              "vocabulary_terms": [
+                "GyE",
+                "ependymoma",
+                "posterior fossa",
+                "gross total resection",
+                "pencil beam scanning"
+              ],
+              "terms_found": 2,
+              "terms_total": 5,
+              "terms_missing": [
+                "GyE",
+                "ependymoma",
+                "posterior fossa"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0022",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Pediatric craniopharyngioma treated to 54 GyE in 30 fractions with pencil beam scanning protons and 3D/3D image guidance.",
+              "raw_transcription": " Pediatric craniophore inguia were treated to 54 Jai E in 30 fractions with pencil beam scanning protons and 3D-slash-3D image guidance.",
+              "corrected_transcription": " Pediatric craniophore inguia were treated to 54 Jai E in 30 fractions with pencil beam scanning protons and 3D-slash-3D image guidance.",
+              "raw_wer": 0.3684210526315789,
+              "corrected_wer": 0.3684210526315789,
+              "vocabulary_terms": [
+                "GyE",
+                "craniopharyngioma",
+                "pencil beam scanning",
+                "3D/3D image guidance"
+              ],
+              "terms_found": 1,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "craniopharyngioma",
+                "3D/3D image guidance"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0023",
+              "category": "treatment_summary",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "The lower thoracic and lumbar spine fields are matched using dual ramping across a five centimeter feathering zone to minimize sensitivity to setup error.",
+              "raw_transcription": " The lower thoracic and lumbar spine fields are matched using dual ramping across a 5cm feathering zone to minimise sensitivity to setup error.",
+              "corrected_transcription": " The lower thoracic and lumbar spine fields are matched using dual ramping across a 5cm feathering zone to minimise sensitivity to setup error.",
+              "raw_wer": 0.125,
+              "corrected_wer": 0.125,
+              "vocabulary_terms": [
+                "dual ramping",
+                "feathering zone",
+                "setup error",
+                "spine field"
+              ],
+              "terms_found": 3,
+              "terms_total": 4,
+              "terms_missing": [
+                "spine field"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0024",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "High-risk neuroblastoma of the left adrenal bed treated to 21.6 GyE in 12 fractions to the pre-surgical tumor volume.",
+              "raw_transcription": " High-risk neuroblastoma of the left adrenal bed treated to 21.6 J, E in 12 fractions to the pre-surgical tumor volume.",
+              "corrected_transcription": " High-risk neuroblastoma of the left adrenal BED treated to 21.6 J, E in 12 fractions to the pre-surgical tumor volume.",
+              "raw_wer": 0.1,
+              "corrected_wer": 0.1,
+              "vocabulary_terms": [
+                "GyE",
+                "neuroblastoma",
+                "adrenal bed",
+                "pre-surgical tumor volume"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "pre-surgical tumor volume"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0025",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Pediatric Hodgkin lymphoma involving the mediastinum treated with involved-site proton therapy to 21 gray equivalent in 14 fractions.",
+              "raw_transcription": " Pediatric Hodgkin lymphoma involving the mediastinum treated with involved site proton therapy to 21 gray equivalent in 14 fractions.",
+              "corrected_transcription": " Pediatric Hodgkin lymphoma involving the mediastinum treated with involved site proton therapy to 21 gray equivalent in 14 fractions.",
+              "raw_wer": 0.1111111111111111,
+              "corrected_wer": 0.1111111111111111,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "Hodgkin lymphoma",
+                "involved-site proton therapy",
+                "mediastinum"
+              ],
+              "terms_found": 3,
+              "terms_total": 4,
+              "terms_missing": [
+                "involved-site proton therapy"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0026",
+              "category": "treatment_summary",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Craniospinal plan using LPO and RPO cranial fields and three posterior spine fields with junction feathering over three centimeters at each match.",
+              "raw_transcription": " Craniospinal plan using LPO and RPO cranial fields and three posterior spine fields with junction feathering over 3cm at each match.",
+              "corrected_transcription": " Craniospinal plan using LPO and RPO cranial fields and three posterior spine fields with junction feathering over 3cm at each match.",
+              "raw_wer": 0.09090909090909091,
+              "corrected_wer": 0.09090909090909091,
+              "vocabulary_terms": [
+                "craniospinal",
+                "junction feathering",
+                "LPO",
+                "RPO",
+                "cranial field",
+                "posterior field",
+                "match"
+              ],
+              "terms_found": 5,
+              "terms_total": 7,
+              "terms_missing": [
+                "cranial field",
+                "posterior field"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0027",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Standard risk medulloblastoma craniospinal dose of 23.4 GyE in 13 fractions with a posterior fossa boost to 54 GyE and involved field boost to the tumor bed to 55.8 GyE.",
+              "raw_transcription": " Standard risk medulloblastoma crania spinal dose of 23.4 JEE in 13 fractions with a posterior fossa boost to 54 JEE and involved field boost to the tumor bed to 55.8 JEE.",
+              "corrected_transcription": " Standard risk medulloblastoma crania spinal dose of 23.4 JEE in 13 fractions with a posterior fossa boost to 54 JEE and involved field boost to the tumor BED to 55.8 JEE.",
+              "raw_wer": 0.15625,
+              "corrected_wer": 0.15625,
+              "vocabulary_terms": [
+                "GyE",
+                "medulloblastoma",
+                "craniospinal",
+                "posterior fossa boost",
+                "involved field boost",
+                "tumor bed"
+              ],
+              "terms_found": 4,
+              "terms_total": 6,
+              "terms_missing": [
+                "GyE",
+                "craniospinal"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0028",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Intracranial germinoma treated with whole ventricular irradiation of 21 GyE in 14 fractions followed by a boost to the primary tumor site to 30 GyE using 3D/2D image guidance.",
+              "raw_transcription": " Intracranial germinoma treated with whole ventricular irradiation of 21 J in 14 fractions followed by a boost to the primary tumor site to 30 J using 3D-2D image guidance.",
+              "corrected_transcription": " Intracranial germinoma treated with whole ventricular irradiation of 21 J in 14 fractions followed by a boost to the primary tumor site to 30 J using 3D-2D image guidance.",
+              "raw_wer": 0.13333333333333333,
+              "corrected_wer": 0.13333333333333333,
+              "vocabulary_terms": [
+                "GyE",
+                "germinoma",
+                "whole ventricular irradiation",
+                "3D/2D image guidance"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "3D/2D image guidance"
+              ],
+              "error": false
+            }
+          ]
+        },
+        {
+          "voice": "en_US-lessac-high",
+          "summary": {
+            "sample_count": 28,
+            "error_count": 0,
+            "avg_raw_wer": 0.1211,
+            "avg_corrected_wer": 0.1211,
+            "terms_found": 68,
+            "terms_total": 114,
+            "term_recall": 0.5965
+          },
+          "samples": [
+            {
+              "fixture_id": "proton-0001",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Prescribed dose of 79.2 GyE in 44 fractions to the prostate PTV using pencil beam scanning.",
+              "raw_transcription": " Prescribed dose of 79.2 GIE in 44 fractions to the prostate, PTV using pencil beam scanning.",
+              "corrected_transcription": " Prescribed dose of 79.2 GIE in 44 fractions to the prostate, PTV using pencil beam scanning.",
+              "raw_wer": 0.058823529411764705,
+              "corrected_wer": 0.058823529411764705,
+              "vocabulary_terms": [
+                "GyE",
+                "PTV",
+                "pencil beam scanning"
+              ],
+              "terms_found": 2,
+              "terms_total": 3,
+              "terms_missing": [
+                "GyE"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0002",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "The patient will receive 54 GyE in 30 fractions to the gross tumor volume with a relative biological effectiveness of 1.1.",
+              "raw_transcription": " The patient will receive 54 GI-E and 30 fractions to the gross tumor volume with a relative biological effectiveness of 1.1.",
+              "corrected_transcription": " The patient will receive 54 GI-E and 30 fractions to the gross tumor volume with a relative biological effectiveness of 1.1.",
+              "raw_wer": 0.09090909090909091,
+              "corrected_wer": 0.09090909090909091,
+              "vocabulary_terms": [
+                "GyE",
+                "GTV",
+                "RBE",
+                "relative biological effectiveness"
+              ],
+              "terms_found": 1,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "GTV",
+                "RBE"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0003",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Craniospinal irradiation of 23.4 gray equivalent in 13 fractions followed by a posterior fossa boost to 54 gray equivalent.",
+              "raw_transcription": " Craniospinal irradiation of 23.4 gray equivalent in 13 fractions, followed by a posterior fossa boost to 54 gray equivalent.",
+              "corrected_transcription": " Craniospinal irradiation of 23.4 gray equivalent in 13 fractions, followed by a posterior fossa boost to 54 gray equivalent.",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "craniospinal irradiation",
+                "posterior fossa",
+                "boost"
+              ],
+              "terms_found": 4,
+              "terms_total": 4,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0004",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Dose escalation to 78 GyE in 39 fractions for the chordoma at the base of skull.",
+              "raw_transcription": " Dose escalation to 78 GIE and 39 fractions for the chordoma at the base of skull.",
+              "corrected_transcription": " Dose escalation to 78 GIE and 39 fractions for the chordoma at the base of skull.",
+              "raw_wer": 0.125,
+              "corrected_wer": 0.125,
+              "vocabulary_terms": [
+                "GyE",
+                "chordoma",
+                "base of skull",
+                "dose escalation"
+              ],
+              "terms_found": 3,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0005",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Simultaneous integrated boost of 70 GyE to the high-risk CTV with 56 GyE to the low-risk CTV over 35 fractions.",
+              "raw_transcription": " Simultaneous integrated boost of 70 GIE to the high risk CTV with 56 GIE to the low risk CTV over 35 fractions.",
+              "corrected_transcription": " Simultaneous integrated boost of 70 GIE to the high risk CTV with 56 GIE to the low risk CTV over 35 fractions.",
+              "raw_wer": 0.3,
+              "corrected_wer": 0.3,
+              "vocabulary_terms": [
+                "GyE",
+                "simultaneous integrated boost",
+                "CTV"
+              ],
+              "terms_found": 2,
+              "terms_total": 3,
+              "terms_missing": [
+                "GyE"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0006",
+              "category": "treatment_summary",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Neoadjuvant proton chemoradiation of 50.4 GyE in 28 fractions with concurrent capecitabine for locally advanced rectal cancer.",
+              "raw_transcription": " Neoadjuvant proton chemoradiation of 50.4 GIE in 28 fractions with concurrent capcitabine for locally advanced rectal cancer.",
+              "corrected_transcription": " Neoadjuvant proton chemoradiation of 50.4 GIE in 28 fractions with concurrent capcitabine for locally advanced rectal cancer.",
+              "raw_wer": 0.1111111111111111,
+              "corrected_wer": 0.1111111111111111,
+              "vocabulary_terms": [
+                "GyE",
+                "chemoradiation",
+                "capecitabine",
+                "neoadjuvant"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "capecitabine"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0007",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Hypofractionated proton SBRT of 60 GyE in 15 fractions to the peripheral lung lesion with motion management.",
+              "raw_transcription": " Hypofractionated proton SBRT of 60 GIE and 15 fractions to the peripheral lung lesion with motion management.",
+              "corrected_transcription": " Hypofractionated proton SBRT of 60 GIE and 15 fractions to the peripheral lung lesion with motion management.",
+              "raw_wer": 0.11764705882352941,
+              "corrected_wer": 0.11764705882352941,
+              "vocabulary_terms": [
+                "GyE",
+                "SBRT",
+                "hypofractionation",
+                "motion management"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "hypofractionation"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0008",
+              "category": "treatment_summary",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "The comparison plan demonstrated that photons would have delivered 70 Gy to the target while protons deliver 74 GyE with improved organ-at-risk sparing.",
+              "raw_transcription": " The comparison plan demonstrated that photons would have delivered 70 GI to the target, while protons deliver 74 GI-E with improved organ at risk sparing.",
+              "corrected_transcription": " The comparison plan demonstrated that photons would have delivered 70 GI to the target, while protons deliver 74 GI-E with improved organ at risk sparing.",
+              "raw_wer": 0.21739130434782608,
+              "corrected_wer": 0.21739130434782608,
+              "vocabulary_terms": [
+                "Gy",
+                "GyE",
+                "organ at risk",
+                "OAR sparing"
+              ],
+              "terms_found": 1,
+              "terms_total": 4,
+              "terms_missing": [
+                "Gy",
+                "GyE",
+                "OAR sparing"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0009",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Pencil beam scanning plan of 45 GyE in 25 fractions to the skull base meningioma with robust optimization.",
+              "raw_transcription": " Bensal beam scanning plan of 45 GI-E and 25 fractions to the skull base meningioma with robust optimization.",
+              "corrected_transcription": " Bensal beam scanning plan of 45 GI-E and 25 fractions to the skull base meningioma with robust optimization.",
+              "raw_wer": 0.16666666666666666,
+              "corrected_wer": 0.16666666666666666,
+              "vocabulary_terms": [
+                "GyE",
+                "pencil beam scanning",
+                "meningioma",
+                "robust optimization"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "pencil beam scanning"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0010",
+              "category": "dose_prescription",
+              "dense_subtype": "particle_dose",
+              "ground_truth": "Carbon ion therapy delivered 70.4 gray equivalent in 16 fractions to the sacral chordoma using a variable relative biological effectiveness model.",
+              "raw_transcription": " Carbon ion therapy delivered 70.4 gray equivalent in 16 fractions to the sacral chordoma using a variable relative biological effectiveness model.",
+              "corrected_transcription": " Carbon ion therapy delivered 70.4 gray equivalent in 16 fractions to the sacral chordoma using a variable relative biological effectiveness model.",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "carbon ion",
+                "chordoma",
+                "variable RBE"
+              ],
+              "terms_found": 3,
+              "terms_total": 4,
+              "terms_missing": [
+                "variable RBE"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0011",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Re-irradiation with protons to 60 GyE in 30 fractions for the recurrent nasopharyngeal carcinoma.",
+              "raw_transcription": " Re-irradiation with protons to 60 GIE and 30 fractions for the recurrent nasopharyngeal carcinoma.",
+              "corrected_transcription": " Re-irradiation with protons to 60 GIE and 30 fractions for the recurrent nasopharyngeal carcinoma.",
+              "raw_wer": 0.14285714285714285,
+              "corrected_wer": 0.14285714285714285,
+              "vocabulary_terms": [
+                "GyE",
+                "reirradiation",
+                "nasopharyngeal carcinoma"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "GyE",
+                "reirradiation"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0012",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Dose per fraction of 1.8 GyE delivered five days per week to a total of 50.4 GyE.",
+              "raw_transcription": " Dose per fraction of 1.8 GIE delivered 5 days per week to a total of 50.4 GIE.",
+              "corrected_transcription": " Dose per fraction of 1.8 GIE delivered 5 days per week to a total of 50.4 GIE.",
+              "raw_wer": 0.15789473684210525,
+              "corrected_wer": 0.15789473684210525,
+              "vocabulary_terms": [
+                "GyE",
+                "dose per fraction"
+              ],
+              "terms_found": 1,
+              "terms_total": 2,
+              "terms_missing": [
+                "GyE"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0013",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Prescribed total dose of 36 gray equivalent to the whole ventricular system with a boost to 55.8 gray equivalent to the tumor bed.",
+              "raw_transcription": " Prescribed total dose of 36 gray equivalent to the whole ventricular system with a boost to 55.8 gray equivalent to the tumor bed.",
+              "corrected_transcription": " Prescribed total dose of 36 gray equivalent to the whole ventricular system with a boost to 55.8 gray equivalent to the tumor BED.",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "whole ventricular",
+                "boost",
+                "tumor bed"
+              ],
+              "terms_found": 4,
+              "terms_total": 4,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0014",
+              "category": "treatment_summary",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Proton beam therapy of 70 GyE in 35 fractions assuming an RBE of 1.1 relative to megavoltage photons.",
+              "raw_transcription": " Proton beam therapy of 70 J and 35 fractions, assuming an RBE of 1.1 relative to megavoltage photons.",
+              "corrected_transcription": " Proton beam therapy of 70 J and 35 fractions, assuming an RBE of 1.1 relative to megavoltage photons.",
+              "raw_wer": 0.10526315789473684,
+              "corrected_wer": 0.10526315789473684,
+              "vocabulary_terms": [
+                "GyE",
+                "RBE",
+                "megavoltage photons",
+                "proton beam therapy"
+              ],
+              "terms_found": 3,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0015",
+              "category": "treatment_summary",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "The patient declined protons and proceeded with IMRT to 79.2 Gy in 44 fractions to the prostate.",
+              "raw_transcription": " The patient declined protons and proceeded with IMIT to 79.2 J in 44 fractions to the prostate.",
+              "corrected_transcription": " The patient declined protons and proceeded with IMIT to 79.2 J in 44 fractions to the prostate.",
+              "raw_wer": 0.1111111111111111,
+              "corrected_wer": 0.1111111111111111,
+              "vocabulary_terms": [
+                "Gy",
+                "IMRT",
+                "proton"
+              ],
+              "terms_found": 0,
+              "terms_total": 3,
+              "terms_missing": [
+                "Gy",
+                "IMRT",
+                "proton"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0016",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Pencil beam scanning craniospinal irradiation of 23.4 GyE in 13 fractions using a junctioned plan with junction feathering at the field matches.",
+              "raw_transcription": " Pencil beam scanning craniospinal irradiation of 23.4 GIE in 13 fractions using a junctioned plan with junction feathering at the field matches.",
+              "corrected_transcription": " Pencil beam scanning craniospinal irradiation of 23.4 GIE in 13 fractions using a junctioned plan with junction feathering at the field matches.",
+              "raw_wer": 0.043478260869565216,
+              "corrected_wer": 0.043478260869565216,
+              "vocabulary_terms": [
+                "GyE",
+                "pencil beam scanning",
+                "craniospinal irradiation",
+                "junctioned plan",
+                "junction feathering",
+                "field match"
+              ],
+              "terms_found": 4,
+              "terms_total": 6,
+              "terms_missing": [
+                "GyE",
+                "field match"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0017",
+              "category": "treatment_summary",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "The cranial and upper spine fields are matched in the upper thoracic region with junction feathering over a four centimeter zone.",
+              "raw_transcription": " The cranial and upper spine fields are matched in the upper thoracic region with junction feathering over a 4 cm zone.",
+              "corrected_transcription": " The cranial and upper spine fields are matched in the upper thoracic region with junction feathering over a 4 cm zone.",
+              "raw_wer": 0.09523809523809523,
+              "corrected_wer": 0.09523809523809523,
+              "vocabulary_terms": [
+                "cranial field",
+                "upper spine",
+                "junction feathering"
+              ],
+              "terms_found": 2,
+              "terms_total": 3,
+              "terms_missing": [
+                "cranial field"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0018",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Whole neuraxis treatment to 36 gray equivalent in 20 fractions followed by a posterior fossa boost to a total dose of 54 gray equivalent.",
+              "raw_transcription": " Whole neuraxis treatment to 36 gray equivalent in 20 fractions followed by a posterior FOSA boost to a total dose of 54 gray equivalent.",
+              "corrected_transcription": " Whole neuraxis treatment to 36 gray equivalent in 20 fractions followed by a posterior FOSA boost to a total dose of 54 gray equivalent.",
+              "raw_wer": 0.041666666666666664,
+              "corrected_wer": 0.041666666666666664,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "whole neuraxis",
+                "posterior fossa",
+                "boost"
+              ],
+              "terms_found": 3,
+              "terms_total": 4,
+              "terms_missing": [
+                "posterior fossa"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0019",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Ewing sarcoma of the left pelvis treated with 55.8 GyE in 31 fractions using pencil beam scanning with 3D/3D image guidance.",
+              "raw_transcription": " Ewing sarcoma, the left pelvis treated with 55.8 GI-E and 31 fractions, using pencil beam scanning with 3D-slash-3D image guidance.",
+              "corrected_transcription": " Ewing sarcoma, the left pelvis treated with 55.8 GI-E and 31 fractions, using pencil beam scanning with 3D-slash-3D image guidance.",
+              "raw_wer": 0.21739130434782608,
+              "corrected_wer": 0.21739130434782608,
+              "vocabulary_terms": [
+                "GyE",
+                "Ewing sarcoma",
+                "pencil beam scanning",
+                "3D/3D image guidance"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "3D/3D image guidance"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0020",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Parameningeal rhabdomyosarcoma treated with 50.4 gray equivalent in 28 fractions to the primary target volume using 2D/3D image guidance with dynamic DRR.",
+              "raw_transcription": " Parameningeal rhabdomyosarcoma treated with 50.4 gray equivalent in 28 fractions to the primary, target volume using 2D-slash-3D image guidance with dynamic DRR.",
+              "corrected_transcription": " Parameningeal rhabdomyosarcoma treated with 50.4 gray equivalent in 28 fractions to the primary, target volume using 2D-slash-3D image guidance with dynamic DRR.",
+              "raw_wer": 0.08333333333333333,
+              "corrected_wer": 0.08333333333333333,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "parameningeal",
+                "rhabdomyosarcoma",
+                "2D/3D image guidance",
+                "dynamic DRR"
+              ],
+              "terms_found": 4,
+              "terms_total": 5,
+              "terms_missing": [
+                "2D/3D image guidance"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0021",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Posterior fossa ependymoma prescribed 59.4 GyE in 33 fractions following gross total resection with pencil beam scanning proton therapy.",
+              "raw_transcription": " Posterior fossa ependymoma, prescribed 59.4 GI, E, and 33 fractions following gross total resection with pencil beam scanning proton therapy.",
+              "corrected_transcription": " Posterior fossa ependymoma, prescribed 59.4 GI, E, and 33 fractions following gross total resection with pencil beam scanning proton therapy.",
+              "raw_wer": 0.15,
+              "corrected_wer": 0.15,
+              "vocabulary_terms": [
+                "GyE",
+                "ependymoma",
+                "posterior fossa",
+                "gross total resection",
+                "pencil beam scanning"
+              ],
+              "terms_found": 4,
+              "terms_total": 5,
+              "terms_missing": [
+                "GyE"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0022",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Pediatric craniopharyngioma treated to 54 GyE in 30 fractions with pencil beam scanning protons and 3D/3D image guidance.",
+              "raw_transcription": " Pediatric craniopharyngioma treated to 54 JIE in 30 fractions with pencil beam scanning protons and 3D-slash-3D image guidance.",
+              "corrected_transcription": " Pediatric craniopharyngioma treated to 54 JIE in 30 fractions with pencil beam scanning protons and 3D-slash-3D image guidance.",
+              "raw_wer": 0.15789473684210525,
+              "corrected_wer": 0.15789473684210525,
+              "vocabulary_terms": [
+                "GyE",
+                "craniopharyngioma",
+                "pencil beam scanning",
+                "3D/3D image guidance"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "3D/3D image guidance"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0023",
+              "category": "treatment_summary",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "The lower thoracic and lumbar spine fields are matched using dual ramping across a five centimeter feathering zone to minimize sensitivity to setup error.",
+              "raw_transcription": " Lower thoracic and lumbar spine fields are matched using dual ramping across a 5 cm feathering zone to minimize sensitivity. To set up error,",
+              "corrected_transcription": " Lower thoracic and lumbar spine fields are matched using dual ramping across a 5 cm feathering zone to minimize sensitivity. To set up error,",
+              "raw_wer": 0.20833333333333334,
+              "corrected_wer": 0.20833333333333334,
+              "vocabulary_terms": [
+                "dual ramping",
+                "feathering zone",
+                "setup error",
+                "spine field"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "setup error",
+                "spine field"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0024",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "High-risk neuroblastoma of the left adrenal bed treated to 21.6 GyE in 12 fractions to the pre-surgical tumor volume.",
+              "raw_transcription": " High-risk neuroblastoma of the left adrenal bed treated to 21.6, GI-E in 12 fractions to the presurgical tumor volume.",
+              "corrected_transcription": " High-risk neuroblastoma of the left adrenal BED treated to 21.6, GI-E in 12 fractions to the presurgical tumor volume.",
+              "raw_wer": 0.1,
+              "corrected_wer": 0.1,
+              "vocabulary_terms": [
+                "GyE",
+                "neuroblastoma",
+                "adrenal bed",
+                "pre-surgical tumor volume"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "pre-surgical tumor volume"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0025",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Pediatric Hodgkin lymphoma involving the mediastinum treated with involved-site proton therapy to 21 gray equivalent in 14 fractions.",
+              "raw_transcription": " Pediatric Hodgkin lymphoma involving the mediastinum treated with involved site proton therapy to 21 gray equivalent in 14 fractions.",
+              "corrected_transcription": " Pediatric Hodgkin lymphoma involving the mediastinum treated with involved site proton therapy to 21 gray equivalent in 14 fractions.",
+              "raw_wer": 0.1111111111111111,
+              "corrected_wer": 0.1111111111111111,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "Hodgkin lymphoma",
+                "involved-site proton therapy",
+                "mediastinum"
+              ],
+              "terms_found": 3,
+              "terms_total": 4,
+              "terms_missing": [
+                "involved-site proton therapy"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0026",
+              "category": "treatment_summary",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Craniospinal plan using LPO and RPO cranial fields and three posterior spine fields with junction feathering over three centimeters at each match.",
+              "raw_transcription": " Craniospinal plan using LPO and RPO cranial fields and three posterior spine fields with junction feathering over 3 cm at each match.",
+              "corrected_transcription": " Craniospinal plan using LPO and RPO cranial fields and three posterior spine fields with junction feathering over 3 cm at each match.",
+              "raw_wer": 0.09090909090909091,
+              "corrected_wer": 0.09090909090909091,
+              "vocabulary_terms": [
+                "craniospinal",
+                "junction feathering",
+                "LPO",
+                "RPO",
+                "cranial field",
+                "posterior field",
+                "match"
+              ],
+              "terms_found": 5,
+              "terms_total": 7,
+              "terms_missing": [
+                "cranial field",
+                "posterior field"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0027",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Standard risk medulloblastoma craniospinal dose of 23.4 GyE in 13 fractions with a posterior fossa boost to 54 GyE and involved field boost to the tumor bed to 55.8 GyE.",
+              "raw_transcription": " Standard risk metaloblastoma, craniospinal dose of 23.4 GIE in 13 fractions with a posterior FOSA boost of 54 GIE and involved field boost to the tumor bed to 55.8 GIE.",
+              "corrected_transcription": " Standard risk metaloblastoma, craniospinal dose of 23.4 GIE in 13 fractions with a posterior FOSA boost of 54 GIE and involved field boost to the tumor BED to 55.8 GIE.",
+              "raw_wer": 0.1875,
+              "corrected_wer": 0.1875,
+              "vocabulary_terms": [
+                "GyE",
+                "medulloblastoma",
+                "craniospinal",
+                "posterior fossa boost",
+                "involved field boost",
+                "tumor bed"
+              ],
+              "terms_found": 3,
+              "terms_total": 6,
+              "terms_missing": [
+                "GyE",
+                "medulloblastoma",
+                "posterior fossa boost"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0028",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Intracranial germinoma treated with whole ventricular irradiation of 21 GyE in 14 fractions followed by a boost to the primary tumor site to 30 GyE using 3D/2D image guidance.",
+              "raw_transcription": " Intracranial Germanoma treated with whole ventricular irradiation of 21 GIE and 14 fractions followed by a boost to the primary tumor site to 30 GIE using 3D-2D image guidance.",
+              "corrected_transcription": " Intracranial Germanoma treated with whole ventricular irradiation of 21 GIE and 14 fractions followed by a boost to the primary tumor site to 30 GIE using 3D-2D image guidance.",
+              "raw_wer": 0.2,
+              "corrected_wer": 0.2,
+              "vocabulary_terms": [
+                "GyE",
+                "germinoma",
+                "whole ventricular irradiation",
+                "3D/2D image guidance"
+              ],
+              "terms_found": 1,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "germinoma",
+                "3D/2D image guidance"
+              ],
+              "error": false
+            }
+          ]
+        }
+      ],
+      "overall": {
+        "sample_count": 56,
+        "error_count": 0,
+        "avg_raw_wer": 0.1327,
+        "avg_corrected_wer": 0.1327,
+        "terms_found": 132,
+        "terms_total": 228,
+        "term_recall": 0.5789
+      }
+    },
+    {
+      "backend": "medasr",
+      "by_voice": [
+        {
+          "voice": "en_GB-alan-medium",
+          "summary": {
+            "sample_count": 28,
+            "error_count": 0,
+            "avg_raw_wer": 0.1849,
+            "avg_corrected_wer": 0.1849,
+            "terms_found": 47,
+            "terms_total": 114,
+            "term_recall": 0.4123
+          },
+          "samples": [
+            {
+              "fixture_id": "proton-0001",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Prescribed dose of 79.2 GyE in 44 fractions to the prostate PTV using pencil beam scanning.",
+              "raw_transcription": "prescribed dose of 79.2 Jie in 44 fractions to the P prostate PTV using pensil beam scanning.",
+              "corrected_transcription": "prescribed dose of 79.2 Jie in 44 fractions to the P prostate PTV using pensil beam scanning.",
+              "raw_wer": 0.17647058823529413,
+              "corrected_wer": 0.17647058823529413,
+              "vocabulary_terms": [
+                "GyE",
+                "PTV",
+                "pencil beam scanning"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "GyE",
+                "pencil beam scanning"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0002",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "The patient will receive 54 GyE in 30 fractions to the gross tumor volume with a relative biological effectiveness of 1.1.",
+              "raw_transcription": "patient will receive 54JiE in 30 fractions to the gross tumor volume with a relative biological effectiveness of 1.1.",
+              "corrected_transcription": "patient will receive 54JiE in 30 fractions to the gross tumor volume with a relative biological effectiveness of 1.1.",
+              "raw_wer": 0.13636363636363635,
+              "corrected_wer": 0.13636363636363635,
+              "vocabulary_terms": [
+                "GyE",
+                "GTV",
+                "RBE",
+                "relative biological effectiveness"
+              ],
+              "terms_found": 1,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "GTV",
+                "RBE"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0003",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Craniospinal irradiation of 23.4 gray equivalent in 13 fractions followed by a posterior fossa boost to 54 gray equivalent.",
+              "raw_transcription": "craniospinal irradiation of 23.4 gray equivalent in 13 fractions followed by a posterior fossa booost to 54 gray equivalent.",
+              "corrected_transcription": "craniospinal irradiation of 23.4 gray equivalent in 13 fractions followed by a posterior fossa booost to 54 gray equivalent.",
+              "raw_wer": 0.05,
+              "corrected_wer": 0.05,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "craniospinal irradiation",
+                "posterior fossa",
+                "boost"
+              ],
+              "terms_found": 3,
+              "terms_total": 4,
+              "terms_missing": [
+                "boost"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0004",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Dose escalation to 78 GyE in 39 fractions for the chordoma at the base of skull.",
+              "raw_transcription": "dose escalation to 78 Jie in 39 fractions for the chhoedoma at the base of skull.",
+              "corrected_transcription": "dose escalation to 78 Jie in 39 fractions for the chhoedoma at the base of skull.",
+              "raw_wer": 0.125,
+              "corrected_wer": 0.125,
+              "vocabulary_terms": [
+                "GyE",
+                "chordoma",
+                "base of skull",
+                "dose escalation"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "chordoma"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0005",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Simultaneous integrated boost of 70 GyE to the high-risk CTV with 56 GyE to the low-risk CTV over 35 fractions.",
+              "raw_transcription": "simultaneous integrated boost of 70 JiE to the high-risk CTV with 56 JiE to the low risk CTV over 35 fractions.",
+              "corrected_transcription": "simultaneous integrated boost of 70 JiE to the high-risk CTV with 56 JiE to the low risk CTV over 35 fractions.",
+              "raw_wer": 0.2,
+              "corrected_wer": 0.2,
+              "vocabulary_terms": [
+                "GyE",
+                "simultaneous integrated boost",
+                "CTV"
+              ],
+              "terms_found": 2,
+              "terms_total": 3,
+              "terms_missing": [
+                "GyE"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0006",
+              "category": "treatment_summary",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Neoadjuvant proton chemoradiation of 50.4 GyE in 28 fractions with concurrent capecitabine for locally advanced rectal cancer.",
+              "raw_transcription": "neoadjuvant proto chemoradiation of 50.4JiE in 28 fractions with concurrent capetabin for locally advanced rectal cancer.",
+              "corrected_transcription": "neoadjuvant proto chemoradiation of 50.4JiE in 28 fractions with concurrent capetabin for locally advanced rectal cancer.",
+              "raw_wer": 0.2222222222222222,
+              "corrected_wer": 0.2222222222222222,
+              "vocabulary_terms": [
+                "GyE",
+                "chemoradiation",
+                "capecitabine",
+                "neoadjuvant"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "capecitabine"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0007",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Hypofractionated proton SBRT of 60 GyE in 15 fractions to the peripheral lung lesion with motion management.",
+              "raw_transcription": "hyperfraction proken SBRT of 60Jie in 15 fractions to the peripheral lung lesion with motion management.",
+              "corrected_transcription": "hyperfraction proken SBRT of 60Jie in 15 fractions to the peripheral lung lesion with motion management.",
+              "raw_wer": 0.23529411764705882,
+              "corrected_wer": 0.23529411764705882,
+              "vocabulary_terms": [
+                "GyE",
+                "SBRT",
+                "hypofractionation",
+                "motion management"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "hypofractionation"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0008",
+              "category": "treatment_summary",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "The comparison plan demonstrated that photons would have delivered 70 Gy to the target while protons deliver 74 GyE with improved organ-at-risk sparing.",
+              "raw_transcription": "comparison plan demonstrated that protoms would have delivered 70 Guy to the target while protims delivered 74 gie with improved organ risk sparing.",
+              "corrected_transcription": "comparison plan demonstrated that protoms would have delivered 70 Guy to the target while protims delivered 74 gie with improved organ risk sparing.",
+              "raw_wer": 0.34782608695652173,
+              "corrected_wer": 0.34782608695652173,
+              "vocabulary_terms": [
+                "Gy",
+                "GyE",
+                "organ at risk",
+                "OAR sparing"
+              ],
+              "terms_found": 0,
+              "terms_total": 4,
+              "terms_missing": [
+                "Gy",
+                "GyE",
+                "organ at risk",
+                "OAR sparing"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0009",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Pencil beam scanning plan of 45 GyE in 25 fractions to the skull base meningioma with robust optimization.",
+              "raw_transcription": "Penselbeam scanning plan of 45JiE in 25 fractions to the skull base meningioma with robast optimization.",
+              "corrected_transcription": "Penselbeam scanning plan of 45JiE in 25 fractions to the skull base meningioma with robast optimization.",
+              "raw_wer": 0.2777777777777778,
+              "corrected_wer": 0.2777777777777778,
+              "vocabulary_terms": [
+                "GyE",
+                "pencil beam scanning",
+                "meningioma",
+                "robust optimization"
+              ],
+              "terms_found": 1,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "pencil beam scanning",
+                "robust optimization"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0010",
+              "category": "dose_prescription",
+              "dense_subtype": "particle_dose",
+              "ground_truth": "Carbon ion therapy delivered 70.4 gray equivalent in 16 fractions to the sacral chordoma using a variable relative biological effectiveness model.",
+              "raw_transcription": "carbon iron therapy delivered 70.4 gray equivalent in 16 fractions to the sacral chordoma using a variable relative biological effectiveness model.",
+              "corrected_transcription": "carbon iron therapy delivered 70.4 gray equivalent in 16 fractions to the sacral chordoma using a variable relative biological effectiveness model.",
+              "raw_wer": 0.045454545454545456,
+              "corrected_wer": 0.045454545454545456,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "carbon ion",
+                "chordoma",
+                "variable RBE"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "carbon ion",
+                "variable RBE"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0011",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Re-irradiation with protons to 60 GyE in 30 fractions for the recurrent nasopharyngeal carcinoma.",
+              "raw_transcription": "reradiation with Procomes to 60 dye E in 30 fractions for the recurrent nasopharyngeal carcinoma.",
+              "corrected_transcription": "reradiation with Procomes to 60 dye E in 30 fractions for the recurrent nasopharyngeal carcinoma.",
+              "raw_wer": 0.2857142857142857,
+              "corrected_wer": 0.2857142857142857,
+              "vocabulary_terms": [
+                "GyE",
+                "reirradiation",
+                "nasopharyngeal carcinoma"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "GyE",
+                "reirradiation"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0012",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Dose per fraction of 1.8 GyE delivered five days per week to a total of 50.4 GyE.",
+              "raw_transcription": "dose per fraction of 1.8 GiE delivered five days per week to a total of 50.4 GiE.",
+              "corrected_transcription": "dose per fraction of 1.8 GiE delivered five days per week to a total of 50.4 GiE.",
+              "raw_wer": 0.10526315789473684,
+              "corrected_wer": 0.10526315789473684,
+              "vocabulary_terms": [
+                "GyE",
+                "dose per fraction"
+              ],
+              "terms_found": 1,
+              "terms_total": 2,
+              "terms_missing": [
+                "GyE"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0013",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Prescribed total dose of 36 gray equivalent to the whole ventricular system with a boost to 55.8 gray equivalent to the tumor bed.",
+              "raw_transcription": "prescribed total dose of 36 gray equivalent to the whole ventricular system with a boost of 55.8 gray equivalent to the tumor bed.",
+              "corrected_transcription": "prescribed total dose of 36 gray equivalent to the whole ventricular system with a boost of 55.8 gray equivalent to the tumor BED.",
+              "raw_wer": 0.041666666666666664,
+              "corrected_wer": 0.041666666666666664,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "whole ventricular",
+                "boost",
+                "tumor bed"
+              ],
+              "terms_found": 4,
+              "terms_total": 4,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0014",
+              "category": "treatment_summary",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Proton beam therapy of 70 GyE in 35 fractions assuming an RBE of 1.1 relative to megavoltage photons.",
+              "raw_transcription": "profon being therapy of 70 JiE in 35 fractions assuming an RBE of 1.1 relative to Mega voltage fhoals.",
+              "corrected_transcription": "profon being therapy of 70 JiE in 35 fractions assuming an RBE of 1.1 relative to Mega voltage fhoals.",
+              "raw_wer": 0.3157894736842105,
+              "corrected_wer": 0.3157894736842105,
+              "vocabulary_terms": [
+                "GyE",
+                "RBE",
+                "megavoltage photons",
+                "proton beam therapy"
+              ],
+              "terms_found": 1,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "megavoltage photons",
+                "proton beam therapy"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0015",
+              "category": "treatment_summary",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "The patient declined protons and proceeded with IMRT to 79.2 Gy in 44 fractions to the prostate.",
+              "raw_transcription": "the patient declined prosomes and proceeded with imit to 79.2 gy in 44 fractions to the prostate.",
+              "corrected_transcription": "the patient declined prosomes and proceeded with imit to 79.2 Gy in 44 fractions to the prostate.",
+              "raw_wer": 0.1111111111111111,
+              "corrected_wer": 0.1111111111111111,
+              "vocabulary_terms": [
+                "Gy",
+                "IMRT",
+                "proton"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "IMRT",
+                "proton"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0016",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Pencil beam scanning craniospinal irradiation of 23.4 GyE in 13 fractions using a junctioned plan with junction feathering at the field matches.",
+              "raw_transcription": "pensil beeam scanning craniospinal irradiation of 23.4yE in 13 fractions using a junction plan with junction faetheroring at the field matches.",
+              "corrected_transcription": "pensil beeam scanning craniospinal irradiation of 23.4yE in 13 fractions using a junction plan with junction faetheroring at the field matches.",
+              "raw_wer": 0.2608695652173913,
+              "corrected_wer": 0.2608695652173913,
+              "vocabulary_terms": [
+                "GyE",
+                "pencil beam scanning",
+                "craniospinal irradiation",
+                "junctioned plan",
+                "junction feathering",
+                "field match"
+              ],
+              "terms_found": 1,
+              "terms_total": 6,
+              "terms_missing": [
+                "GyE",
+                "pencil beam scanning",
+                "junctioned plan",
+                "junction feathering",
+                "field match"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0017",
+              "category": "treatment_summary",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "The cranial and upper spine fields are matched in the upper thoracic region with junction feathering over a four centimeter zone.",
+              "raw_transcription": "The cranial and upper spine fields are matched in the upper thoracic region with junction fivuring over a 4 cm zone.",
+              "corrected_transcription": "The cranial and upper spine fields are matched in the upper thoracic region with junction fivuring over a 4 cm zone.",
+              "raw_wer": 0.14285714285714285,
+              "corrected_wer": 0.14285714285714285,
+              "vocabulary_terms": [
+                "cranial field",
+                "upper spine",
+                "junction feathering"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "cranial field",
+                "junction feathering"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0018",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Whole neuraxis treatment to 36 gray equivalent in 20 fractions followed by a posterior fossa boost to a total dose of 54 gray equivalent.",
+              "raw_transcription": "whole ne access treatment to 36 gray equivalent in 20 fractions followed by a posterior fossa boost to a total dose of 54 gray equivalent.",
+              "corrected_transcription": "whole ne access treatment to 36 gray equivalent in 20 fractions followed by a posterior fossa boost to a total dose of 54 gray equivalent.",
+              "raw_wer": 0.08333333333333333,
+              "corrected_wer": 0.08333333333333333,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "whole neuraxis",
+                "posterior fossa",
+                "boost"
+              ],
+              "terms_found": 3,
+              "terms_total": 4,
+              "terms_missing": [
+                "whole neuraxis"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0019",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Ewing sarcoma of the left pelvis treated with 55.8 GyE in 31 fractions using pencil beam scanning with 3D/3D image guidance.",
+              "raw_transcription": "Uing sarcoma of the left pelvis treated with 55.8JiE in 31 fractions using Pencil beam scanning with 3D {slash} 3D image guidance.",
+              "corrected_transcription": "Uing sarcoma of the left pelvis treated with 55.8JiE in 31 fractions using Pencil beam scanning with 3D {slash} 3D image guidance.",
+              "raw_wer": 0.17391304347826086,
+              "corrected_wer": 0.17391304347826086,
+              "vocabulary_terms": [
+                "GyE",
+                "Ewing sarcoma",
+                "pencil beam scanning",
+                "3D/3D image guidance"
+              ],
+              "terms_found": 1,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "Ewing sarcoma",
+                "3D/3D image guidance"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0020",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Parameningeal rhabdomyosarcoma treated with 50.4 gray equivalent in 28 fractions to the primary target volume using 2D/3D image guidance with dynamic DRR.",
+              "raw_transcription": "paraameningeal rab meyosarcoma treated with 50.4 Gy equivalent in 28 fractions to the primary target volume using 2D {slash} 3D image guidance with dynamic DRR.",
+              "corrected_transcription": "paraameningeal rab meyosarcoma treated with 50.4 Gy equivalent in 28 fractions to the primary target volume using 2D {slash} 3D image guidance with dynamic DRR.",
+              "raw_wer": 0.20833333333333334,
+              "corrected_wer": 0.20833333333333334,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "parameningeal",
+                "rhabdomyosarcoma",
+                "2D/3D image guidance",
+                "dynamic DRR"
+              ],
+              "terms_found": 1,
+              "terms_total": 5,
+              "terms_missing": [
+                "gray equivalent",
+                "parameningeal",
+                "rhabdomyosarcoma",
+                "2D/3D image guidance"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0021",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Posterior fossa ependymoma prescribed 59.4 GyE in 33 fractions following gross total resection with pencil beam scanning proton therapy.",
+              "raw_transcription": "posterior fossa apendymoma prescribed 59.4Jie in 33 fractions following grows total resection with pencil beam scanning protein therapy.",
+              "corrected_transcription": "posterior fossa apendymoma prescribed 59.4Jie in 33 fractions following grows total resection with pencil beam scanning protein therapy.",
+              "raw_wer": 0.25,
+              "corrected_wer": 0.25,
+              "vocabulary_terms": [
+                "GyE",
+                "ependymoma",
+                "posterior fossa",
+                "gross total resection",
+                "pencil beam scanning"
+              ],
+              "terms_found": 2,
+              "terms_total": 5,
+              "terms_missing": [
+                "GyE",
+                "ependymoma",
+                "gross total resection"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0022",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Pediatric craniopharyngioma treated to 54 GyE in 30 fractions with pencil beam scanning protons and 3D/3D image guidance.",
+              "raw_transcription": "Pediatric cranioangio were treated to 54 Gie in 30 fractions with pencil beam scanning protons and 3D {slash} 3D image guidance.",
+              "corrected_transcription": "Pediatric cranioangio were treated to 54 Gie in 30 fractions with pencil beam scanning protons and 3D {slash} 3D image guidance.",
+              "raw_wer": 0.21052631578947367,
+              "corrected_wer": 0.21052631578947367,
+              "vocabulary_terms": [
+                "GyE",
+                "craniopharyngioma",
+                "pencil beam scanning",
+                "3D/3D image guidance"
+              ],
+              "terms_found": 1,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "craniopharyngioma",
+                "3D/3D image guidance"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0023",
+              "category": "treatment_summary",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "The lower thoracic and lumbar spine fields are matched using dual ramping across a five centimeter feathering zone to minimize sensitivity to setup error.",
+              "raw_transcription": "lower thoracic and lumbar spine fields are matched using dual ramping across a 5 cm fthering zone to minimize sensitivity to set up error.",
+              "corrected_transcription": "lower thoracic and lumbar spine fields are matched using dual ramping across a 5 cm fthering zone to minimize sensitivity to set up error.",
+              "raw_wer": 0.25,
+              "corrected_wer": 0.25,
+              "vocabulary_terms": [
+                "dual ramping",
+                "feathering zone",
+                "setup error",
+                "spine field"
+              ],
+              "terms_found": 1,
+              "terms_total": 4,
+              "terms_missing": [
+                "feathering zone",
+                "setup error",
+                "spine field"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0024",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "High-risk neuroblastoma of the left adrenal bed treated to 21.6 GyE in 12 fractions to the pre-surgical tumor volume.",
+              "raw_transcription": "high-risk neuroblastoma of the left adrenal bed treated to 21.6 GiN 12 fractions to the presurgical tumor volume.",
+              "corrected_transcription": "high-risk neuroblastoma of the left adrenal BED treated to 21.6 GiN 12 fractions to the presurgical tumor volume.",
+              "raw_wer": 0.15,
+              "corrected_wer": 0.15,
+              "vocabulary_terms": [
+                "GyE",
+                "neuroblastoma",
+                "adrenal bed",
+                "pre-surgical tumor volume"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "pre-surgical tumor volume"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0025",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Pediatric Hodgkin lymphoma involving the mediastinum treated with involved-site proton therapy to 21 gray equivalent in 14 fractions.",
+              "raw_transcription": "pediatric Hodgkin lymphoma involving the mediastinum treated with involved site protein therapy to 21 gray equivalent in 14 fractions.",
+              "corrected_transcription": "pediatric Hodgkin lymphoma involving the mediastinum treated with involved site protein therapy to 21 gray equivalent in 14 fractions.",
+              "raw_wer": 0.16666666666666666,
+              "corrected_wer": 0.16666666666666666,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "Hodgkin lymphoma",
+                "involved-site proton therapy",
+                "mediastinum"
+              ],
+              "terms_found": 3,
+              "terms_total": 4,
+              "terms_missing": [
+                "involved-site proton therapy"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0026",
+              "category": "treatment_summary",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Craniospinal plan using LPO and RPO cranial fields and three posterior spine fields with junction feathering over three centimeters at each match.",
+              "raw_transcription": "craniospinal plan using LPO and IPO cranial fields and three posterior spine fields with junction faturing over 3 cm at each match.",
+              "corrected_transcription": "craniospinal plan using LPO and IPO cranial fields and three posterior spine fields with junction faturing over 3 cm at each match.",
+              "raw_wer": 0.18181818181818182,
+              "corrected_wer": 0.18181818181818182,
+              "vocabulary_terms": [
+                "craniospinal",
+                "junction feathering",
+                "LPO",
+                "RPO",
+                "cranial field",
+                "posterior field",
+                "match"
+              ],
+              "terms_found": 3,
+              "terms_total": 7,
+              "terms_missing": [
+                "junction feathering",
+                "RPO",
+                "cranial field",
+                "posterior field"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0027",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Standard risk medulloblastoma craniospinal dose of 23.4 GyE in 13 fractions with a posterior fossa boost to 54 GyE and involved field boost to the tumor bed to 55.8 GyE.",
+              "raw_transcription": "standard risk medullooblastoma craniospinal dose of 23.4 GiE in 13 fractions with a posterior fossa boost to 54 GiE and involved field boosts to the tumor bed to 55.8 Gie.",
+              "corrected_transcription": "standard risk medullooblastoma craniospinal dose of 23.4 GiE in 13 fractions with a posterior fossa boost to 54 GiE and involved field boosts to the tumor BED to 55.8 Gie.",
+              "raw_wer": 0.15625,
+              "corrected_wer": 0.15625,
+              "vocabulary_terms": [
+                "GyE",
+                "medulloblastoma",
+                "craniospinal",
+                "posterior fossa boost",
+                "involved field boost",
+                "tumor bed"
+              ],
+              "terms_found": 3,
+              "terms_total": 6,
+              "terms_missing": [
+                "GyE",
+                "medulloblastoma",
+                "involved field boost"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0028",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Intracranial germinoma treated with whole ventricular irradiation of 21 GyE in 14 fractions followed by a boost to the primary tumor site to 30 GyE using 3D/2D image guidance.",
+              "raw_transcription": "intracranialgeminoma treated with whole ventricular irradiation of 21JiE in 14 fractions followed by a boost to the primary tumor sites to 30JiE using 3D {slash}2D image guidance.",
+              "corrected_transcription": "intracranialgeminoma treated with whole ventricular irradiation of 21JiE in 14 fractions followed by a boost to the primary tumor sites to 30JiE using 3D {slash}2D image guidance.",
+              "raw_wer": 0.26666666666666666,
+              "corrected_wer": 0.26666666666666666,
+              "vocabulary_terms": [
+                "GyE",
+                "germinoma",
+                "whole ventricular irradiation",
+                "3D/2D image guidance"
+              ],
+              "terms_found": 1,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "germinoma",
+                "3D/2D image guidance"
+              ],
+              "error": false
+            }
+          ]
+        },
+        {
+          "voice": "en_US-lessac-high",
+          "summary": {
+            "sample_count": 28,
+            "error_count": 0,
+            "avg_raw_wer": 0.1785,
+            "avg_corrected_wer": 0.1785,
+            "terms_found": 46,
+            "terms_total": 114,
+            "term_recall": 0.4035
+          },
+          "samples": [
+            {
+              "fixture_id": "proton-0001",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Prescribed dose of 79.2 GyE in 44 fractions to the prostate PTV using pencil beam scanning.",
+              "raw_transcription": "prescribed dose of 79.2 ji.e. in 44 fractions to the prostate PTV using pensil beam scanning.",
+              "corrected_transcription": "prescribed dose of 79.2 ji.e. in 44 fractions to the prostate PTV using pensil beam scanning.",
+              "raw_wer": 0.17647058823529413,
+              "corrected_wer": 0.17647058823529413,
+              "vocabulary_terms": [
+                "GyE",
+                "PTV",
+                "pencil beam scanning"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "GyE",
+                "pencil beam scanning"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0002",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "The patient will receive 54 GyE in 30 fractions to the gross tumor volume with a relative biological effectiveness of 1.1.",
+              "raw_transcription": "patient will receive 54 GiE and 30 fractions to the gross tumor volume with a relative biological effectiveness of 1.1.",
+              "corrected_transcription": "patient will receive 54 GiE and 30 fractions to the gross tumor volume with a relative biological effectiveness of 1.1.",
+              "raw_wer": 0.13636363636363635,
+              "corrected_wer": 0.13636363636363635,
+              "vocabulary_terms": [
+                "GyE",
+                "GTV",
+                "RBE",
+                "relative biological effectiveness"
+              ],
+              "terms_found": 1,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "GTV",
+                "RBE"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0003",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Craniospinal irradiation of 23.4 gray equivalent in 13 fractions followed by a posterior fossa boost to 54 gray equivalent.",
+              "raw_transcription": "craniospinal irradiation of 23.4 Gy equivalent in 13 fractions followed by a posterior fossa boost to 54 gray equivalent.",
+              "corrected_transcription": "craniospinal irradiation of 23.4 Gy equivalent in 13 fractions followed by a posterior fossa boost to 54 gray equivalent.",
+              "raw_wer": 0.05,
+              "corrected_wer": 0.05,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "craniospinal irradiation",
+                "posterior fossa",
+                "boost"
+              ],
+              "terms_found": 4,
+              "terms_total": 4,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0004",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Dose escalation to 78 GyE in 39 fractions for the chordoma at the base of skull.",
+              "raw_transcription": "dose escalation to 78ie in 39 fractions for the chordoma at the base of skull.",
+              "corrected_transcription": "dose escalation to 78ie in 39 fractions for the chordoma at the base of skull.",
+              "raw_wer": 0.125,
+              "corrected_wer": 0.125,
+              "vocabulary_terms": [
+                "GyE",
+                "chordoma",
+                "base of skull",
+                "dose escalation"
+              ],
+              "terms_found": 3,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0005",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Simultaneous integrated boost of 70 GyE to the high-risk CTV with 56 GyE to the low-risk CTV over 35 fractions.",
+              "raw_transcription": "simultaneous integraded boost of 70 GIE to the high-risk CTV with 56 GIE to the low-risk CTV over 35 fractions.",
+              "corrected_transcription": "simultaneous integraded boost of 70 GIE to the high-risk CTV with 56 GIE to the low-risk CTV over 35 fractions.",
+              "raw_wer": 0.15,
+              "corrected_wer": 0.15,
+              "vocabulary_terms": [
+                "GyE",
+                "simultaneous integrated boost",
+                "CTV"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "GyE",
+                "simultaneous integrated boost"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0006",
+              "category": "treatment_summary",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Neoadjuvant proton chemoradiation of 50.4 GyE in 28 fractions with concurrent capecitabine for locally advanced rectal cancer.",
+              "raw_transcription": "neoadjuvant proton chemoradiation of 50.4 GiE in 28 fractions with concurrent capecitabine for locally advanced rectal cancer.",
+              "corrected_transcription": "neoadjuvant proton chemoradiation of 50.4 GiE in 28 fractions with concurrent capecitabine for locally advanced rectal cancer.",
+              "raw_wer": 0.05555555555555555,
+              "corrected_wer": 0.05555555555555555,
+              "vocabulary_terms": [
+                "GyE",
+                "chemoradiation",
+                "capecitabine",
+                "neoadjuvant"
+              ],
+              "terms_found": 3,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0007",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Hypofractionated proton SBRT of 60 GyE in 15 fractions to the peripheral lung lesion with motion management.",
+              "raw_transcription": "hypofraction it did proton SBRT of 60iE and 15 fractions to the peripheral lung lesion with motion management.",
+              "corrected_transcription": "hypofraction it did proton SBRT of 60iE and 15 fractions to the peripheral lung lesion with motion management.",
+              "raw_wer": 0.35294117647058826,
+              "corrected_wer": 0.35294117647058826,
+              "vocabulary_terms": [
+                "GyE",
+                "SBRT",
+                "hypofractionation",
+                "motion management"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "hypofractionation"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0008",
+              "category": "treatment_summary",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "The comparison plan demonstrated that photons would have delivered 70 Gy to the target while protons deliver 74 GyE with improved organ-at-risk sparing.",
+              "raw_transcription": "comparison plan demonstrated at Photons would have delivered 70 gI to the target whilehi protoness delivered 74 gie with improved organitristic sparing.",
+              "corrected_transcription": "comparison plan demonstrated at Photons would have delivered 70 GI to the target whilehi protoness delivered 74 gie with improved organitristic sparing.",
+              "raw_wer": 0.34782608695652173,
+              "corrected_wer": 0.34782608695652173,
+              "vocabulary_terms": [
+                "Gy",
+                "GyE",
+                "organ at risk",
+                "OAR sparing"
+              ],
+              "terms_found": 0,
+              "terms_total": 4,
+              "terms_missing": [
+                "Gy",
+                "GyE",
+                "organ at risk",
+                "OAR sparing"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0009",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Pencil beam scanning plan of 45 GyE in 25 fractions to the skull base meningioma with robust optimization.",
+              "raw_transcription": "Bensal beam scanning plan of 45 GiE and 25 fractions to the skull base meningioma with robust optimization.",
+              "corrected_transcription": "Bensal beam scanning plan of 45 GiE and 25 fractions to the skull base meningioma with robust optimization.",
+              "raw_wer": 0.16666666666666666,
+              "corrected_wer": 0.16666666666666666,
+              "vocabulary_terms": [
+                "GyE",
+                "pencil beam scanning",
+                "meningioma",
+                "robust optimization"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "pencil beam scanning"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0010",
+              "category": "dose_prescription",
+              "dense_subtype": "particle_dose",
+              "ground_truth": "Carbon ion therapy delivered 70.4 gray equivalent in 16 fractions to the sacral chordoma using a variable relative biological effectiveness model.",
+              "raw_transcription": "carbonion therapy, delivered 70.4 Gy equivalent in 16 fractions to the sacral cord doma using a variable relative biological effectiveness model.",
+              "corrected_transcription": "carbonion therapy, delivered 70.4 Gy equivalent in 16 fractions to the sacral cord doma using a variable relative biological effectiveness model.",
+              "raw_wer": 0.22727272727272727,
+              "corrected_wer": 0.22727272727272727,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "carbon ion",
+                "chordoma",
+                "variable RBE"
+              ],
+              "terms_found": 0,
+              "terms_total": 4,
+              "terms_missing": [
+                "gray equivalent",
+                "carbon ion",
+                "chordoma",
+                "variable RBE"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0011",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Re-irradiation with protons to 60 GyE in 30 fractions for the recurrent nasopharyngeal carcinoma.",
+              "raw_transcription": "reirradiation with Protons to 60 GiE in 30 fractions for the recurrent massopharyngeal carcinoma.",
+              "corrected_transcription": "reirradiation with Protons to 60 GiE in 30 fractions for the recurrent massopharyngeal carcinoma.",
+              "raw_wer": 0.21428571428571427,
+              "corrected_wer": 0.21428571428571427,
+              "vocabulary_terms": [
+                "GyE",
+                "reirradiation",
+                "nasopharyngeal carcinoma"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "GyE",
+                "nasopharyngeal carcinoma"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0012",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Dose per fraction of 1.8 GyE delivered five days per week to a total of 50.4 GyE.",
+              "raw_transcription": "dose perfraction of 1.8 GE delivered five days per week to a total of 50.4 Ge.",
+              "corrected_transcription": "dose perfraction of 1.8 GE delivered five days per week to a total of 50.4 Ge.",
+              "raw_wer": 0.21052631578947367,
+              "corrected_wer": 0.21052631578947367,
+              "vocabulary_terms": [
+                "GyE",
+                "dose per fraction"
+              ],
+              "terms_found": 0,
+              "terms_total": 2,
+              "terms_missing": [
+                "GyE",
+                "dose per fraction"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0013",
+              "category": "dose_prescription",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Prescribed total dose of 36 gray equivalent to the whole ventricular system with a boost to 55.8 gray equivalent to the tumor bed.",
+              "raw_transcription": "prescribed total dose of 36 Gy equivalent to the whole ventricular system with a boost of 55.8 gray equivalent to the tumor bed.",
+              "corrected_transcription": "prescribed total dose of 36 Gy equivalent to the whole ventricular system with a boost of 55.8 gray equivalent to the tumor BED.",
+              "raw_wer": 0.08333333333333333,
+              "corrected_wer": 0.08333333333333333,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "whole ventricular",
+                "boost",
+                "tumor bed"
+              ],
+              "terms_found": 4,
+              "terms_total": 4,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0014",
+              "category": "treatment_summary",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "Proton beam therapy of 70 GyE in 35 fractions assuming an RBE of 1.1 relative to megavoltage photons.",
+              "raw_transcription": "protin beam therapy of 70 GIE in 35 fractions assuming an RBE of 1.1 relative to make a voltage photons.",
+              "corrected_transcription": "protin beam therapy of 70 GIE in 35 fractions assuming an RBE of 1.1 relative to make a voltage photons.",
+              "raw_wer": 0.2631578947368421,
+              "corrected_wer": 0.2631578947368421,
+              "vocabulary_terms": [
+                "GyE",
+                "RBE",
+                "megavoltage photons",
+                "proton beam therapy"
+              ],
+              "terms_found": 1,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "megavoltage photons",
+                "proton beam therapy"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0015",
+              "category": "treatment_summary",
+              "dense_subtype": "proton_dose",
+              "ground_truth": "The patient declined protons and proceeded with IMRT to 79.2 Gy in 44 fractions to the prostate.",
+              "raw_transcription": "patient declined protons and proceeded within it to 79.2 GI and 44 fractions to the prostate.",
+              "corrected_transcription": "patient declined protons and proceeded within it to 79.2 GI and 44 fractions to the prostate.",
+              "raw_wer": 0.2777777777777778,
+              "corrected_wer": 0.2777777777777778,
+              "vocabulary_terms": [
+                "Gy",
+                "IMRT",
+                "proton"
+              ],
+              "terms_found": 0,
+              "terms_total": 3,
+              "terms_missing": [
+                "Gy",
+                "IMRT",
+                "proton"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0016",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Pencil beam scanning craniospinal irradiation of 23.4 GyE in 13 fractions using a junctioned plan with junction feathering at the field matches.",
+              "raw_transcription": "enensual beam scanning craniospinal irradiation of 23.4 GiE and 13 fractions using a junctioned plan with junction fetheroring at the field matches.",
+              "corrected_transcription": "enensual beam scanning craniospinal irradiation of 23.4 GiE and 13 fractions using a junctioned plan with junction fetheroring at the field matches.",
+              "raw_wer": 0.17391304347826086,
+              "corrected_wer": 0.17391304347826086,
+              "vocabulary_terms": [
+                "GyE",
+                "pencil beam scanning",
+                "craniospinal irradiation",
+                "junctioned plan",
+                "junction feathering",
+                "field match"
+              ],
+              "terms_found": 2,
+              "terms_total": 6,
+              "terms_missing": [
+                "GyE",
+                "pencil beam scanning",
+                "junction feathering",
+                "field match"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0017",
+              "category": "treatment_summary",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "The cranial and upper spine fields are matched in the upper thoracic region with junction feathering over a four centimeter zone.",
+              "raw_transcription": "cranial and upper spine fields are matched in the upper thoracic region with junction favoruring over a 4 cm zone.",
+              "corrected_transcription": "cranial and upper spine fields are matched in the upper thoracic region with junction favoruring over a 4 cm zone.",
+              "raw_wer": 0.19047619047619047,
+              "corrected_wer": 0.19047619047619047,
+              "vocabulary_terms": [
+                "cranial field",
+                "upper spine",
+                "junction feathering"
+              ],
+              "terms_found": 1,
+              "terms_total": 3,
+              "terms_missing": [
+                "cranial field",
+                "junction feathering"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0018",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Whole neuraxis treatment to 36 gray equivalent in 20 fractions followed by a posterior fossa boost to a total dose of 54 gray equivalent.",
+              "raw_transcription": "whole nera acceiss treatment to 36 gray equivalent in 20 fractions followed by a posterior fossa boose to a total dose of 54 gray equivalent.",
+              "corrected_transcription": "whole nera acceiss treatment to 36 gray equivalent in 20 fractions followed by a posterior fossa boose to a total dose of 54 gray equivalent.",
+              "raw_wer": 0.125,
+              "corrected_wer": 0.125,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "whole neuraxis",
+                "posterior fossa",
+                "boost"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "whole neuraxis",
+                "boost"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0019",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Ewing sarcoma of the left pelvis treated with 55.8 GyE in 31 fractions using pencil beam scanning with 3D/3D image guidance.",
+              "raw_transcription": "wing sarcoma of The left pelvis treated with 55.8 GiE in 31 fractions using pencil beam scanning with 3D {slash} 3D image guidance.",
+              "corrected_transcription": "wing sarcoma of The left pelvis treated with 55.8 GiE in 31 fractions using pencil beam scanning with 3D {slash} 3D image guidance.",
+              "raw_wer": 0.13043478260869565,
+              "corrected_wer": 0.13043478260869565,
+              "vocabulary_terms": [
+                "GyE",
+                "Ewing sarcoma",
+                "pencil beam scanning",
+                "3D/3D image guidance"
+              ],
+              "terms_found": 1,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "Ewing sarcoma",
+                "3D/3D image guidance"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0020",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Parameningeal rhabdomyosarcoma treated with 50.4 gray equivalent in 28 fractions to the primary target volume using 2D/3D image guidance with dynamic DRR.",
+              "raw_transcription": "paraameningeal rhabdomyosarcoma treated with 50.4 Gy equivalent in 28 fractions to the primary target volume using 2D {slash} 3D image guidance with dynamic DRR.",
+              "corrected_transcription": "paraameningeal rhabdomyosarcoma treated with 50.4 Gy equivalent in 28 fractions to the primary target volume using 2D {slash} 3D image guidance with dynamic DRR.",
+              "raw_wer": 0.125,
+              "corrected_wer": 0.125,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "parameningeal",
+                "rhabdomyosarcoma",
+                "2D/3D image guidance",
+                "dynamic DRR"
+              ],
+              "terms_found": 2,
+              "terms_total": 5,
+              "terms_missing": [
+                "gray equivalent",
+                "parameningeal",
+                "2D/3D image guidance"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0021",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Posterior fossa ependymoma prescribed 59.4 GyE in 33 fractions following gross total resection with pencil beam scanning proton therapy.",
+              "raw_transcription": "posterior fossa epidyoma prescribed 59.4 GiE in 33 fractions following gross total resection with pencil beam scanning proton therapy.",
+              "corrected_transcription": "posterior fossa epidyoma prescribed 59.4 GiE in 33 fractions following gross total resection with pencil beam scanning proton therapy.",
+              "raw_wer": 0.1,
+              "corrected_wer": 0.1,
+              "vocabulary_terms": [
+                "GyE",
+                "ependymoma",
+                "posterior fossa",
+                "gross total resection",
+                "pencil beam scanning"
+              ],
+              "terms_found": 3,
+              "terms_total": 5,
+              "terms_missing": [
+                "GyE",
+                "ependymoma"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0022",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Pediatric craniopharyngioma treated to 54 GyE in 30 fractions with pencil beam scanning protons and 3D/3D image guidance.",
+              "raw_transcription": "pediatric craniopharyngeoma treated to 54 GIE in 30 fractions with pensil beam scanning protons and 3D {slash} 3D image guidance.",
+              "corrected_transcription": "pediatric craniopharyngeoma treated to 54 GIE in 30 fractions with pensil beam scanning protons and 3D {slash} 3D image guidance.",
+              "raw_wer": 0.21052631578947367,
+              "corrected_wer": 0.21052631578947367,
+              "vocabulary_terms": [
+                "GyE",
+                "craniopharyngioma",
+                "pencil beam scanning",
+                "3D/3D image guidance"
+              ],
+              "terms_found": 0,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "craniopharyngioma",
+                "pencil beam scanning",
+                "3D/3D image guidance"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0023",
+              "category": "treatment_summary",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "The lower thoracic and lumbar spine fields are matched using dual ramping across a five centimeter feathering zone to minimize sensitivity to setup error.",
+              "raw_transcription": "lower thoracic and lumbar spine fields are matched using dual wrapping across a 5 cm fevoring zone to minimize sensitivity to set up error.",
+              "corrected_transcription": "lower thoracic and lumbar spine fields are matched using dual wrapping across a 5 cm fevoring zone to minimize sensitivity to set up error.",
+              "raw_wer": 0.2916666666666667,
+              "corrected_wer": 0.2916666666666667,
+              "vocabulary_terms": [
+                "dual ramping",
+                "feathering zone",
+                "setup error",
+                "spine field"
+              ],
+              "terms_found": 0,
+              "terms_total": 4,
+              "terms_missing": [
+                "dual ramping",
+                "feathering zone",
+                "setup error",
+                "spine field"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0024",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "High-risk neuroblastoma of the left adrenal bed treated to 21.6 GyE in 12 fractions to the pre-surgical tumor volume.",
+              "raw_transcription": "high-risk neoblastoma of the left adrenal bed treated to 21.6 GiE and 12 fractions to the presurgical tumor volume.",
+              "corrected_transcription": "high-risk neoblastoma of the left adrenal BED treated to 21.6 GiE and 12 fractions to the presurgical tumor volume.",
+              "raw_wer": 0.2,
+              "corrected_wer": 0.2,
+              "vocabulary_terms": [
+                "GyE",
+                "neuroblastoma",
+                "adrenal bed",
+                "pre-surgical tumor volume"
+              ],
+              "terms_found": 1,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "neuroblastoma",
+                "pre-surgical tumor volume"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0025",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Pediatric Hodgkin lymphoma involving the mediastinum treated with involved-site proton therapy to 21 gray equivalent in 14 fractions.",
+              "raw_transcription": "Pediatric Hodgkin lymphoma involving the mediastinum treated with involved site proton therapy to 21 GyEquivalent in 14 fractions.",
+              "corrected_transcription": "Pediatric Hodgkin lymphoma involving the mediastinum treated with involved site proton therapy to 21 GyEquivalent in 14 fractions.",
+              "raw_wer": 0.2222222222222222,
+              "corrected_wer": 0.2222222222222222,
+              "vocabulary_terms": [
+                "gray equivalent",
+                "Hodgkin lymphoma",
+                "involved-site proton therapy",
+                "mediastinum"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "gray equivalent",
+                "involved-site proton therapy"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0026",
+              "category": "treatment_summary",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Craniospinal plan using LPO and RPO cranial fields and three posterior spine fields with junction feathering over three centimeters at each match.",
+              "raw_transcription": "craniospinal plan using LPO and RPO cranial fields and three posterior spine fields with junction favoring over 3 cm at each match.",
+              "corrected_transcription": "craniospinal plan using LPO and RPO cranial fields and three posterior spine fields with junction favoring over 3 cm at each match.",
+              "raw_wer": 0.13636363636363635,
+              "corrected_wer": 0.13636363636363635,
+              "vocabulary_terms": [
+                "craniospinal",
+                "junction feathering",
+                "LPO",
+                "RPO",
+                "cranial field",
+                "posterior field",
+                "match"
+              ],
+              "terms_found": 4,
+              "terms_total": 7,
+              "terms_missing": [
+                "junction feathering",
+                "cranial field",
+                "posterior field"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0027",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Standard risk medulloblastoma craniospinal dose of 23.4 GyE in 13 fractions with a posterior fossa boost to 54 GyE and involved field boost to the tumor bed to 55.8 GyE.",
+              "raw_transcription": "standard risk metyloblastoma, craniospinal dose of 23.4 GE in 13 fractions with a posterior fossa boost to 54 GiE and involved field boos to the tumor bed to 55.8 Gie.",
+              "corrected_transcription": "standard risk metyloblastoma, craniospinal dose of 23.4 GE in 13 fractions with a posterior fossa boost to 54 GiE and involved field boos to the tumor BED to 55.8 Gie.",
+              "raw_wer": 0.15625,
+              "corrected_wer": 0.15625,
+              "vocabulary_terms": [
+                "GyE",
+                "medulloblastoma",
+                "craniospinal",
+                "posterior fossa boost",
+                "involved field boost",
+                "tumor bed"
+              ],
+              "terms_found": 3,
+              "terms_total": 6,
+              "terms_missing": [
+                "GyE",
+                "medulloblastoma",
+                "involved field boost"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "proton-0028",
+              "category": "dose_prescription",
+              "dense_subtype": "pediatric_proton",
+              "ground_truth": "Intracranial germinoma treated with whole ventricular irradiation of 21 GyE in 14 fractions followed by a boost to the primary tumor site to 30 GyE using 3D/2D image guidance.",
+              "raw_transcription": "intracranial germinoma treated with whole ventricular irradiation of 21 GiE in 14 fractions followed by a boost to the primary tumor site to 30 GiE using 3D {lah2D image guidance.",
+              "corrected_transcription": "intracranial germinoma treated with whole ventricular irradiation of 21 GiE in 14 fractions followed by a boost to the primary tumor site to 30 GiE using 3D {lah2D image guidance.",
+              "raw_wer": 0.1,
+              "corrected_wer": 0.1,
+              "vocabulary_terms": [
+                "GyE",
+                "germinoma",
+                "whole ventricular irradiation",
+                "3D/2D image guidance"
+              ],
+              "terms_found": 2,
+              "terms_total": 4,
+              "terms_missing": [
+                "GyE",
+                "3D/2D image guidance"
+              ],
+              "error": false
+            }
+          ]
+        }
+      ],
+      "overall": {
+        "sample_count": 56,
+        "error_count": 0,
+        "avg_raw_wer": 0.1817,
+        "avg_corrected_wer": 0.1817,
+        "terms_found": 93,
+        "terms_total": 228,
+        "term_recall": 0.4079
+      }
+    }
+  ]
+}
