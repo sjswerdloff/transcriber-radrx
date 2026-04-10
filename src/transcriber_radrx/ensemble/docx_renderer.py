@@ -97,6 +97,7 @@ def _render_word(
     author_ensemble: str,
     *,
     mode: str = "audit",
+    doc: Document | None = None,
 ) -> None:
     """Render one EnsembleWord into *rp* using appropriate Track Changes markup.
 
@@ -120,11 +121,18 @@ def _render_word(
     """
     source = ew.source
 
-    # In review mode, automated resolutions become plain text.
-    if mode == "review" and source in (
-        DecisionSource.VOXTRAL,
-        DecisionSource.WHISPER,
-        DecisionSource.CONTEXT_RULE,
+    # In review mode, automated resolutions become plain text — UNLESS
+    # the word is flagged for human review (e.g., context-inferred GyE
+    # promotions where the promotion is uncertain).
+    if (
+        mode == "review"
+        and not ew.needs_review
+        and source
+        in (
+            DecisionSource.VOXTRAL,
+            DecisionSource.WHISPER,
+            DecisionSource.CONTEXT_RULE,
+        )
     ):
         rp.add_run(ew.word)
         rp.add_run(" ")
@@ -165,15 +173,34 @@ def _render_word(
         rp.add_tracked_insertion(context_word, author=author_ensemble)
 
     elif source == DecisionSource.HUMAN_REVIEW:
-        # Both words shown as tracked insertions with a [REVIEW] marker.
-        _add_review_marker(rp)
         voxtral_word = ew.word_voxtral or ew.word or ""
         whisper_word = ew.word_whisper or ""
-        if voxtral_word:
-            rp.add_tracked_insertion(voxtral_word, author=author_voxtral)
-        if whisper_word and whisper_word != voxtral_word:
-            rp.add_run(" / ")
-            rp.add_tracked_insertion(whisper_word, author=author_whisper)
+
+        if mode == "review" and doc is not None:
+            # Review mode: render Voxtral's word as default text with a
+            # comment listing both options.  The clinician either leaves
+            # it (resolve comment = 1 click), edits it to the correct
+            # word, or picks Whisper's suggestion from the comment.
+            run = rp.add_run(voxtral_word)
+            run.bold = True
+            run.font.color.rgb = RGBColor(0xCC, 0x00, 0x00)
+            options = [f"Voxtral: '{voxtral_word}'"]
+            if whisper_word and whisper_word != voxtral_word:
+                options.append(f"Whisper: '{whisper_word}'")
+            comment_text = (
+                "ASR disagreement — neither backend matched the vocabulary.\n"
+                + "\n".join(options)
+                + "\nEdit the highlighted word if needed, then resolve this comment."
+            )
+            doc.add_comment(runs=run, text=comment_text, author="Ensemble Review")
+        else:
+            # Audit mode: both words as tracked insertions with [REVIEW] marker.
+            _add_review_marker(rp)
+            if voxtral_word:
+                rp.add_tracked_insertion(voxtral_word, author=author_voxtral)
+            if whisper_word and whisper_word != voxtral_word:
+                rp.add_run(" / ")
+                rp.add_tracked_insertion(whisper_word, author=author_whisper)
 
     else:
         # Defensive fallback for any future DecisionSource values.
@@ -310,7 +337,15 @@ def render_ensemble_docx(
 
         for ew in result.words:
             try:
-                _render_word(rp, ew, author_voxtral, author_whisper, author_ensemble, mode=mode)
+                _render_word(
+                    rp,
+                    ew,
+                    author_voxtral,
+                    author_whisper,
+                    author_ensemble,
+                    mode=mode,
+                    doc=doc,
+                )
             except Exception:
                 logger.exception(
                     "Failed to render word fixture={} voice={} word={}",
