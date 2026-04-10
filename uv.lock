@@ -2847,6 +2847,7 @@ audio = [
     { name = "scipy" },
 ]
 dev = [
+    { name = "jiwer" },
     { name = "mypy" },
     { name = "pre-commit" },
     { name = "pytest" },
@@ -2870,6 +2871,7 @@ requires-dist = [
     { name = "huggingface-hub", marker = "extra == 'asr-granite'", specifier = ">=0.25" },
     { name = "huggingface-hub", marker = "extra == 'asr-medasr'", specifier = ">=0.25" },
     { name = "huggingface-hub", marker = "extra == 'asr-voxtral'", specifier = ">=0.25" },
+    { name = "jiwer", marker = "extra == 'dev'", specifier = ">=4.0" },
     { name = "jiwer", marker = "extra == 'validation'", specifier = ">=4.0" },
     { name = "kenlm", marker = "extra == 'asr-medasr'", specifier = ">=0.3" },
     { name = "librosa", marker = "extra == 'asr-cohere'", specifier = ">=0.10" },

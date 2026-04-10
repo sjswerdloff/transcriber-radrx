@@ -96,3 +96,58 @@ signature. If `Failure` had been constructed with keyword arguments throughout,
 the impact would have been zero for existing tests. Lesson: for frozen
 dataclasses that serve as public API (used in tests), always construct with
 keyword arguments.
+
+---
+
+## Phase 1.1 + Phase 2 — Ensemble Decision Rules (#119)
+
+### WER vs. safety: the ensemble trades one for the other
+
+The 2-backend ensemble (Voxtral + Whisper) reduces CRIT+HIGH safety failures
+from 47 (best individual: Voxtral=47, Whisper=94) to 28, and eliminates the
+single CRITICAL failure (a DOSE_VALUE_MISSING from Voxtral). However raw WER
+increases from 0.0951 (Voxtral) to 0.1347 (ensemble). This is the expected
+clinical tradeoff: the ensemble's Rules 3–5 sometimes pick the more-clinically-correct
+word (e.g. "GyE" over Voxtral's "Gy") at the cost of raw WER when Voxtral's
+lower-WER choice happened to be correct for WER but wrong for clinical safety.
+
+The integration test contract therefore checks `ensemble WER <= max(vox, whi)`,
+not `<= min(vox, whi)`. The ensemble should never be WORSE than BOTH, but
+being worse than the best-WER model on raw string matching is acceptable if
+safety failures decrease.
+
+### Normalization ordering matters: -slash- before -hyphen
+
+The normalizer table must have `3D-slash-3D` before `3D-3D`. If `3D-3D` fires
+first on the input `3D-slash-3D`, it would match the suffix `3D-3D` (since
+`3D-slash-3D` contains `3D` and `3D` but with `-slash-` in between — actually
+the `-3D` suffix IS a substring match risk). The current table puts the longer
+`-slash-` forms before the shorter `-` hyphen forms, which is correct.
+
+### Rule priority subtlety: Rule 2 vs Rule 4
+
+Rule 2 (DOSE_UNIT_GYE) fires when "at least one is GyE, one or both are Gy-variants."
+Since GyE is itself in `_GY_VARIANT_SET`, if word_b is `GyE` and word_a is `dose`
+(not a Gy-variant), Rule 2 still fires because `is_gy_variant("GyE")` is True.
+This is correct behavior — Rule 2 should pick `GyE` over any non-GyE word when
+GyE is present, regardless of what the other word is. Rule 4 (DOSE_UNIT_VISIBLE_CORRUPTION)
+handles the case where one is a Gy-variant that is NOT GyE.
+
+### sys.path injection pattern for scripts that import from the tests package
+
+The `run_ensemble_aggregator.py` script needs both `src/` (for the transcriber_radrx
+package) and the repo root (for `tests.validation.metrics.safety_gate`). When
+run via `uv run python tests/validation/scripts/run_ensemble_aggregator.py`,
+neither is automatically on sys.path unless the project is installed in dev mode.
+The pattern used: insert `_REPO_ROOT` (= `Path(__file__).parents[2]`) into
+`sys.path[0]` at module load time. This is safe for a validation script but
+would be inappropriate in production library code.
+
+### 25 words flagged for human review across 56 pairs
+
+The ensemble flagged 25 words via Rule 6 (BOTH_WRONG — neither in vocabulary,
+words differ significantly). Most of these come from proper-noun corruption where
+both backends fail on rare disease names or patient-specific terminology. This
+count is a meaningful clinical signal: a human reviewer could check 25 words
+across 56 fixture-voice pairs in under 5 minutes, versus reviewing entire
+transcriptions.
