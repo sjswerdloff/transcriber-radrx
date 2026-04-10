@@ -9,6 +9,7 @@ authors = [
     {name = "The Kindled", email = "stuart@sjstargetedsolutions.co.nz"},
 ]
 dependencies = [
+    "loguru>=0.7.3",
     # mlx-whisper is currently a hard dependency because it is the baseline
     # ASR backend and most users will want it. A future PR may move this
     # into an `asr-whisper-mlx` extra once the backend registry is the

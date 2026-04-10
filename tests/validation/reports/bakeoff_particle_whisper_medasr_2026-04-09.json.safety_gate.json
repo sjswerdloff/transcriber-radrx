@@ -1,0 +1,2458 @@
+{
+  "metric_version": "1.1",
+  "source_report": "bakeoff_particle_whisper_medasr_2026-04-09.json",
+  "timestamp": "2026-04-09T04:46:50.580274+00:00",
+  "backends": {
+    "mlx_whisper": {
+      "voices": {
+        "en_GB-alan-medium": {
+          "n_samples": 28,
+          "failures_by_severity": {
+            "CRITICAL": [],
+            "HIGH": [
+              {
+                "fixture_id": "proton-0001",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '79.2 GI' for gold dose near '79.2 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "79.2 GI"
+              },
+              {
+                "fixture_id": "proton-0001",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '79.2 GI-E' for gold dose near '79.2 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "79.2 GI-E"
+              },
+              {
+                "fixture_id": "proton-0002",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 GI' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 GI"
+              },
+              {
+                "fixture_id": "proton-0002",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 GI-E' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 GI-E"
+              },
+              {
+                "fixture_id": "proton-0004",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '78 Jai E' for gold dose near '78 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "78 Jai E"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '70 J to' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 J to"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '56 J to' for gold dose near '56 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "56 J to"
+              },
+              {
+                "fixture_id": "proton-0006",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 Jai E' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 Jai E"
+              },
+              {
+                "fixture_id": "proton-0007",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '60 Jai E' for gold dose near '60 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "60 Jai E"
+              },
+              {
+                "fixture_id": "proton-0008",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '70 GI' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 GI"
+              },
+              {
+                "fixture_id": "proton-0008",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '74 GI' for gold dose near '74 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "74 GI"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '1.8 Jai E' for gold dose near '1.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "1.8 Jai E"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 Jai E' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 Jai E"
+              },
+              {
+                "fixture_id": "proton-0014",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '70 Jai E' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 Jai E"
+              },
+              {
+                "fixture_id": "proton-0015",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '79.2 J in' for gold dose near '79.2 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "79.2 J in"
+              },
+              {
+                "fixture_id": "proton-0019",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '55.8 Jai E' for gold dose near '55.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "55.8 Jai E"
+              },
+              {
+                "fixture_id": "proton-0022",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 Jai E' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 Jai E"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '23.4 JEE' for gold dose near '23.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "23.4 JEE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 JEE' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 JEE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '55.8 JEE' for gold dose near '55.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "55.8 JEE"
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '21 J in' for gold dose near '21 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "21 J in"
+              }
+            ],
+            "MEDIUM": [
+              {
+                "fixture_id": "proton-0019",
+                "class": "SLASHED_FORM_LOSS",
+                "severity": "MEDIUM",
+                "correctability": "ADJACENCY_RULE",
+                "detail": "Gold has slashed IGRT form '3D/3D' which is absent from prediction",
+                "gold_value": "3D/3D",
+                "pred_value": null
+              },
+              {
+                "fixture_id": "proton-0020",
+                "class": "SLASHED_FORM_LOSS",
+                "severity": "MEDIUM",
+                "correctability": "ADJACENCY_RULE",
+                "detail": "Gold has slashed IGRT form '2D/3D' which is absent from prediction",
+                "gold_value": "2D/3D",
+                "pred_value": null
+              },
+              {
+                "fixture_id": "proton-0022",
+                "class": "SLASHED_FORM_LOSS",
+                "severity": "MEDIUM",
+                "correctability": "ADJACENCY_RULE",
+                "detail": "Gold has slashed IGRT form '3D/3D' which is absent from prediction",
+                "gold_value": "3D/3D",
+                "pred_value": null
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "SLASHED_FORM_LOSS",
+                "severity": "MEDIUM",
+                "correctability": "ADJACENCY_RULE",
+                "detail": "Gold has slashed IGRT form '3D/2D' which is absent from prediction",
+                "gold_value": "3D/2D",
+                "pred_value": null
+              }
+            ]
+          },
+          "counts": {
+            "CRITICAL": 0,
+            "HIGH": 21,
+            "MEDIUM": 4
+          },
+          "counts_by_correctability": {
+            "UNRECOVERABLE": 0,
+            "CONTEXT_RULE": 0,
+            "PHONETIC_MAP": 21,
+            "ADJACENCY_RULE": 4
+          },
+          "residual_unrecoverable": {
+            "CRITICAL": 0,
+            "HIGH": 0,
+            "MEDIUM": 0
+          },
+          "gate": "FAIL",
+          "raw_gate": "FAIL",
+          "post_correction_gate": "PASS",
+          "safety_adjusted_wer": 0.164479
+        },
+        "en_US-lessac-high": {
+          "n_samples": 28,
+          "failures_by_severity": {
+            "CRITICAL": [],
+            "HIGH": [
+              {
+                "fixture_id": "proton-0001",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '79.2 GIE' for gold dose near '79.2 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "79.2 GIE"
+              },
+              {
+                "fixture_id": "proton-0001",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '79.2 Gie' for gold dose near '79.2 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "79.2 Gie"
+              },
+              {
+                "fixture_id": "proton-0001",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '79.2 GiE' for gold dose near '79.2 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "79.2 GiE"
+              },
+              {
+                "fixture_id": "proton-0001",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '79.2 giE' for gold dose near '79.2 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "79.2 giE"
+              },
+              {
+                "fixture_id": "proton-0002",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 GI' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 GI"
+              },
+              {
+                "fixture_id": "proton-0002",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 GI-E' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 GI-E"
+              },
+              {
+                "fixture_id": "proton-0004",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '78 GIE' for gold dose near '78 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "78 GIE"
+              },
+              {
+                "fixture_id": "proton-0004",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '78 Gie' for gold dose near '78 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "78 Gie"
+              },
+              {
+                "fixture_id": "proton-0004",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '78 GiE' for gold dose near '78 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "78 GiE"
+              },
+              {
+                "fixture_id": "proton-0004",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '78 giE' for gold dose near '78 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "78 giE"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '70 GIE' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 GIE"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '56 GIE' for gold dose near '56 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "56 GIE"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '70 Gie' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 Gie"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '56 Gie' for gold dose near '56 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "56 Gie"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '70 GiE' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 GiE"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '56 GiE' for gold dose near '56 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "56 GiE"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '70 giE' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 giE"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '56 giE' for gold dose near '56 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "56 giE"
+              },
+              {
+                "fixture_id": "proton-0006",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 GIE' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 GIE"
+              },
+              {
+                "fixture_id": "proton-0006",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 Gie' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 Gie"
+              },
+              {
+                "fixture_id": "proton-0006",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 GiE' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 GiE"
+              },
+              {
+                "fixture_id": "proton-0006",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 giE' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 giE"
+              },
+              {
+                "fixture_id": "proton-0007",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '60 GIE' for gold dose near '60 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "60 GIE"
+              },
+              {
+                "fixture_id": "proton-0007",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '60 Gie' for gold dose near '60 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "60 Gie"
+              },
+              {
+                "fixture_id": "proton-0007",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '60 GiE' for gold dose near '60 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "60 GiE"
+              },
+              {
+                "fixture_id": "proton-0007",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '60 giE' for gold dose near '60 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "60 giE"
+              },
+              {
+                "fixture_id": "proton-0008",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '70 GI' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 GI"
+              },
+              {
+                "fixture_id": "proton-0008",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '74 GI' for gold dose near '74 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "74 GI"
+              },
+              {
+                "fixture_id": "proton-0008",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '74 GI-E' for gold dose near '74 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "74 GI-E"
+              },
+              {
+                "fixture_id": "proton-0009",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '45 GI' for gold dose near '45 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "45 GI"
+              },
+              {
+                "fixture_id": "proton-0009",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '45 GI-E' for gold dose near '45 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "45 GI-E"
+              },
+              {
+                "fixture_id": "proton-0011",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '60 GIE' for gold dose near '60 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "60 GIE"
+              },
+              {
+                "fixture_id": "proton-0011",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '60 Gie' for gold dose near '60 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "60 Gie"
+              },
+              {
+                "fixture_id": "proton-0011",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '60 GiE' for gold dose near '60 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "60 GiE"
+              },
+              {
+                "fixture_id": "proton-0011",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '60 giE' for gold dose near '60 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "60 giE"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '1.8 GIE' for gold dose near '1.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "1.8 GIE"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 GIE' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 GIE"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '1.8 Gie' for gold dose near '1.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "1.8 Gie"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 Gie' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 Gie"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '1.8 GiE' for gold dose near '1.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "1.8 GiE"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 GiE' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 GiE"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '1.8 giE' for gold dose near '1.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "1.8 giE"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 giE' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 giE"
+              },
+              {
+                "fixture_id": "proton-0015",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '79.2 J in' for gold dose near '79.2 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "79.2 J in"
+              },
+              {
+                "fixture_id": "proton-0016",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '23.4 GIE' for gold dose near '23.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "23.4 GIE"
+              },
+              {
+                "fixture_id": "proton-0016",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '23.4 Gie' for gold dose near '23.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "23.4 Gie"
+              },
+              {
+                "fixture_id": "proton-0016",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '23.4 GiE' for gold dose near '23.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "23.4 GiE"
+              },
+              {
+                "fixture_id": "proton-0016",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '23.4 giE' for gold dose near '23.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "23.4 giE"
+              },
+              {
+                "fixture_id": "proton-0019",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '55.8 GI' for gold dose near '55.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "55.8 GI"
+              },
+              {
+                "fixture_id": "proton-0019",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '55.8 GI-E' for gold dose near '55.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "55.8 GI-E"
+              },
+              {
+                "fixture_id": "proton-0021",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '59.4 GI' for gold dose near '59.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "59.4 GI"
+              },
+              {
+                "fixture_id": "proton-0022",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 JIE' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 JIE"
+              },
+              {
+                "fixture_id": "proton-0022",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 Jie' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 Jie"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '23.4 GIE' for gold dose near '23.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "23.4 GIE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 GIE' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 GIE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '55.8 GIE' for gold dose near '55.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "55.8 GIE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '23.4 Gie' for gold dose near '23.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "23.4 Gie"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 Gie' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 Gie"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '55.8 Gie' for gold dose near '55.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "55.8 Gie"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '23.4 GiE' for gold dose near '23.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "23.4 GiE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 GiE' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 GiE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '55.8 GiE' for gold dose near '55.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "55.8 GiE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '23.4 giE' for gold dose near '23.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "23.4 giE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 giE' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 giE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '55.8 giE' for gold dose near '55.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "55.8 giE"
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '21 GIE' for gold dose near '21 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "21 GIE"
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '30 GIE' for gold dose near '30 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "30 GIE"
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '21 Gie' for gold dose near '21 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "21 Gie"
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '30 Gie' for gold dose near '30 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "30 Gie"
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '21 GiE' for gold dose near '21 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "21 GiE"
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '30 GiE' for gold dose near '30 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "30 GiE"
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '21 giE' for gold dose near '21 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "21 giE"
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '30 giE' for gold dose near '30 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "30 giE"
+              }
+            ],
+            "MEDIUM": [
+              {
+                "fixture_id": "proton-0019",
+                "class": "SLASHED_FORM_LOSS",
+                "severity": "MEDIUM",
+                "correctability": "ADJACENCY_RULE",
+                "detail": "Gold has slashed IGRT form '3D/3D' which is absent from prediction",
+                "gold_value": "3D/3D",
+                "pred_value": null
+              },
+              {
+                "fixture_id": "proton-0020",
+                "class": "SLASHED_FORM_LOSS",
+                "severity": "MEDIUM",
+                "correctability": "ADJACENCY_RULE",
+                "detail": "Gold has slashed IGRT form '2D/3D' which is absent from prediction",
+                "gold_value": "2D/3D",
+                "pred_value": null
+              },
+              {
+                "fixture_id": "proton-0022",
+                "class": "SLASHED_FORM_LOSS",
+                "severity": "MEDIUM",
+                "correctability": "ADJACENCY_RULE",
+                "detail": "Gold has slashed IGRT form '3D/3D' which is absent from prediction",
+                "gold_value": "3D/3D",
+                "pred_value": null
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "SLASHED_FORM_LOSS",
+                "severity": "MEDIUM",
+                "correctability": "ADJACENCY_RULE",
+                "detail": "Gold has slashed IGRT form '3D/2D' which is absent from prediction",
+                "gold_value": "3D/2D",
+                "pred_value": null
+              }
+            ]
+          },
+          "counts": {
+            "CRITICAL": 0,
+            "HIGH": 73,
+            "MEDIUM": 4
+          },
+          "counts_by_correctability": {
+            "UNRECOVERABLE": 0,
+            "CONTEXT_RULE": 0,
+            "PHONETIC_MAP": 73,
+            "ADJACENCY_RULE": 4
+          },
+          "residual_unrecoverable": {
+            "CRITICAL": 0,
+            "HIGH": 0,
+            "MEDIUM": 0
+          },
+          "gate": "FAIL",
+          "raw_gate": "FAIL",
+          "post_correction_gate": "PASS",
+          "safety_adjusted_wer": 0.187707
+        }
+      },
+      "overall": {
+        "counts": {
+          "CRITICAL": 0,
+          "HIGH": 94,
+          "MEDIUM": 8
+        },
+        "counts_by_correctability": {
+          "UNRECOVERABLE": 0,
+          "CONTEXT_RULE": 0,
+          "PHONETIC_MAP": 94,
+          "ADJACENCY_RULE": 8
+        },
+        "residual_unrecoverable": {
+          "CRITICAL": 0,
+          "HIGH": 0,
+          "MEDIUM": 0
+        },
+        "gate": "FAIL",
+        "raw_gate": "FAIL",
+        "post_correction_gate": "PASS",
+        "safety_adjusted_wer": 0.176093
+      }
+    },
+    "medasr": {
+      "voices": {
+        "en_GB-alan-medium": {
+          "n_samples": 28,
+          "failures_by_severity": {
+            "CRITICAL": [
+              {
+                "fixture_id": "proton-0002",
+                "class": "DOSE_VALUE_MISSING",
+                "severity": "CRITICAL",
+                "correctability": "UNRECOVERABLE",
+                "detail": "Gold dose value '54' does not appear anywhere in prediction",
+                "gold_value": "54",
+                "pred_value": null
+              },
+              {
+                "fixture_id": "proton-0006",
+                "class": "DOSE_VALUE_MISSING",
+                "severity": "CRITICAL",
+                "correctability": "UNRECOVERABLE",
+                "detail": "Gold dose value '50.4' does not appear anywhere in prediction",
+                "gold_value": "50.4",
+                "pred_value": null
+              },
+              {
+                "fixture_id": "proton-0007",
+                "class": "DOSE_VALUE_MISSING",
+                "severity": "CRITICAL",
+                "correctability": "UNRECOVERABLE",
+                "detail": "Gold dose value '60' does not appear anywhere in prediction",
+                "gold_value": "60",
+                "pred_value": null
+              },
+              {
+                "fixture_id": "proton-0009",
+                "class": "DOSE_VALUE_MISSING",
+                "severity": "CRITICAL",
+                "correctability": "UNRECOVERABLE",
+                "detail": "Gold dose value '45' does not appear anywhere in prediction",
+                "gold_value": "45",
+                "pred_value": null
+              },
+              {
+                "fixture_id": "proton-0016",
+                "class": "DOSE_VALUE_MISSING",
+                "severity": "CRITICAL",
+                "correctability": "UNRECOVERABLE",
+                "detail": "Gold dose value '23.4' does not appear anywhere in prediction",
+                "gold_value": "23.4",
+                "pred_value": null
+              },
+              {
+                "fixture_id": "proton-0019",
+                "class": "DOSE_VALUE_MISSING",
+                "severity": "CRITICAL",
+                "correctability": "UNRECOVERABLE",
+                "detail": "Gold dose value '55.8' does not appear anywhere in prediction",
+                "gold_value": "55.8",
+                "pred_value": null
+              },
+              {
+                "fixture_id": "proton-0021",
+                "class": "DOSE_VALUE_MISSING",
+                "severity": "CRITICAL",
+                "correctability": "UNRECOVERABLE",
+                "detail": "Gold dose value '59.4' does not appear anywhere in prediction",
+                "gold_value": "59.4",
+                "pred_value": null
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_VALUE_MISSING",
+                "severity": "CRITICAL",
+                "correctability": "UNRECOVERABLE",
+                "detail": "Gold dose value '21' does not appear anywhere in prediction",
+                "gold_value": "21",
+                "pred_value": null
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_VALUE_MISSING",
+                "severity": "CRITICAL",
+                "correctability": "UNRECOVERABLE",
+                "detail": "Gold dose value '30' does not appear anywhere in prediction",
+                "gold_value": "30",
+                "pred_value": null
+              }
+            ],
+            "HIGH": [
+              {
+                "fixture_id": "proton-0001",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '79.2 JIE' for gold dose near '79.2 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "79.2 JIE"
+              },
+              {
+                "fixture_id": "proton-0001",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '79.2 Jie' for gold dose near '79.2 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "79.2 Jie"
+              },
+              {
+                "fixture_id": "proton-0002",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 JIE' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 JIE"
+              },
+              {
+                "fixture_id": "proton-0002",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 Jie' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 Jie"
+              },
+              {
+                "fixture_id": "proton-0004",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '78 JIE' for gold dose near '78 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "78 JIE"
+              },
+              {
+                "fixture_id": "proton-0004",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '78 Jie' for gold dose near '78 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "78 Jie"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '70 JIE' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 JIE"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '56 JIE' for gold dose near '56 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "56 JIE"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '70 Jie' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 Jie"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '56 Jie' for gold dose near '56 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "56 Jie"
+              },
+              {
+                "fixture_id": "proton-0006",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 JIE' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 JIE"
+              },
+              {
+                "fixture_id": "proton-0006",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 Jie' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 Jie"
+              },
+              {
+                "fixture_id": "proton-0007",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '60 JIE' for gold dose near '60 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "60 JIE"
+              },
+              {
+                "fixture_id": "proton-0007",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '60 Jie' for gold dose near '60 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "60 Jie"
+              },
+              {
+                "fixture_id": "proton-0008",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '74 GIE' for gold dose near '74 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "74 GIE"
+              },
+              {
+                "fixture_id": "proton-0008",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '74 Gie' for gold dose near '74 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "74 Gie"
+              },
+              {
+                "fixture_id": "proton-0008",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '74 GiE' for gold dose near '74 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "74 GiE"
+              },
+              {
+                "fixture_id": "proton-0008",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '74 giE' for gold dose near '74 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "74 giE"
+              },
+              {
+                "fixture_id": "proton-0009",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '45 JIE' for gold dose near '45 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "45 JIE"
+              },
+              {
+                "fixture_id": "proton-0009",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '45 Jie' for gold dose near '45 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "45 Jie"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '1.8 GIE' for gold dose near '1.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "1.8 GIE"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 GIE' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 GIE"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '1.8 Gie' for gold dose near '1.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "1.8 Gie"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 Gie' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 Gie"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '1.8 GiE' for gold dose near '1.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "1.8 GiE"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 GiE' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 GiE"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '1.8 giE' for gold dose near '1.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "1.8 giE"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 giE' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 giE"
+              },
+              {
+                "fixture_id": "proton-0014",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '70 JIE' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 JIE"
+              },
+              {
+                "fixture_id": "proton-0014",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '70 Jie' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 Jie"
+              },
+              {
+                "fixture_id": "proton-0019",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '55.8 JIE' for gold dose near '55.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "55.8 JIE"
+              },
+              {
+                "fixture_id": "proton-0019",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '55.8 Jie' for gold dose near '55.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "55.8 Jie"
+              },
+              {
+                "fixture_id": "proton-0020",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "correctability": "CONTEXT_RULE",
+                "detail": "Gold has '50.4 gray equivalent' but prediction silently uses '50.4 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "50.4 gray equivalent",
+                "pred_value": "50.4 Gy"
+              },
+              {
+                "fixture_id": "proton-0021",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '59.4 JIE' for gold dose near '59.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "59.4 JIE"
+              },
+              {
+                "fixture_id": "proton-0021",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '59.4 Jie' for gold dose near '59.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "59.4 Jie"
+              },
+              {
+                "fixture_id": "proton-0022",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 GIE' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 GIE"
+              },
+              {
+                "fixture_id": "proton-0022",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 Gie' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 Gie"
+              },
+              {
+                "fixture_id": "proton-0022",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 GiE' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 GiE"
+              },
+              {
+                "fixture_id": "proton-0022",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 giE' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 giE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '23.4 GIE' for gold dose near '23.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "23.4 GIE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 GIE' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 GIE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '55.8 GIE' for gold dose near '55.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "55.8 GIE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '23.4 Gie' for gold dose near '23.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "23.4 Gie"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 Gie' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 Gie"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '55.8 Gie' for gold dose near '55.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "55.8 Gie"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '23.4 GiE' for gold dose near '23.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "23.4 GiE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 GiE' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 GiE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '55.8 GiE' for gold dose near '55.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "55.8 GiE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '23.4 giE' for gold dose near '23.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "23.4 giE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 giE' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 giE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '55.8 giE' for gold dose near '55.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "55.8 giE"
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '21 JIE' for gold dose near '21 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "21 JIE"
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '30 JIE' for gold dose near '30 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "30 JIE"
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '21 Jie' for gold dose near '21 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "21 Jie"
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '30 Jie' for gold dose near '30 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "30 Jie"
+              }
+            ],
+            "MEDIUM": [
+              {
+                "fixture_id": "proton-0019",
+                "class": "SLASHED_FORM_LOSS",
+                "severity": "MEDIUM",
+                "correctability": "ADJACENCY_RULE",
+                "detail": "Gold has slashed IGRT form '3D/3D' which is absent from prediction",
+                "gold_value": "3D/3D",
+                "pred_value": null
+              },
+              {
+                "fixture_id": "proton-0020",
+                "class": "SLASHED_FORM_LOSS",
+                "severity": "MEDIUM",
+                "correctability": "ADJACENCY_RULE",
+                "detail": "Gold has slashed IGRT form '2D/3D' which is absent from prediction",
+                "gold_value": "2D/3D",
+                "pred_value": null
+              },
+              {
+                "fixture_id": "proton-0022",
+                "class": "SLASHED_FORM_LOSS",
+                "severity": "MEDIUM",
+                "correctability": "ADJACENCY_RULE",
+                "detail": "Gold has slashed IGRT form '3D/3D' which is absent from prediction",
+                "gold_value": "3D/3D",
+                "pred_value": null
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "SLASHED_FORM_LOSS",
+                "severity": "MEDIUM",
+                "correctability": "ADJACENCY_RULE",
+                "detail": "Gold has slashed IGRT form '3D/2D' which is absent from prediction",
+                "gold_value": "3D/2D",
+                "pred_value": null
+              }
+            ]
+          },
+          "counts": {
+            "CRITICAL": 9,
+            "HIGH": 55,
+            "MEDIUM": 4
+          },
+          "counts_by_correctability": {
+            "UNRECOVERABLE": 9,
+            "CONTEXT_RULE": 1,
+            "PHONETIC_MAP": 54,
+            "ADJACENCY_RULE": 4
+          },
+          "residual_unrecoverable": {
+            "CRITICAL": 9,
+            "HIGH": 0,
+            "MEDIUM": 0
+          },
+          "gate": "FAIL",
+          "raw_gate": "FAIL",
+          "post_correction_gate": "FAIL",
+          "safety_adjusted_wer": 0.28365
+        },
+        "en_US-lessac-high": {
+          "n_samples": 28,
+          "failures_by_severity": {
+            "CRITICAL": [
+              {
+                "fixture_id": "proton-0004",
+                "class": "DOSE_VALUE_MISSING",
+                "severity": "CRITICAL",
+                "correctability": "UNRECOVERABLE",
+                "detail": "Gold dose value '78' does not appear anywhere in prediction",
+                "gold_value": "78",
+                "pred_value": null
+              },
+              {
+                "fixture_id": "proton-0007",
+                "class": "DOSE_VALUE_MISSING",
+                "severity": "CRITICAL",
+                "correctability": "UNRECOVERABLE",
+                "detail": "Gold dose value '60' does not appear anywhere in prediction",
+                "gold_value": "60",
+                "pred_value": null
+              }
+            ],
+            "HIGH": [
+              {
+                "fixture_id": "proton-0001",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '79.2 Ji' for gold dose near '79.2 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "79.2 Ji"
+              },
+              {
+                "fixture_id": "proton-0002",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 GIE' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 GIE"
+              },
+              {
+                "fixture_id": "proton-0002",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 Gie' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 Gie"
+              },
+              {
+                "fixture_id": "proton-0002",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 GiE' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 GiE"
+              },
+              {
+                "fixture_id": "proton-0002",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 giE' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 giE"
+              },
+              {
+                "fixture_id": "proton-0003",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "correctability": "CONTEXT_RULE",
+                "detail": "Gold has '23.4 gray equivalent' but prediction silently uses '23.4 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "23.4 gray equivalent",
+                "pred_value": "23.4 Gy"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '70 GIE' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 GIE"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '56 GIE' for gold dose near '56 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "56 GIE"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '70 Gie' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 Gie"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '56 Gie' for gold dose near '56 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "56 Gie"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '70 GiE' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 GiE"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '56 GiE' for gold dose near '56 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "56 GiE"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '70 giE' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 giE"
+              },
+              {
+                "fixture_id": "proton-0005",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '56 giE' for gold dose near '56 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "56 giE"
+              },
+              {
+                "fixture_id": "proton-0006",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 GIE' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 GIE"
+              },
+              {
+                "fixture_id": "proton-0006",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 Gie' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 Gie"
+              },
+              {
+                "fixture_id": "proton-0006",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 GiE' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 GiE"
+              },
+              {
+                "fixture_id": "proton-0006",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 giE' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 giE"
+              },
+              {
+                "fixture_id": "proton-0008",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '70 GI' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 GI"
+              },
+              {
+                "fixture_id": "proton-0008",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '74 GIE' for gold dose near '74 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "74 GIE"
+              },
+              {
+                "fixture_id": "proton-0008",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '74 Gie' for gold dose near '74 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "74 Gie"
+              },
+              {
+                "fixture_id": "proton-0008",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '74 GiE' for gold dose near '74 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "74 GiE"
+              },
+              {
+                "fixture_id": "proton-0008",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '74 giE' for gold dose near '74 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "74 giE"
+              },
+              {
+                "fixture_id": "proton-0009",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '45 GIE' for gold dose near '45 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "45 GIE"
+              },
+              {
+                "fixture_id": "proton-0009",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '45 Gie' for gold dose near '45 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "45 Gie"
+              },
+              {
+                "fixture_id": "proton-0009",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '45 GiE' for gold dose near '45 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "45 GiE"
+              },
+              {
+                "fixture_id": "proton-0009",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '45 giE' for gold dose near '45 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "45 giE"
+              },
+              {
+                "fixture_id": "proton-0010",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "correctability": "CONTEXT_RULE",
+                "detail": "Gold has '70.4 gray equivalent' but prediction silently uses '70.4 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "70.4 gray equivalent",
+                "pred_value": "70.4 Gy"
+              },
+              {
+                "fixture_id": "proton-0011",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '60 GIE' for gold dose near '60 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "60 GIE"
+              },
+              {
+                "fixture_id": "proton-0011",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '60 Gie' for gold dose near '60 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "60 Gie"
+              },
+              {
+                "fixture_id": "proton-0011",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '60 GiE' for gold dose near '60 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "60 GiE"
+              },
+              {
+                "fixture_id": "proton-0011",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '60 giE' for gold dose near '60 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "60 giE"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '1.8 GE' for gold dose near '1.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "1.8 GE"
+              },
+              {
+                "fixture_id": "proton-0012",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '50.4 GE' for gold dose near '50.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "50.4 GE"
+              },
+              {
+                "fixture_id": "proton-0014",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '70 GIE' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 GIE"
+              },
+              {
+                "fixture_id": "proton-0014",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '70 Gie' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 Gie"
+              },
+              {
+                "fixture_id": "proton-0014",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '70 GiE' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 GiE"
+              },
+              {
+                "fixture_id": "proton-0014",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '70 giE' for gold dose near '70 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "70 giE"
+              },
+              {
+                "fixture_id": "proton-0015",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '79.2 GI' for gold dose near '79.2 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "79.2 GI"
+              },
+              {
+                "fixture_id": "proton-0016",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '23.4 GIE' for gold dose near '23.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "23.4 GIE"
+              },
+              {
+                "fixture_id": "proton-0016",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '23.4 Gie' for gold dose near '23.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "23.4 Gie"
+              },
+              {
+                "fixture_id": "proton-0016",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '23.4 GiE' for gold dose near '23.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "23.4 GiE"
+              },
+              {
+                "fixture_id": "proton-0016",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '23.4 giE' for gold dose near '23.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "23.4 giE"
+              },
+              {
+                "fixture_id": "proton-0019",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '55.8 GIE' for gold dose near '55.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "55.8 GIE"
+              },
+              {
+                "fixture_id": "proton-0019",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '55.8 Gie' for gold dose near '55.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "55.8 Gie"
+              },
+              {
+                "fixture_id": "proton-0019",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '55.8 GiE' for gold dose near '55.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "55.8 GiE"
+              },
+              {
+                "fixture_id": "proton-0019",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '55.8 giE' for gold dose near '55.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "55.8 giE"
+              },
+              {
+                "fixture_id": "proton-0020",
+                "class": "SILENT_UNIT_SUBSTITUTION",
+                "severity": "HIGH",
+                "correctability": "CONTEXT_RULE",
+                "detail": "Gold has '50.4 gray equivalent' but prediction silently uses '50.4 Gy' (particle-therapy context present; RBE correction lost)",
+                "gold_value": "50.4 gray equivalent",
+                "pred_value": "50.4 Gy"
+              },
+              {
+                "fixture_id": "proton-0021",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '59.4 GIE' for gold dose near '59.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "59.4 GIE"
+              },
+              {
+                "fixture_id": "proton-0021",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '59.4 Gie' for gold dose near '59.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "59.4 Gie"
+              },
+              {
+                "fixture_id": "proton-0021",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '59.4 GiE' for gold dose near '59.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "59.4 GiE"
+              },
+              {
+                "fixture_id": "proton-0021",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '59.4 giE' for gold dose near '59.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "59.4 giE"
+              },
+              {
+                "fixture_id": "proton-0022",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 GIE' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 GIE"
+              },
+              {
+                "fixture_id": "proton-0022",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 Gie' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 Gie"
+              },
+              {
+                "fixture_id": "proton-0022",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 GiE' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 GiE"
+              },
+              {
+                "fixture_id": "proton-0022",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 giE' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 giE"
+              },
+              {
+                "fixture_id": "proton-0024",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '21.6 GIE' for gold dose near '21.6 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "21.6 GIE"
+              },
+              {
+                "fixture_id": "proton-0024",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '21.6 Gie' for gold dose near '21.6 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "21.6 Gie"
+              },
+              {
+                "fixture_id": "proton-0024",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '21.6 GiE' for gold dose near '21.6 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "21.6 GiE"
+              },
+              {
+                "fixture_id": "proton-0024",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '21.6 giE' for gold dose near '21.6 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "21.6 giE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 GIE' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 GIE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '55.8 GIE' for gold dose near '55.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "55.8 GIE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 Gie' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 Gie"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '55.8 Gie' for gold dose near '55.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "55.8 Gie"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 GiE' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 GiE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '55.8 GiE' for gold dose near '55.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "55.8 GiE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '23.4 GE' for gold dose near '23.4 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "23.4 GE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '54 giE' for gold dose near '54 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "54 giE"
+              },
+              {
+                "fixture_id": "proton-0027",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '55.8 giE' for gold dose near '55.8 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "55.8 giE"
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '21 GIE' for gold dose near '21 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "21 GIE"
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '30 GIE' for gold dose near '30 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "30 GIE"
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '21 Gie' for gold dose near '21 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "21 Gie"
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '30 Gie' for gold dose near '30 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "30 Gie"
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '21 GiE' for gold dose near '21 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "21 GiE"
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '30 GiE' for gold dose near '30 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "30 GiE"
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '21 giE' for gold dose near '21 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "21 giE"
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "DOSE_UNIT_CORRUPTION",
+                "severity": "HIGH",
+                "correctability": "PHONETIC_MAP",
+                "detail": "Prediction contains known-bad Gy rendering '30 giE' for gold dose near '30 Gy/GyE'",
+                "gold_value": null,
+                "pred_value": "30 giE"
+              }
+            ],
+            "MEDIUM": [
+              {
+                "fixture_id": "proton-0019",
+                "class": "SLASHED_FORM_LOSS",
+                "severity": "MEDIUM",
+                "correctability": "ADJACENCY_RULE",
+                "detail": "Gold has slashed IGRT form '3D/3D' which is absent from prediction",
+                "gold_value": "3D/3D",
+                "pred_value": null
+              },
+              {
+                "fixture_id": "proton-0020",
+                "class": "SLASHED_FORM_LOSS",
+                "severity": "MEDIUM",
+                "correctability": "ADJACENCY_RULE",
+                "detail": "Gold has slashed IGRT form '2D/3D' which is absent from prediction",
+                "gold_value": "2D/3D",
+                "pred_value": null
+              },
+              {
+                "fixture_id": "proton-0022",
+                "class": "SLASHED_FORM_LOSS",
+                "severity": "MEDIUM",
+                "correctability": "ADJACENCY_RULE",
+                "detail": "Gold has slashed IGRT form '3D/3D' which is absent from prediction",
+                "gold_value": "3D/3D",
+                "pred_value": null
+              },
+              {
+                "fixture_id": "proton-0028",
+                "class": "SLASHED_FORM_LOSS",
+                "severity": "MEDIUM",
+                "correctability": "ADJACENCY_RULE",
+                "detail": "Gold has slashed IGRT form '3D/2D' which is absent from prediction",
+                "gold_value": "3D/2D",
+                "pred_value": null
+              }
+            ]
+          },
+          "counts": {
+            "CRITICAL": 2,
+            "HIGH": 77,
+            "MEDIUM": 4
+          },
+          "counts_by_correctability": {
+            "UNRECOVERABLE": 2,
+            "CONTEXT_RULE": 3,
+            "PHONETIC_MAP": 74,
+            "ADJACENCY_RULE": 4
+          },
+          "residual_unrecoverable": {
+            "CRITICAL": 2,
+            "HIGH": 0,
+            "MEDIUM": 0
+          },
+          "gate": "FAIL",
+          "raw_gate": "FAIL",
+          "post_correction_gate": "FAIL",
+          "safety_adjusted_wer": 0.259393
+        }
+      },
+      "overall": {
+        "counts": {
+          "CRITICAL": 11,
+          "HIGH": 132,
+          "MEDIUM": 8
+        },
+        "counts_by_correctability": {
+          "UNRECOVERABLE": 11,
+          "CONTEXT_RULE": 4,
+          "PHONETIC_MAP": 128,
+          "ADJACENCY_RULE": 8
+        },
+        "residual_unrecoverable": {
+          "CRITICAL": 11,
+          "HIGH": 0,
+          "MEDIUM": 0
+        },
+        "gate": "FAIL",
+        "raw_gate": "FAIL",
+        "post_correction_gate": "FAIL",
+        "safety_adjusted_wer": 0.271521
+      }
+    }
+  }
+}
