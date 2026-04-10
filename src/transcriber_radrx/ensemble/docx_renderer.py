@@ -32,7 +32,8 @@ from __future__ import annotations
 from datetime import date
 from pathlib import Path
 
-from docx import Document
+from docx import Document  # noqa: F401 — used as factory
+from docx.document import Document as DocumentClass
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.shared import Pt, RGBColor
 from docx_revisions.paragraph import RevisionParagraph  # type: ignore[import-untyped]
@@ -97,7 +98,7 @@ def _render_word(
     author_ensemble: str,
     *,
     mode: str = "audit",
-    doc: Document | None = None,
+    doc: DocumentClass | None = None,
 ) -> None:
     """Render one EnsembleWord into *rp* using appropriate Track Changes markup.
 
