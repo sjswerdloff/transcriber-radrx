@@ -103,6 +103,7 @@ asr-voxtral = [
     # Voxtral uses mistral-common for its audio-aware tokenization in
     # some code paths (notably the apply_transcription_request path).
     "mistral-common>=1.5",
+    "librosa>=0.10",
 ]
 
 [project.scripts]

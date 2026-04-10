@@ -1,0 +1,1005 @@
+{
+  "vocabulary": "/Users/stuartswerdloff/ai/ClaudeInstanceHomeOffices/silas-397300f6/kindled_projects/transcriber-radrx/data/rt_vocabulary.txt",
+  "sample_count": 20,
+  "dense_only": true,
+  "seed": 42,
+  "system_prompt": null,
+  "noise": null,
+  "fixture_ids": [
+    "anatomy-0001",
+    "anatomy-0002",
+    "anatomy-0003",
+    "anatomy-0004",
+    "anatomy-0005",
+    "anatomy-0006",
+    "anatomy-0007",
+    "anatomy-0008",
+    "anatomy-0009",
+    "anatomy-0010",
+    "anatomy-0011",
+    "anatomy-0012",
+    "anatomy-0013",
+    "anatomy-0014",
+    "anatomy-0015",
+    "anatomy-0016",
+    "anatomy-0017",
+    "anatomy-0018",
+    "anatomy-0019",
+    "anatomy-0020"
+  ],
+  "voices": [
+    "en_GB-alan-medium",
+    "en_US-lessac-high"
+  ],
+  "backends": [
+    "voxtral"
+  ],
+  "results": [
+    {
+      "backend": "voxtral",
+      "by_voice": [
+        {
+          "voice": "en_GB-alan-medium",
+          "summary": {
+            "sample_count": 20,
+            "error_count": 0,
+            "avg_raw_wer": 0.1159,
+            "avg_corrected_wer": 0.1159,
+            "terms_found": 73,
+            "terms_total": 101,
+            "term_recall": 0.7228
+          },
+          "samples": [
+            {
+              "fixture_id": "anatomy-0001",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_breast",
+              "ground_truth": "Whole breast irradiation of 40 Gy in 15 fractions following lumpectomy with a sequential boost of 10 Gy in 4 fractions to the tumor bed.",
+              "raw_transcription": "whole breast irradiation of 40 Gy in 15 fractions following lumpectomy with a sequential boost of 10 Gy in 4 fractions to the tumor bed.",
+              "corrected_transcription": "whole breast irradiation of 40 Gy in 15 fractions following lumpectomy with a sequential boost of 10 Gy in 4 fractions to the tumor BED.",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "Gy",
+                "lumpectomy",
+                "sequential boost",
+                "tumor bed"
+              ],
+              "terms_found": 4,
+              "terms_total": 4,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0002",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_breast",
+              "ground_truth": "Right breast tangential fields with deep inspiration breath hold to 50 Gy in 25 fractions including the supraclavicular fossa and level three axilla.",
+              "raw_transcription": "Right breast tangential fields with deep inspiration breath hold to 50 Gy in 25 fractions including the supraclavicular fossa and level 3 axilla.",
+              "corrected_transcription": "Right breast tangential fields with deep inspiration breath hold to 50 Gy in 25 fractions including the supraclavicular fossa and level 3 axilla.",
+              "raw_wer": 0.043478260869565216,
+              "corrected_wer": 0.043478260869565216,
+              "vocabulary_terms": [
+                "Gy",
+                "tangential fields",
+                "deep inspiration breath hold",
+                "DIBH",
+                "supraclavicular fossa",
+                "axilla"
+              ],
+              "terms_found": 5,
+              "terms_total": 6,
+              "terms_missing": [
+                "DIBH"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0003",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_prostate",
+              "ground_truth": "Definitive prostate VMAT to 78 Gy in 39 fractions with simultaneous integrated boost to the intraprostatic lesion to 82 Gy.",
+              "raw_transcription": "definitive prostate FEMAT to 78 Gy in 39 fractions with simultaneous integrated boost to the intraprostatic lesion to 82 Gy.",
+              "corrected_transcription": "definitive prostate FEMAT to 78 Gy in 39 fractions with simultaneous integrated boost to the intraprostatic lesion to 82 Gy.",
+              "raw_wer": 0.05,
+              "corrected_wer": 0.05,
+              "vocabulary_terms": [
+                "Gy",
+                "VMAT",
+                "simultaneous integrated boost",
+                "intraprostatic lesion"
+              ],
+              "terms_found": 3,
+              "terms_total": 4,
+              "terms_missing": [
+                "VMAT"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0004",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_prostate",
+              "ground_truth": "Post-prostatectomy radiation to the prostate bed of 66 Gy in 33 fractions with fiducial marker image guidance and rectal SpaceOAR hydrogel in situ.",
+              "raw_transcription": "Post-prostatectomy radiation to the prostate bed of 66 Gy in 33 fractions with fiducial marker image guidance and rectal space OAR hydrogel in situ.",
+              "corrected_transcription": "Post-prostatectomy radiation to the prostate BED of 66 Gy in 33 fractions with fiducial marker image guidance and rectal space OAR hydrogel in situ.",
+              "raw_wer": 0.08695652173913043,
+              "corrected_wer": 0.08695652173913043,
+              "vocabulary_terms": [
+                "Gy",
+                "prostatectomy",
+                "prostate bed",
+                "fiducial marker",
+                "SpaceOAR",
+                "hydrogel"
+              ],
+              "terms_found": 5,
+              "terms_total": 6,
+              "terms_missing": [
+                "SpaceOAR"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0005",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_cervix",
+              "ground_truth": "External beam radiation to the pelvis of 45 Gy in 25 fractions with concurrent weekly cisplatin followed by intracavitary brachytherapy using tandem and ovoids.",
+              "raw_transcription": "External beam radiation to the pelvis of 45 Gy in 25 fractions with concurrent weekly cisplatinum followed by intracavitary brachytherapy using tandem and ovids.",
+              "corrected_transcription": "External beam radiation to the pelvis of 45 Gy in 25 fractions with concurrent weekly cisplatinum followed by intracavitary brachytherapy using tandem and ovids.",
+              "raw_wer": 0.08333333333333333,
+              "corrected_wer": 0.08333333333333333,
+              "vocabulary_terms": [
+                "Gy",
+                "cisplatin",
+                "brachytherapy",
+                "intracavitary",
+                "tandem and ovoids"
+              ],
+              "terms_found": 3,
+              "terms_total": 5,
+              "terms_missing": [
+                "cisplatin",
+                "tandem and ovoids"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0006",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_cervix",
+              "ground_truth": "Cervical cancer treated with 50.4 Gy in 28 fractions to the primary and pelvic nodes with parametrial boost to 60 Gy and HDR brachytherapy of 7 Gy times 4 fractions to point A.",
+              "raw_transcription": "Cervical cancer treated with 50.4 Gy in 28 fractions to the primary and pelvic nodes with parametrial boost to 60 Gy and HDR brachytherapy of 7 Gy x 4 fractions to point A.",
+              "corrected_transcription": "Cervical cancer treated with 50.4 Gy in 28 fractions to the primary and pelvic nodes with parametrial boost to 60 Gy and HDR brachytherapy of 7 Gy x 4 fractions to point A.",
+              "raw_wer": 0.029411764705882353,
+              "corrected_wer": 0.029411764705882353,
+              "vocabulary_terms": [
+                "Gy",
+                "parametrial",
+                "HDR",
+                "brachytherapy",
+                "point A"
+              ],
+              "terms_found": 5,
+              "terms_total": 5,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0007",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_rectum",
+              "ground_truth": "Long course neoadjuvant chemoradiation of 50.4 Gy in 28 fractions to the rectum and mesorectum with concurrent capecitabine prior to total mesorectal excision.",
+              "raw_transcription": "Long-course neo-adjuvant chemoradiation of 50.4 Gy in 28 fractions to the rectum and mesocolon with concurrent capecitabine prior to total mesocolon excision.",
+              "corrected_transcription": "Long-course neo-adjuvant chemoradiation of 50.4 Gy in 28 fractions to the rectum and mesocolon with concurrent capecitabine prior to total mesocolon excision.",
+              "raw_wer": 0.20833333333333334,
+              "corrected_wer": 0.20833333333333334,
+              "vocabulary_terms": [
+                "Gy",
+                "chemoradiation",
+                "mesorectum",
+                "capecitabine",
+                "total mesorectal excision"
+              ],
+              "terms_found": 3,
+              "terms_total": 5,
+              "terms_missing": [
+                "mesorectum",
+                "total mesorectal excision"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0008",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_rectum",
+              "ground_truth": "Short course preoperative radiation of 25 Gy in 5 fractions to the rectal primary and mesorectal lymph nodes followed by delayed surgery at 8 weeks.",
+              "raw_transcription": "Short course preoperative radiation of 25 Gy in 5 fractions to the rectal primary and mesoctal lymph nodes followed by delayed surgery at 8 weeks.",
+              "corrected_transcription": "Short course preoperative radiation of 25 Gy in 5 fractions to the rectal primary and mesoctal lymph nodes followed by delayed surgery at 8 weeks.",
+              "raw_wer": 0.04,
+              "corrected_wer": 0.04,
+              "vocabulary_terms": [
+                "Gy",
+                "mesorectal",
+                "preoperative"
+              ],
+              "terms_found": 2,
+              "terms_total": 3,
+              "terms_missing": [
+                "mesorectal"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0009",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_anus",
+              "ground_truth": "Definitive chemoradiation for squamous cell carcinoma of the anal canal with dose painting to 54 Gy to the primary and 36 Gy to elective inguinal nodes with concurrent mitomycin-C and 5-fluorouracil.",
+              "raw_transcription": "Definitive Kima radiation for squamous cell carcinoma of the Engel canal with dose painting to 54 Gy to the primary and 36 Gy to elective inguinal nodes with concurrent mitomycin C and 5-fluoracil.",
+              "corrected_transcription": "Definitive Kima radiation for squamous cell carcinoma of the Engel canal with dose painting to 54 Gy to the primary and 36 Gy to elective inguinal nodes with concurrent mitomycin C and 5-fluoracil.",
+              "raw_wer": 0.1935483870967742,
+              "corrected_wer": 0.1935483870967742,
+              "vocabulary_terms": [
+                "Gy",
+                "squamous cell carcinoma",
+                "anal canal",
+                "dose painting",
+                "inguinal nodes",
+                "mitomycin-C",
+                "5-fluorouracil"
+              ],
+              "terms_found": 4,
+              "terms_total": 7,
+              "terms_missing": [
+                "anal canal",
+                "mitomycin-C",
+                "5-fluorouracil"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0010",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_anus",
+              "ground_truth": "Anal margin carcinoma treated with IMRT to 50 Gy in 25 fractions to the primary with concurrent 5-FU and elective coverage of the bilateral inguinal and internal iliac nodes.",
+              "raw_transcription": "Anal margin carcinoma treated with IMMUT to 50 Gy in 25 fractions to the primary with concurrent 5-FU and elective coverage of the bilateral inguinal and internal iliac nodes.",
+              "corrected_transcription": "Anal margin carcinoma treated with IMMUT to 50 Gy in 25 fractions to the primary with concurrent 5-FU and elective coverage of the bilateral inguinal and internal iliac nodes.",
+              "raw_wer": 0.034482758620689655,
+              "corrected_wer": 0.034482758620689655,
+              "vocabulary_terms": [
+                "Gy",
+                "IMRT",
+                "5-FU",
+                "inguinal",
+                "internal iliac"
+              ],
+              "terms_found": 3,
+              "terms_total": 5,
+              "terms_missing": [
+                "IMRT",
+                "5-FU"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0011",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_vulva",
+              "ground_truth": "Adjuvant pelvic radiation for vulvar squamous cell carcinoma of 45 Gy in 25 fractions with boost to 54 Gy to the vulvar tumor bed and bilateral inguinofemoral nodes.",
+              "raw_transcription": "A juvant pelvic radiation for vulvar squamous cell carcinoma of 45 Gy in 25 fractions with boost to 54 Gy to the vulvar tumor bed and bilateral inguinofemoral nodes.",
+              "corrected_transcription": "A juvant pelvic radiation for vulvar squamous cell carcinoma of 45 Gy in 25 fractions with boost to 54 Gy to the vulvar tumor BED and bilateral inguinofemoral nodes.",
+              "raw_wer": 0.07142857142857142,
+              "corrected_wer": 0.07142857142857142,
+              "vocabulary_terms": [
+                "Gy",
+                "vulvar",
+                "squamous cell carcinoma",
+                "inguinofemoral",
+                "tumor bed"
+              ],
+              "terms_found": 5,
+              "terms_total": 5,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0012",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_vagina",
+              "ground_truth": "Vaginal cuff HDR brachytherapy of 7 Gy times 3 fractions prescribed to 5 millimeters depth following total abdominal hysterectomy and bilateral salpingo-oophorectomy.",
+              "raw_transcription": "\"Brachytherapy of 7 Gy x 3 fractions prescribed to 5 mm depth following total abdominal hysterectomy and bilateral salpingo-forkectomy.\"",
+              "corrected_transcription": "\"brachytherapy of 7 Gy x 3 fractions prescribed to 5 mm depth following total abdominal hysterectomy and bilateral salpingo-forkectomy.\"",
+              "raw_wer": 0.2727272727272727,
+              "corrected_wer": 0.2727272727272727,
+              "vocabulary_terms": [
+                "Gy",
+                "vaginal cuff",
+                "HDR",
+                "brachytherapy",
+                "hysterectomy",
+                "salpingo-oophorectomy"
+              ],
+              "terms_found": 3,
+              "terms_total": 6,
+              "terms_missing": [
+                "vaginal cuff",
+                "HDR",
+                "salpingo-oophorectomy"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0013",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_endometrium",
+              "ground_truth": "Adjuvant radiation for endometrial carcinoma of 45 Gy in 25 fractions to the pelvis with a vaginal cuff boost using HDR brachytherapy of 6 Gy times 2 fractions.",
+              "raw_transcription": "HDR brachytherapy of 6 Gy x 2 fractions.",
+              "corrected_transcription": "HDR brachytherapy of 6 Gy x 2 fractions.",
+              "raw_wer": 0.75,
+              "corrected_wer": 0.75,
+              "vocabulary_terms": [
+                "Gy",
+                "endometrial carcinoma",
+                "vaginal cuff",
+                "HDR",
+                "brachytherapy"
+              ],
+              "terms_found": 3,
+              "terms_total": 5,
+              "terms_missing": [
+                "endometrial carcinoma",
+                "vaginal cuff"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0014",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_endometrium",
+              "ground_truth": "Endometrial cancer pelvic IMRT of 50.4 Gy in 28 fractions with concurrent carboplatin and paclitaxel for stage IIIC1 disease with para-aortic nodal involvement.",
+              "raw_transcription": "Endometrial cancer pelvic immit of 50.4 g in 28 fractions with concurrent carboplatin and paclitaxel for stage Ic1 disease with para-aortic nodal involvement.",
+              "corrected_transcription": "Endometrial cancer pelvic immit of 50.4 g in 28 fractions with concurrent carboplatin and paclitaxel for stage Ic1 disease with para-aortic nodal involvement.",
+              "raw_wer": 0.125,
+              "corrected_wer": 0.125,
+              "vocabulary_terms": [
+                "Gy",
+                "IMRT",
+                "carboplatin",
+                "paclitaxel",
+                "para-aortic"
+              ],
+              "terms_found": 2,
+              "terms_total": 5,
+              "terms_missing": [
+                "Gy",
+                "IMRT",
+                "para-aortic"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0015",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_testes",
+              "ground_truth": "Adjuvant para-aortic strip radiation for stage IIB seminoma of 20 Gy in 10 fractions following left radical orchidectomy.",
+              "raw_transcription": "A juvant para-aortic strip radiation for stage IIB seminoma of 20 Gy in 10 fractions following left radical orchidectomy.",
+              "corrected_transcription": "A juvant para-aortic strip radiation for stage IIB seminoma of 20 Gy in 10 fractions following left radical orchidectomy.",
+              "raw_wer": 0.1111111111111111,
+              "corrected_wer": 0.1111111111111111,
+              "vocabulary_terms": [
+                "Gy",
+                "para-aortic",
+                "seminoma",
+                "orchidectomy"
+              ],
+              "terms_found": 3,
+              "terms_total": 4,
+              "terms_missing": [
+                "para-aortic"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0016",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_testes",
+              "ground_truth": "Dog-leg field radiation for stage IIA seminoma of 30 Gy in 15 fractions covering the para-aortic and ipsilateral iliac nodes following orchidectomy.",
+              "raw_transcription": "Dogleg field radiation for stage IIA seminoma of 30 Gy in 15 fractions covering the para-aortic and ipsilateral iliac nodes following orchidectomy.",
+              "corrected_transcription": "Dogleg field radiation for stage IIA seminoma of 30 Gy in 15 fractions covering the para-aortic and ipsilateral iliac nodes following orchidectomy.",
+              "raw_wer": 0.045454545454545456,
+              "corrected_wer": 0.045454545454545456,
+              "vocabulary_terms": [
+                "Gy",
+                "dog-leg field",
+                "seminoma",
+                "para-aortic",
+                "ipsilateral iliac",
+                "orchidectomy"
+              ],
+              "terms_found": 4,
+              "terms_total": 6,
+              "terms_missing": [
+                "dog-leg field",
+                "para-aortic"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0017",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_penis",
+              "ground_truth": "Partial penile irradiation with HDR brachytherapy using an interstitial implant to 60 Gy for a T1 squamous cell carcinoma of the glans penis.",
+              "raw_transcription": "Harshal Penile Irradiation with HDR Brachytherapy using an Interstitial Implant to 60Gy for a T1 Squamous Cell Carcinoma of the Glans Penis.",
+              "corrected_transcription": "Harshal Penile Irradiation with HDR brachytherapy using an Interstitial Implant to 60Gy for a T1 Squamous Cell Carcinoma of the Glans Penis.",
+              "raw_wer": 0.13043478260869565,
+              "corrected_wer": 0.13043478260869565,
+              "vocabulary_terms": [
+                "Gy",
+                "HDR",
+                "brachytherapy",
+                "interstitial implant",
+                "glans penis"
+              ],
+              "terms_found": 4,
+              "terms_total": 5,
+              "terms_missing": [
+                "Gy"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0018",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_penis",
+              "ground_truth": "External beam radiation to the penis and bilateral inguinal nodes of 45 Gy in 25 fractions with a boost to the primary of 64.8 Gy using IMRT.",
+              "raw_transcription": "External beam radiation to the penis and bilateral inguinal nodes of 45 Gy in 25 fractions with a boost to the primary of 64.8 Gy using IMRT.",
+              "corrected_transcription": "External beam radiation to the penis and bilateral inguinal nodes of 45 Gy in 25 fractions with a boost to the primary of 64.8 Gy using IMRT.",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "Gy",
+                "inguinal nodes",
+                "IMRT",
+                "boost"
+              ],
+              "terms_found": 4,
+              "terms_total": 4,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0019",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_head_neck",
+              "ground_truth": "Head and neck IMRT for oropharyngeal squamous cell carcinoma of 70 Gy in 35 fractions to the primary with 56 Gy to the elective bilateral cervical and retropharyngeal nodes.",
+              "raw_transcription": "Head and neck IMRT for oropharyngeal squamous cell carcinoma of 70 Gy in 35 fractions to the primary with 56 Gy to the elective bilateral cervical and retropharyngeal nodes.",
+              "corrected_transcription": "Head and neck IMRT for oropharyngeal squamous cell carcinoma of 70 Gy in 35 fractions to the primary with 56 Gy to the elective bilateral cervical and retropharyngeal nodes.",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "Gy",
+                "IMRT",
+                "oropharyngeal",
+                "squamous cell carcinoma",
+                "cervical nodes",
+                "retropharyngeal"
+              ],
+              "terms_found": 5,
+              "terms_total": 6,
+              "terms_missing": [
+                "cervical nodes"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0020",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_lung",
+              "ground_truth": "Definitive chemoradiation for locally advanced non-small cell lung cancer of 60 Gy in 30 fractions with concurrent carboplatin and paclitaxel followed by durvalumab consolidation.",
+              "raw_transcription": "definitive chemoradiation for locally advanced non-small cell lung cancer of 60 Gy in 30 fractions with concurrent carboplatin and paclitaxel followed by dervalumab consolidation.",
+              "corrected_transcription": "definitive chemoradiation for locally advanced non-small cell lung cancer of 60 Gy in 30 fractions with concurrent carboplatin and paclitaxel followed by dervalumab consolidation.",
+              "raw_wer": 0.041666666666666664,
+              "corrected_wer": 0.041666666666666664,
+              "vocabulary_terms": [
+                "Gy",
+                "non-small cell lung cancer",
+                "carboplatin",
+                "paclitaxel",
+                "durvalumab"
+              ],
+              "terms_found": 3,
+              "terms_total": 5,
+              "terms_missing": [
+                "non-small cell lung cancer",
+                "durvalumab"
+              ],
+              "error": false
+            }
+          ]
+        },
+        {
+          "voice": "en_US-lessac-high",
+          "summary": {
+            "sample_count": 20,
+            "error_count": 0,
+            "avg_raw_wer": 0.0782,
+            "avg_corrected_wer": 0.0782,
+            "terms_found": 77,
+            "terms_total": 101,
+            "term_recall": 0.7624
+          },
+          "samples": [
+            {
+              "fixture_id": "anatomy-0001",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_breast",
+              "ground_truth": "Whole breast irradiation of 40 Gy in 15 fractions following lumpectomy with a sequential boost of 10 Gy in 4 fractions to the tumor bed.",
+              "raw_transcription": "whole breast irradiation of 40 Gy in 15 fractions following lumpectomy with a sequential boost of 10 Gy in 4 fractions to the tumor bed.",
+              "corrected_transcription": "whole breast irradiation of 40 Gy in 15 fractions following lumpectomy with a sequential boost of 10 Gy in 4 fractions to the tumor BED.",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "Gy",
+                "lumpectomy",
+                "sequential boost",
+                "tumor bed"
+              ],
+              "terms_found": 4,
+              "terms_total": 4,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0002",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_breast",
+              "ground_truth": "Right breast tangential fields with deep inspiration breath hold to 50 Gy in 25 fractions including the supraclavicular fossa and level three axilla.",
+              "raw_transcription": "Right breast tangential fields with deep inspiration breath hold to 50 Gy and 25 fractions, including the supraclavicular fossa and level 3 axilla.",
+              "corrected_transcription": "Right breast tangential fields with deep inspiration breath hold to 50 Gy and 25 fractions, including the supraclavicular fossa and level 3 axilla.",
+              "raw_wer": 0.08695652173913043,
+              "corrected_wer": 0.08695652173913043,
+              "vocabulary_terms": [
+                "Gy",
+                "tangential fields",
+                "deep inspiration breath hold",
+                "DIBH",
+                "supraclavicular fossa",
+                "axilla"
+              ],
+              "terms_found": 5,
+              "terms_total": 6,
+              "terms_missing": [
+                "DIBH"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0003",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_prostate",
+              "ground_truth": "Definitive prostate VMAT to 78 Gy in 39 fractions with simultaneous integrated boost to the intraprostatic lesion to 82 Gy.",
+              "raw_transcription": "Definitive prostate VMAT to 78 Gy in 39 fractions with simultaneous integrated boost to the intrapostatic lesion to 82 Gy.",
+              "corrected_transcription": "Definitive prostate VMAT to 78 Gy in 39 fractions with simultaneous integrated boost to the intrapostatic lesion to 82 Gy.",
+              "raw_wer": 0.05,
+              "corrected_wer": 0.05,
+              "vocabulary_terms": [
+                "Gy",
+                "VMAT",
+                "simultaneous integrated boost",
+                "intraprostatic lesion"
+              ],
+              "terms_found": 3,
+              "terms_total": 4,
+              "terms_missing": [
+                "intraprostatic lesion"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0004",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_prostate",
+              "ground_truth": "Post-prostatectomy radiation to the prostate bed of 66 Gy in 33 fractions with fiducial marker image guidance and rectal SpaceOAR hydrogel in situ.",
+              "raw_transcription": "post-prostatectomy radiation to the prostate bed of 66 Gy in 33 fractions with fiducial marker image guidance and rectal space OAR hydrogel in situ.",
+              "corrected_transcription": "post-prostatectomy radiation to the prostate BED of 66 Gy in 33 fractions with fiducial marker image guidance and rectal space OAR hydrogel in situ.",
+              "raw_wer": 0.08695652173913043,
+              "corrected_wer": 0.08695652173913043,
+              "vocabulary_terms": [
+                "Gy",
+                "prostatectomy",
+                "prostate bed",
+                "fiducial marker",
+                "SpaceOAR",
+                "hydrogel"
+              ],
+              "terms_found": 5,
+              "terms_total": 6,
+              "terms_missing": [
+                "SpaceOAR"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0005",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_cervix",
+              "ground_truth": "External beam radiation to the pelvis of 45 Gy in 25 fractions with concurrent weekly cisplatin followed by intracavitary brachytherapy using tandem and ovoids.",
+              "raw_transcription": "External beam radiation to the pelvis of 45 Gy in 25 fractions with concurrent weekly cisplatin followed by intracavitary brachytherapy using tandem and ovoids.",
+              "corrected_transcription": "External beam radiation to the pelvis of 45 Gy in 25 fractions with concurrent weekly cisplatin followed by intracavitary brachytherapy using tandem and ovoids.",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "Gy",
+                "cisplatin",
+                "brachytherapy",
+                "intracavitary",
+                "tandem and ovoids"
+              ],
+              "terms_found": 5,
+              "terms_total": 5,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0006",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_cervix",
+              "ground_truth": "Cervical cancer treated with 50.4 Gy in 28 fractions to the primary and pelvic nodes with parametrial boost to 60 Gy and HDR brachytherapy of 7 Gy times 4 fractions to point A.",
+              "raw_transcription": "Cervical cancer treated with 50.4 Gy in 28 fractions to the primary and pelvic nodes with parametrial boost to 60 Gy and HER brachytherapy of 7 Gy x 4 fractions to point A.",
+              "corrected_transcription": "Cervical cancer treated with 50.4 Gy in 28 fractions to the primary and pelvic nodes with parametrial boost to 60 Gy and HER brachytherapy of 7 Gy x 4 fractions to point A.",
+              "raw_wer": 0.058823529411764705,
+              "corrected_wer": 0.058823529411764705,
+              "vocabulary_terms": [
+                "Gy",
+                "parametrial",
+                "HDR",
+                "brachytherapy",
+                "point A"
+              ],
+              "terms_found": 4,
+              "terms_total": 5,
+              "terms_missing": [
+                "HDR"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0007",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_rectum",
+              "ground_truth": "Long course neoadjuvant chemoradiation of 50.4 Gy in 28 fractions to the rectum and mesorectum with concurrent capecitabine prior to total mesorectal excision.",
+              "raw_transcription": "long-course neoadjuvant chemo-radiation of 50.4 Gy in 28 fractions to the rectum and mesorectum with concurrent capecitabine prior to total mesorectal excision.",
+              "corrected_transcription": "long-course neoadjuvant chemo-radiation of 50.4 Gy in 28 fractions to the rectum and mesorectum with concurrent capecitabine prior to total mesorectal excision.",
+              "raw_wer": 0.125,
+              "corrected_wer": 0.125,
+              "vocabulary_terms": [
+                "Gy",
+                "chemoradiation",
+                "mesorectum",
+                "capecitabine",
+                "total mesorectal excision"
+              ],
+              "terms_found": 4,
+              "terms_total": 5,
+              "terms_missing": [
+                "chemoradiation"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0008",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_rectum",
+              "ground_truth": "Short course preoperative radiation of 25 Gy in 5 fractions to the rectal primary and mesorectal lymph nodes followed by delayed surgery at 8 weeks.",
+              "raw_transcription": "short course preoperative radiation of 25 Gy in 5 fractions to the rectal primary and mesorectal lymph nodes followed by delayed surgery at 8 weeks.",
+              "corrected_transcription": "short course preoperative radiation of 25 Gy in 5 fractions to the rectal primary and mesorectal lymph nodes followed by delayed surgery at 8 weeks.",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "Gy",
+                "mesorectal",
+                "preoperative"
+              ],
+              "terms_found": 3,
+              "terms_total": 3,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0009",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_anus",
+              "ground_truth": "Definitive chemoradiation for squamous cell carcinoma of the anal canal with dose painting to 54 Gy to the primary and 36 Gy to elective inguinal nodes with concurrent mitomycin-C and 5-fluorouracil.",
+              "raw_transcription": "Definitive chemo-radiation for squamous cell carcinoma of the anal canal with dose painting to 54 Gy to the primary and 36 Gy to elective inguinal nodes with concurrent mitomycin C and 5-fluorouracil.",
+              "corrected_transcription": "Definitive chemo-radiation for squamous cell carcinoma of the anal canal with dose painting to 54 Gy to the primary and 36 Gy to elective inguinal nodes with concurrent mitomycin C and 5-fluorouracil.",
+              "raw_wer": 0.0967741935483871,
+              "corrected_wer": 0.0967741935483871,
+              "vocabulary_terms": [
+                "Gy",
+                "squamous cell carcinoma",
+                "anal canal",
+                "dose painting",
+                "inguinal nodes",
+                "mitomycin-C",
+                "5-fluorouracil"
+              ],
+              "terms_found": 5,
+              "terms_total": 7,
+              "terms_missing": [
+                "mitomycin-C",
+                "5-fluorouracil"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0010",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_anus",
+              "ground_truth": "Anal margin carcinoma treated with IMRT to 50 Gy in 25 fractions to the primary with concurrent 5-FU and elective coverage of the bilateral inguinal and internal iliac nodes.",
+              "raw_transcription": "Anal margin carcinoma treated with IMMIT to 50 Gy in 25 fractions to the primary, with concurrent 5-FU and elective coverage of the bilateral inguinal and internal iliac nodes.",
+              "corrected_transcription": "Anal margin carcinoma treated with IMMIT to 50 Gy in 25 fractions to the primary, with concurrent 5-FU and elective coverage of the bilateral inguinal and internal iliac nodes.",
+              "raw_wer": 0.034482758620689655,
+              "corrected_wer": 0.034482758620689655,
+              "vocabulary_terms": [
+                "Gy",
+                "IMRT",
+                "5-FU",
+                "inguinal",
+                "internal iliac"
+              ],
+              "terms_found": 3,
+              "terms_total": 5,
+              "terms_missing": [
+                "IMRT",
+                "5-FU"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0011",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_vulva",
+              "ground_truth": "Adjuvant pelvic radiation for vulvar squamous cell carcinoma of 45 Gy in 25 fractions with boost to 54 Gy to the vulvar tumor bed and bilateral inguinofemoral nodes.",
+              "raw_transcription": "A juvant pelvic radiation for vulvar squamous cell carcinoma of 45 Gy in 25 fractions, with boost of 54 Gy to the vulvar tumor bed and bilateral inguinofemoral nodes.",
+              "corrected_transcription": "A juvant pelvic radiation for vulvar squamous cell carcinoma of 45 Gy in 25 fractions, with boost of 54 Gy to the vulvar tumor BED and bilateral inguinofemoral nodes.",
+              "raw_wer": 0.10714285714285714,
+              "corrected_wer": 0.10714285714285714,
+              "vocabulary_terms": [
+                "Gy",
+                "vulvar",
+                "squamous cell carcinoma",
+                "inguinofemoral",
+                "tumor bed"
+              ],
+              "terms_found": 5,
+              "terms_total": 5,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0012",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_vagina",
+              "ground_truth": "Vaginal cuff HDR brachytherapy of 7 Gy times 3 fractions prescribed to 5 millimeters depth following total abdominal hysterectomy and bilateral salpingo-oophorectomy.",
+              "raw_transcription": "Vaginal cuff HDR brachytherapy of 7 Gy x 3 fractions prescribed to 5 mm depth following total abdominal hysterectomy and bilateral salpingoforectomy.",
+              "corrected_transcription": "Vaginal cuff HDR brachytherapy of 7 Gy x 3 fractions prescribed to 5 mm depth following total abdominal hysterectomy and bilateral salpingoforectomy.",
+              "raw_wer": 0.13636363636363635,
+              "corrected_wer": 0.13636363636363635,
+              "vocabulary_terms": [
+                "Gy",
+                "vaginal cuff",
+                "HDR",
+                "brachytherapy",
+                "hysterectomy",
+                "salpingo-oophorectomy"
+              ],
+              "terms_found": 5,
+              "terms_total": 6,
+              "terms_missing": [
+                "salpingo-oophorectomy"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0013",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_endometrium",
+              "ground_truth": "Adjuvant radiation for endometrial carcinoma of 45 Gy in 25 fractions to the pelvis with a vaginal cuff boost using HDR brachytherapy of 6 Gy times 2 fractions.",
+              "raw_transcription": "adjuvant radiation for endometrial carcinoma of 45 Gy and 25 fractions to the pelvis with a vaginal cuff boost using HDR brachytherapy of 6 Gy x 2 fractions.",
+              "corrected_transcription": "adjuvant radiation for endometrial carcinoma of 45 Gy and 25 fractions to the pelvis with a vaginal cuff boost using HDR brachytherapy of 6 Gy x 2 fractions.",
+              "raw_wer": 0.07142857142857142,
+              "corrected_wer": 0.07142857142857142,
+              "vocabulary_terms": [
+                "Gy",
+                "endometrial carcinoma",
+                "vaginal cuff",
+                "HDR",
+                "brachytherapy"
+              ],
+              "terms_found": 5,
+              "terms_total": 5,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0014",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_endometrium",
+              "ground_truth": "Endometrial cancer pelvic IMRT of 50.4 Gy in 28 fractions with concurrent carboplatin and paclitaxel for stage IIIC1 disease with para-aortic nodal involvement.",
+              "raw_transcription": "endometrial cancer pelvic imita 50.4 g and 28 fractions with concurrent carboplatin and pectatexil for stagig 1 disease with para-aortic nodal involvement.",
+              "corrected_transcription": "endometrial cancer pelvic imita 50.4 g and 28 fractions with concurrent carboplatin and pectatexil for stagig 1 disease with para-aortic nodal involvement.",
+              "raw_wer": 0.2916666666666667,
+              "corrected_wer": 0.2916666666666667,
+              "vocabulary_terms": [
+                "Gy",
+                "IMRT",
+                "carboplatin",
+                "paclitaxel",
+                "para-aortic"
+              ],
+              "terms_found": 1,
+              "terms_total": 5,
+              "terms_missing": [
+                "Gy",
+                "IMRT",
+                "paclitaxel",
+                "para-aortic"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0015",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_testes",
+              "ground_truth": "Adjuvant para-aortic strip radiation for stage IIB seminoma of 20 Gy in 10 fractions following left radical orchidectomy.",
+              "raw_transcription": "A juvant para-aortic strip radiation for stage IIB seminoma of 20 GY in 10 fractions following left radical orchidectomy.",
+              "corrected_transcription": "A juvant para-aortic strip radiation for stage IIB seminoma of 20 Gy in 10 fractions following left radical orchidectomy.",
+              "raw_wer": 0.1111111111111111,
+              "corrected_wer": 0.1111111111111111,
+              "vocabulary_terms": [
+                "Gy",
+                "para-aortic",
+                "seminoma",
+                "orchidectomy"
+              ],
+              "terms_found": 3,
+              "terms_total": 4,
+              "terms_missing": [
+                "para-aortic"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0016",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_testes",
+              "ground_truth": "Dog-leg field radiation for stage IIA seminoma of 30 Gy in 15 fractions covering the para-aortic and ipsilateral iliac nodes following orchidectomy.",
+              "raw_transcription": "Dogleg field radiation for stage IIA seminoma of 30 GY in 15 fractions covering the peri-aortic and ipsilateral iliac nodes following orchiectomy.",
+              "corrected_transcription": "Dogleg field radiation for stage IIA seminoma of 30 Gy in 15 fractions covering the peri-aortic and ipsilateral iliac nodes following orchiectomy.",
+              "raw_wer": 0.13636363636363635,
+              "corrected_wer": 0.13636363636363635,
+              "vocabulary_terms": [
+                "Gy",
+                "dog-leg field",
+                "seminoma",
+                "para-aortic",
+                "ipsilateral iliac",
+                "orchidectomy"
+              ],
+              "terms_found": 3,
+              "terms_total": 6,
+              "terms_missing": [
+                "dog-leg field",
+                "para-aortic",
+                "orchidectomy"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0017",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_penis",
+              "ground_truth": "Partial penile irradiation with HDR brachytherapy using an interstitial implant to 60 Gy for a T1 squamous cell carcinoma of the glans penis.",
+              "raw_transcription": "Partial penile irradiation with SDR brachytherapy using an interstitial implant to 60 Gy for a T1 squamous cell carcinoma of the gland's penis.",
+              "corrected_transcription": "Partial penile irradiation with SDR brachytherapy using an interstitial implant to 60 Gy for a T1 squamous cell carcinoma of the gland's penis.",
+              "raw_wer": 0.08695652173913043,
+              "corrected_wer": 0.08695652173913043,
+              "vocabulary_terms": [
+                "Gy",
+                "HDR",
+                "brachytherapy",
+                "interstitial implant",
+                "glans penis"
+              ],
+              "terms_found": 3,
+              "terms_total": 5,
+              "terms_missing": [
+                "HDR",
+                "glans penis"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0018",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_penis",
+              "ground_truth": "External beam radiation to the penis and bilateral inguinal nodes of 45 Gy in 25 fractions with a boost to the primary of 64.8 Gy using IMRT.",
+              "raw_transcription": "External beam radiation to the penis and bilateral inguinal nodes of 45 Gy in 25 fractions with a boost to the primary of 64.8 Gy using IMRT.",
+              "corrected_transcription": "External beam radiation to the penis and bilateral inguinal nodes of 45 Gy in 25 fractions with a boost to the primary of 64.8 Gy using IMRT.",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "Gy",
+                "inguinal nodes",
+                "IMRT",
+                "boost"
+              ],
+              "terms_found": 4,
+              "terms_total": 4,
+              "terms_missing": [],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0019",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_head_neck",
+              "ground_truth": "Head and neck IMRT for oropharyngeal squamous cell carcinoma of 70 Gy in 35 fractions to the primary with 56 Gy to the elective bilateral cervical and retropharyngeal nodes.",
+              "raw_transcription": "Head and neck IMRT for oropharyngeal squamous cell carcinoma of 70 Gy in 35 fractions to the primary, with 56 Gy to the elective bilateral cervical and retropharyngeal nodes.",
+              "corrected_transcription": "Head and neck IMRT for oropharyngeal squamous cell carcinoma of 70 Gy in 35 fractions to the primary, with 56 Gy to the elective bilateral cervical and retropharyngeal nodes.",
+              "raw_wer": 0.0,
+              "corrected_wer": 0.0,
+              "vocabulary_terms": [
+                "Gy",
+                "IMRT",
+                "oropharyngeal",
+                "squamous cell carcinoma",
+                "cervical nodes",
+                "retropharyngeal"
+              ],
+              "terms_found": 5,
+              "terms_total": 6,
+              "terms_missing": [
+                "cervical nodes"
+              ],
+              "error": false
+            },
+            {
+              "fixture_id": "anatomy-0020",
+              "category": "dose_prescription",
+              "dense_subtype": "anatomy_lung",
+              "ground_truth": "Definitive chemoradiation for locally advanced non-small cell lung cancer of 60 Gy in 30 fractions with concurrent carboplatin and paclitaxel followed by durvalumab consolidation.",
+              "raw_transcription": "Definitive chemoradiation for locally advanced non-small cell lung cancer of 60 Gy in 30 fractions with concurrent carboplatin and pectilexil followed by dervalumab consolidation.",
+              "corrected_transcription": "Definitive chemoradiation for locally advanced non-small cell lung cancer of 60 Gy in 30 fractions with concurrent carboplatin and pectilexil followed by dervalumab consolidation.",
+              "raw_wer": 0.08333333333333333,
+              "corrected_wer": 0.08333333333333333,
+              "vocabulary_terms": [
+                "Gy",
+                "non-small cell lung cancer",
+                "carboplatin",
+                "paclitaxel",
+                "durvalumab"
+              ],
+              "terms_found": 2,
+              "terms_total": 5,
+              "terms_missing": [
+                "non-small cell lung cancer",
+                "paclitaxel",
+                "durvalumab"
+              ],
+              "error": false
+            }
+          ]
+        }
+      ],
+      "overall": {
+        "sample_count": 40,
+        "error_count": 0,
+        "avg_raw_wer": 0.097,
+        "avg_corrected_wer": 0.097,
+        "terms_found": 150,
+        "terms_total": 202,
+        "term_recall": 0.7426
+      }
+    }
+  ]
+}
