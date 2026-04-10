@@ -13,3 +13,6 @@ results.json
 # Copy env.example.sh to env.sh and edit for your machine, or set
 # $PIPER_VOICES_ROOT / $PIPER_BIN in your shell profile directly.
 env.sh
+
+# Generated demo documents (not committed)
+docs/demo/*.docx

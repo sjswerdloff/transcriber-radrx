@@ -143,6 +143,51 @@ The pattern used: insert `_REPO_ROOT` (= `Path(__file__).parents[2]`) into
 `sys.path[0]` at module load time. This is safe for a validation script but
 would be inappropriate in production library code.
 
+---
+
+## Cycle 110 — Task #120: Ensemble docx renderer
+
+### docx-revisions deletion API uses paragraph.text offsets, not cumulative run lengths
+
+The `RevisionParagraph.add_tracked_deletion(start, end)` API takes character
+offsets into the *current visible text* of the paragraph (`para.text`), not
+cumulative byte or element offsets. The pattern that works for building Track
+Changes from scratch:
+1. Record `offset_start = len(rp.text)` BEFORE adding the to-be-deleted word.
+2. Add the word with `rp.add_run(word)` — this makes it visible in `rp.text`.
+3. Call `rp.add_tracked_deletion(offset_start, offset_start + len(word), ...)`.
+   The library wraps the run in a `<w:del>` element, removing it from `rp.text`.
+4. Call `rp.add_tracked_insertion(replacement_word, author=...)` for the chosen word.
+5. Add a space with `rp.add_run(" ")`.
+
+The key subtlety: `rp.text` *excludes* already-deleted runs, so recording the
+offset before step 2 gives the correct position into the paragraph's current
+visible character sequence.
+
+### RevisionParagraph.from_paragraph() shares the underlying XML element
+
+`RevisionParagraph.from_paragraph(para)` does NOT copy the paragraph — it
+wraps the same `CT_P` XML element. Mutations via `rp.add_run()` are visible
+on the original `para` object, and vice versa. This is the correct behavior
+for building Track Changes into a paragraph created by `doc.add_paragraph()`.
+
+### docx-revisions is built for editing existing documents; from-scratch construction works too
+
+The library's main documented use case is editing existing .docx files (find-and-
+replace-tracked). But from-scratch construction — add paragraph, convert to
+RevisionParagraph, add deletion/insertion — works correctly as demonstrated by
+the 24-test suite. The only gap is that `RevisionDocument` wraps an existing
+document; we use `docx.Document()` directly and then apply `RevisionParagraph.from_paragraph()`
+to each paragraph that needs revision marks.
+
+### docx_revisions has no py.typed marker
+
+The `docx_revisions` package ships without a `py.typed` marker or bundled stubs.
+Mypy reports `import-untyped` for it. The correct fix for a project where pyproject.toml
+cannot be modified in CI is an inline `# type: ignore[import-untyped]` comment on
+the import line. Adding a `[[tool.mypy.overrides]]` entry would be cleaner but
+requires touching pyproject.toml.
+
 ### 25 words flagged for human review across 56 pairs
 
 The ensemble flagged 25 words via Rule 6 (BOTH_WRONG — neither in vocabulary,
