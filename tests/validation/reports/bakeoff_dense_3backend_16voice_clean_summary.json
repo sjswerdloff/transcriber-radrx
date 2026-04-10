@@ -68,7 +68,8 @@
             "terms_found": 23,
             "terms_total": 63,
             "term_recall": 0.3651
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_GB-alba-medium",
@@ -80,7 +81,8 @@
             "terms_found": 25,
             "terms_total": 63,
             "term_recall": 0.3968
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_GB-aru-medium",
@@ -92,7 +94,8 @@
             "terms_found": 18,
             "terms_total": 63,
             "term_recall": 0.2857
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_GB-cori-high",
@@ -104,7 +107,8 @@
             "terms_found": 22,
             "terms_total": 63,
             "term_recall": 0.3492
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_GB-jenny_dioco-medium",
@@ -116,7 +120,8 @@
             "terms_found": 21,
             "terms_total": 63,
             "term_recall": 0.3333
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_GB-northern_english_male-medium",
@@ -128,7 +133,8 @@
             "terms_found": 24,
             "terms_total": 63,
             "term_recall": 0.381
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_GB-semaine-medium",
@@ -140,7 +146,8 @@
             "terms_found": 24,
             "terms_total": 63,
             "term_recall": 0.381
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_GB-southern_english_female-low",
@@ -152,7 +159,8 @@
             "terms_found": 22,
             "terms_total": 63,
             "term_recall": 0.3492
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-amy-medium",
@@ -164,7 +172,8 @@
             "terms_found": 21,
             "terms_total": 63,
             "term_recall": 0.3333
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-kristin-medium",
@@ -176,7 +185,8 @@
             "terms_found": 21,
             "terms_total": 63,
             "term_recall": 0.3333
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-lessac-high",
@@ -188,7 +198,8 @@
             "terms_found": 25,
             "terms_total": 63,
             "term_recall": 0.3968
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-ljspeech-high",
@@ -200,7 +211,8 @@
             "terms_found": 25,
             "terms_total": 63,
             "term_recall": 0.3968
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-hfc_male-medium",
@@ -212,7 +224,8 @@
             "terms_found": 23,
             "terms_total": 63,
             "term_recall": 0.3651
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-joe-medium",
@@ -224,7 +237,8 @@
             "terms_found": 19,
             "terms_total": 63,
             "term_recall": 0.3016
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-norman-medium",
@@ -236,7 +250,8 @@
             "terms_found": 21,
             "terms_total": 63,
             "term_recall": 0.3333
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-ryan-high",
@@ -248,7 +263,8 @@
             "terms_found": 22,
             "terms_total": 63,
             "term_recall": 0.3492
-          }
+          },
+          "sample_count": 24
         }
       ],
       "overall": {
@@ -274,7 +290,8 @@
             "terms_found": 25,
             "terms_total": 63,
             "term_recall": 0.3968
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_GB-alba-medium",
@@ -286,7 +303,8 @@
             "terms_found": 26,
             "terms_total": 63,
             "term_recall": 0.4127
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_GB-aru-medium",
@@ -298,7 +316,8 @@
             "terms_found": 15,
             "terms_total": 63,
             "term_recall": 0.2381
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_GB-cori-high",
@@ -310,7 +329,8 @@
             "terms_found": 26,
             "terms_total": 63,
             "term_recall": 0.4127
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_GB-jenny_dioco-medium",
@@ -322,7 +342,8 @@
             "terms_found": 21,
             "terms_total": 63,
             "term_recall": 0.3333
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_GB-northern_english_male-medium",
@@ -334,7 +355,8 @@
             "terms_found": 24,
             "terms_total": 63,
             "term_recall": 0.381
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_GB-semaine-medium",
@@ -346,7 +368,8 @@
             "terms_found": 25,
             "terms_total": 63,
             "term_recall": 0.3968
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_GB-southern_english_female-low",
@@ -358,7 +381,8 @@
             "terms_found": 11,
             "terms_total": 63,
             "term_recall": 0.1746
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-amy-medium",
@@ -370,7 +394,8 @@
             "terms_found": 23,
             "terms_total": 63,
             "term_recall": 0.3651
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-kristin-medium",
@@ -382,7 +407,8 @@
             "terms_found": 25,
             "terms_total": 63,
             "term_recall": 0.3968
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-lessac-high",
@@ -394,7 +420,8 @@
             "terms_found": 26,
             "terms_total": 63,
             "term_recall": 0.4127
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-ljspeech-high",
@@ -406,7 +433,8 @@
             "terms_found": 28,
             "terms_total": 63,
             "term_recall": 0.4444
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-hfc_male-medium",
@@ -418,7 +446,8 @@
             "terms_found": 25,
             "terms_total": 63,
             "term_recall": 0.3968
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-joe-medium",
@@ -430,7 +459,8 @@
             "terms_found": 22,
             "terms_total": 63,
             "term_recall": 0.3492
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-norman-medium",
@@ -442,7 +472,8 @@
             "terms_found": 25,
             "terms_total": 63,
             "term_recall": 0.3968
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-ryan-high",
@@ -454,7 +485,8 @@
             "terms_found": 23,
             "terms_total": 63,
             "term_recall": 0.3651
-          }
+          },
+          "sample_count": 24
         }
       ],
       "overall": {
@@ -480,7 +512,8 @@
             "terms_found": 23,
             "terms_total": 63,
             "term_recall": 0.3651
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_GB-alba-medium",
@@ -492,7 +525,8 @@
             "terms_found": 25,
             "terms_total": 63,
             "term_recall": 0.3968
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_GB-aru-medium",
@@ -504,7 +538,8 @@
             "terms_found": 17,
             "terms_total": 63,
             "term_recall": 0.2698
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_GB-cori-high",
@@ -516,7 +551,8 @@
             "terms_found": 13,
             "terms_total": 63,
             "term_recall": 0.2063
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_GB-jenny_dioco-medium",
@@ -528,7 +564,8 @@
             "terms_found": 24,
             "terms_total": 63,
             "term_recall": 0.381
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_GB-northern_english_male-medium",
@@ -540,7 +577,8 @@
             "terms_found": 23,
             "terms_total": 63,
             "term_recall": 0.3651
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_GB-semaine-medium",
@@ -552,7 +590,8 @@
             "terms_found": 18,
             "terms_total": 63,
             "term_recall": 0.2857
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_GB-southern_english_female-low",
@@ -564,7 +603,8 @@
             "terms_found": 21,
             "terms_total": 63,
             "term_recall": 0.3333
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-amy-medium",
@@ -576,7 +616,8 @@
             "terms_found": 22,
             "terms_total": 63,
             "term_recall": 0.3492
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-kristin-medium",
@@ -588,7 +629,8 @@
             "terms_found": 20,
             "terms_total": 63,
             "term_recall": 0.3175
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-lessac-high",
@@ -600,7 +642,8 @@
             "terms_found": 21,
             "terms_total": 63,
             "term_recall": 0.3333
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-ljspeech-high",
@@ -612,7 +655,8 @@
             "terms_found": 24,
             "terms_total": 63,
             "term_recall": 0.381
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-hfc_male-medium",
@@ -624,7 +668,8 @@
             "terms_found": 24,
             "terms_total": 63,
             "term_recall": 0.381
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-joe-medium",
@@ -636,7 +681,8 @@
             "terms_found": 17,
             "terms_total": 63,
             "term_recall": 0.2698
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-norman-medium",
@@ -648,7 +694,8 @@
             "terms_found": 24,
             "terms_total": 63,
             "term_recall": 0.381
-          }
+          },
+          "sample_count": 24
         },
         {
           "voice": "en_US-ryan-high",
@@ -660,7 +707,8 @@
             "terms_found": 21,
             "terms_total": 63,
             "term_recall": 0.3333
-          }
+          },
+          "sample_count": 24
         }
       ],
       "overall": {
