@@ -211,8 +211,19 @@ def main() -> int:
             title="Particle Therapy Ensemble Review",
             show_gold=True,
             gold_texts=particle_gold,  # type: ignore[arg-type]
+            mode="audit",
         )
-        print(f"Demo document written to {particle_out} — open in Word to see tracked changes")
+        particle_review_out = _DOCS_DEMO_DIR / "ensemble_review_particle_review.docx"
+        render_ensemble_docx(
+            particle_results,  # type: ignore[arg-type]
+            particle_review_out,
+            title="Particle Therapy Ensemble Review",
+            show_gold=True,
+            gold_texts=particle_gold,  # type: ignore[arg-type]
+            mode="review",
+        )
+        print(f"Demo document written to {particle_out} (audit) — open in Word to see all tracked changes")
+        print(f"Demo document written to {particle_review_out} (review) — only UWR items as tracked changes")
     else:
         logger.warning("Particle corpus files not found — skipping particle demo")
 
@@ -232,8 +243,19 @@ def main() -> int:
             title="Anatomy Corpus Ensemble Review",
             show_gold=True,
             gold_texts=anatomy_gold,  # type: ignore[arg-type]
+            mode="audit",
         )
-        print(f"Demo document written to {anatomy_out} — open in Word to see tracked changes")
+        anatomy_review_out = _DOCS_DEMO_DIR / "ensemble_review_anatomy_review.docx"
+        render_ensemble_docx(
+            anatomy_results,  # type: ignore[arg-type]
+            anatomy_review_out,
+            title="Anatomy Corpus Ensemble Review",
+            show_gold=True,
+            gold_texts=anatomy_gold,  # type: ignore[arg-type]
+            mode="review",
+        )
+        print(f"Demo document written to {anatomy_out} (audit) — open in Word to see all tracked changes")
+        print(f"Demo document written to {anatomy_review_out} (review) — only UWR items as tracked changes")
     else:
         logger.warning("Anatomy corpus files not found — skipping anatomy demo")
 
