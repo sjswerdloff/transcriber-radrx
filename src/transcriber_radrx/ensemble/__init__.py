@@ -19,6 +19,11 @@ from transcriber_radrx.ensemble.decision_rules import (
     EnsembleWord,
     ensemble_transcriptions,
 )
+from transcriber_radrx.ensemble.docx_renderer import (
+    DocxRendererError,
+    render_ensemble_docx,
+    render_ensemble_docx_pair,
+)
 
 __all__ = [
     # Phase 1: aligner
@@ -34,4 +39,8 @@ __all__ = [
     "EnsembleResult",
     "EnsembleWord",
     "ensemble_transcriptions",
+    # Phase 3: docx rendering
+    "DocxRendererError",
+    "render_ensemble_docx",
+    "render_ensemble_docx_pair",
 ]

@@ -26,6 +26,7 @@ dev = [
     "ruff>=0.8.0",
     "mypy>=1.13",
     "jiwer>=4.0",
+    "docx-revisions>=0.1",
 ]
 phonetic = [
     "metaphone>=0.6",
