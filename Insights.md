@@ -236,3 +236,30 @@ The `say -v '?'` output uses title-case voice names. The exclusion set
 stores all names in lowercase and the comparison uses `.lower()`. This
 handles platform variation (e.g. if Apple ever ships a voice whose display
 name capitalisation differs between macOS versions) without requiring regex.
+
+## Cycle 113 — Phrase-level corrector (phrase_corrector.py)
+
+### Lookahead patterns break the "sub on isolated match group" anti-pattern
+
+When a regex uses a lookahead assertion (e.g. `\bvulva\b(?=\s+squamous)`),
+`match.group()` returns only the consumed text (`"vulva"`), not the context
+in the lookahead. Re-running `pattern.regex.sub(replacement, match.group())`
+then silently fails because the lookahead condition can never be satisfied
+inside the isolated substring. The correct approach is `match.expand(replacement)`,
+which expands backreference groups from the match object directly, bypassing
+the need to re-run the regex. This also preserves correctness for capture-group
+replacements like `r"\1 Gy"`.
+
+### lump/lymph regex etymology trap
+
+`\blymph?[et]ectomy\b` looks right for `lymphectomy` but fails: the pattern
+needs `lymp + h? + [et] + ectomy` = 4+1+1+6 = 12 chars, but `lymphectomy` is
+only 11. The `[et]` slot consumes the `e` that should start `ectomy`, leaving
+only `ctomy` (5 chars) instead of `ectomy` (6 chars). The correct pattern is
+`\blymph?t?ectomy\b`: optional `h` then optional `t` then `ectomy`.
+
+### Plural suffixes in phrase patterns
+
+A pattern for `physical marker` won't match `physical markers`. Always consider
+whether the real-world ASR output will produce singular or plural and include
+`s?` in the pattern when both are expected in clinical dictation.
