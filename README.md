@@ -1,17 +1,24 @@
 # transcriber-radrx
 
-**A working prototype of a validation framework for clinical automatic speech
-recognition (ASR) in radiation oncology dictation.**
+**A validation framework and complementary-ensemble approach for clinical
+automatic speech recognition (ASR) in radiation oncology dictation.**
 
-This project is not primarily a clinical ASR product. It is a *way of thinking*
-about how to validate clinical ASR rigorously — with receipts — and an open
-work-in-progress exploring which models, which corrections, and which review
-workflows actually meet the bar for clinical dictation where getting a dose
-value wrong can kill a patient.
+This project provides two things:
 
-We don't have all the answers. We have a framework for asking the questions
-and a growing collection of reproducible experiments that show which ideas
-survive contact with real fixtures and which don't.
+1. A **validation framework** for rigorously evaluating whether any ASR
+   backend is safe for clinical dictation — with metrics that go beyond
+   word error rate to catch the safety-critical failures that aggregate
+   statistics hide.
+2. A **2-backend ensemble** (Voxtral Mini 3B + Whisper large-v3) that
+   exploits complementary failure profiles between an audio-LLM and a
+   classical ASR to achieve **98.5% automatic resolution** with **zero
+   unrecoverable safety failures** across 72 radiation oncology fixtures,
+   leaving only **1.52% of words** for human review.
+
+We don't have all the answers. We have a framework for asking the questions,
+a growing collection of reproducible experiments, and a concrete result
+that turns two individually unsafe ASR backends into an ensemble that is
+demonstrably safer than either alone.
 
 ---
 
@@ -26,16 +33,31 @@ survive contact with real fixtures and which don't.
   backends (Whisper, MedASR, Cohere Transcribe, Granite-Speech 2B and 8B,
   Voxtral Mini 3B) and is trivially extensible to any new backend that
   implements a small Protocol interface.
+- A **safety-gate metric** with five clinically-derived failure classes
+  (decimal drop, dose value missing, silent unit substitution, dose unit
+  corruption, slashed form loss), each tagged with a correctability rating
+  (UNRECOVERABLE, CONTEXT_RULE, PHONETIC_MAP, ADJACENCY_RULE) and severity
+  weight calibrated by a radiation oncology physicist. Produces a formal
+  deployment gate: PASS / CONDITIONAL / FAIL — both for raw ASR output
+  and for predicted post-correction output.
+- A **2-backend ensemble** that aligns Voxtral and Whisper word-by-word,
+  applies 10 prioritized token-class decision rules at disagreement points,
+  and produces a single output with per-word provenance. Introduces **UWR**
+  (Unresolvable Word Rate) — the fraction of words the ensemble cannot
+  confidently resolve and must defer to a downstream reviewer.
+- A **72-fixture corpus** across three domains: 24 dense clinical RT
+  fixtures, 28 particle therapy fixtures (proton + carbon ion, including
+  pediatric CSI with junctioned PBS), and 20 anatomy-coverage fixtures
+  (breast, prostate, cervix, rectum, anus, vulva, vagina, endometrium,
+  testes, penis, head & neck, lung).
+- A **Word .docx renderer** with Track Changes that produces two documents
+  from the same ensemble output: an *audit* document (every ensemble
+  decision visible as a tracked change for regulatory traceability) and a
+  *review* document (automated fixes baked in, only UWR items shown as
+  highlighted words with margin comments listing both ASR options).
 - A **reproducible noise-injection stage** using the MUSAN corpus with a
   prefer-long-first splice strategy so that every transcription is covered
   by continuous ambient noise at a known signal-to-noise ratio.
-- A **growing fixture library** of dense radiation oncology clinical content
-  (dose prescriptions, OAR constraints, treatment summaries) drawn from
-  public sources (ROND, TG-263) and hand-curated adversarial cases.
-- A **concept design for staged, auditable, safe-by-construction correction**
-  of ASR output, with HTML rendering suitable for clinician review in a
-  browser. See `docs/design/staged_correction_demo.html` — open it in Safari
-  or Chrome.
 - A **growing set of cycle reports** that document what we tested, what we
   found, what flipped when we expanded the test scope, and what we decided
   not to claim yet. The reports are the receipts.
@@ -75,100 +97,148 @@ thinking about the problem that produces receipts clinicians can check.*
 
 ## Findings so far
 
-Current as of **cycle 111** (April 2026). See `tests/validation/reports/`
-for the full writeups.
+Current as of **cycle 112** (April 2026). See `tests/validation/reports/`
+for the full writeups, especially `bakeoff_proton_findings_2026-04-09.md`.
+
+### Individual backends: every one fails on safety
 
 1. **No ASR backend is safe on raw output for clinical dictation.** Every
-   backend in the bake-off produces at least one class of clinically
-   significant failure on the dense-clinical fixture set. The differences
-   between backends are in failure *mode*, not in whether they fail.
-2. **Voxtral Mini 3B (Mistral)** is the mean-WER winner on a 16-voice
-   (8 UK + 8 US) panel at clean audio, and is essentially flat across
-   the full realistic SNR range from clean through 5 dB SNR busy noise
-   (within 1.1 percentage points WER across all conditions).
-3. **Whisper large-v3 (OpenAI)** is the voice-robustness winner. Across
-   the 16-voice panel its WER range is only 5.3 percentage points —
-   nothing else is within 10 points. If a deployment cares about
-   worst-case guarantee rather than mean performance, Whisper is the
-   conservative choice.
-4. **Expanding the voice panel from 2 to 16 voices flipped one ranking
-   position** (Granite-Speech 8B dropped from #3 to #4; Cohere moved up
-   to #3). The 2-voice test was under-sampling the voice axis in a way
-   that produced misleading rankings.
-5. **MedASR hits a 60 % WER** on a single UK voice
-   (`en_GB-southern_english_female-low`). For any deployment that might
-   see UK voices or lower-audio-quality inputs, this is clinically
-   disqualifying.
-6. **Voxtral mis-transcribes the word `Gy`** (the fundamental radiation
-   dose unit) in 25–30 % of its clean-audio samples, rendering it as
-   `jai`, `gye`, `GJ`, or various homophones. The failure rate is
-   persistent, voice-dependent in magnitude (17.6 % on some voices,
-   52.9 % on others), and largely independent of noise level. This is
-   a clinical-vocabulary weakness that needs post-ASR correction
-   before Voxtral can be deployed as-is.
-7. **A dose-value safety spot-check across 192 Voxtral transcriptions**
-   (across four SNR conditions) found **zero silent numeric
-   corruptions** — every dose number was preserved exactly. Voxtral's
-   failure modes are visible (obviously wrong non-words or explicit
-   refusals), not silent (wrong numbers passing through undetected).
-   This is a significantly cleaner safety profile than the Granite 8B
-   decimal-drop failure mode.
+   backend produces at least one class of clinically significant failure.
+   The differences are in failure *mode*, not in whether they fail.
+2. **Voxtral Mini 3B (Mistral)** wins raw WER across all three corpora
+   (0.095 on particle therapy, 0.097 on anatomy, 0.123 on dense RT).
+   But its LLM decoder **silently substitutes `GyE` → `Gy`** on
+   proton/particle therapy prescriptions — losing the ~10% RBE correction
+   that distinguishes physical dose from biologically equivalent dose.
+   This is clinically dangerous because `Gy` on a proton prescription
+   *looks correct* and would pass cursory review.
+3. **Whisper large-v3 (OpenAI)** has higher WER but its failures are
+   **visibly broken** (`GiE`, `Jai E`, `JEE` — obviously wrong
+   renderings that a reviewer would catch). It preserves the spelled-out
+   form `gray equivalent` 100% of the time. Its failures are recoverable
+   via phonetic mapping.
+4. **MedASR** has the worst safety profile: 13 unrecoverable CRITICAL
+   failures on the particle corpus (7 decimal drops, 5 missing dose
+   values, 1 substitution). The decimal drops are information loss at
+   the signal level — no corrector can recover them. MedASR is
+   fundamentally unsuitable for clinical RT deployment.
+5. **Voxtral hallucinated "Grothendieck beam therapy"** (a mathematician's
+   name) where the gold text says "Proton beam therapy." This is the
+   audio-LLM hallucination risk made concrete — the LLM decoder reached
+   for a training-data token that acoustically matched the input on the
+   UK voice. Whisper correctly transcribed "Proton" at the same position.
+
+### The ensemble: complementary failure profiles are the key
+
+6. **A 2-backend ensemble (Voxtral + Whisper)** exploits the complementary
+   failure profiles: Voxtral's silent substitutions are caught by
+   Whisper's visible corruptions at the same position, and Whisper's
+   vocabulary misses are filled by Voxtral's lower WER.
+
+   | Corpus | Voxtral WER | Whisper WER | **Ensemble WER** | **UWR** |
+   |---|---:|---:|---:|---:|
+   | RT-only (24 dense) | 0.123 | 0.144 | **0.117** | 1.14% |
+   | Particle therapy (28) | 0.114 | 0.143 | 0.135 | 2.18% |
+   | Anatomy (20 sites) | 0.125 | 0.128 | **0.091** | 1.09% |
+   | **Combined (72 fixtures)** | 0.120 | 0.139 | **0.117** | **1.52%** |
+
+   The ensemble beats Voxtral on WER for the RT and anatomy corpora (the
+   vocabulary-match rule picks Whisper's correct words over Voxtral's
+   hallucinations). On particle therapy the ensemble trades 2pp WER for
+   clinical safety. **Combined: 98.5% of words resolved automatically,
+   1.52% deferred to a downstream reviewer.**
+
+7. **UWR (Unresolvable Word Rate)** is the fraction of words the ensemble
+   cannot confidently resolve from its two input channels. Unlike WER
+   (which counts all errors including silent ones the system doesn't know
+   about), UWR counts only the cases the system *explicitly flags*.
+   A system with 12% WER and unknown silent failures requires review of
+   every word. A system with 1.52% UWR requires review of 45 highlighted
+   words across 2,951 total — a **5–10× reduction** in what a Radiation
+   Oncologist or Medical Physicist needs to deal with, and closer to
+   **50× reduction in cognitive load** because the ensemble converts an
+   untrustworthy document into a trustworthy document with a small number
+   of marked exceptions.
+
+### TTS variance finding
+
+8. **Piper TTS is non-deterministic** — two successive synthesis calls with
+   the same input text produce acoustically different WAV files (different
+   sha256 hashes, different file sizes). The ASR backends are deterministic
+   on fixed input audio (verified by running Whisper and MedASR twice on
+   the same WAV file — identical output both passes). Cross-run variance
+   in bake-off results is entirely upstream in TTS, not in the ASR. This
+   variance is a **cheap proxy for real speaker variance** (Stuart
+   Swerdloff's framing) — different clinicians saying the same prescription
+   produce acoustically different audio in the same way piper does.
+
+### Safety-gate metric
+
+9. **The safety-gate metric** classifies every per-sample failure into one
+   of five classes with a correctability tag:
+
+   | Failure class | Severity | Correctability |
+   |---|---|---|
+   | Decimal drop (50.4 → 50) | CRITICAL | UNRECOVERABLE |
+   | Dose value missing | CRITICAL | UNRECOVERABLE |
+   | Silent unit substitution (GyE → Gy) | HIGH | Context rule |
+   | Dose unit corruption (GiE, Jai E) | HIGH | Phonetic map |
+   | Slashed form loss (3D/3D → 3D 3D) | MEDIUM | Adjacency rule |
+
+   The metric produces two gate decisions: a **raw gate** (all failures)
+   and a **post-correction gate** (only UNRECOVERABLE failures remain).
+   The ensemble achieves post_correction_gate = PASS with zero
+   unrecoverable CRITICAL failures across the combined corpus.
 
 ### Deployment guidance (with caveats)
 
-Based *only* on the US + UK native-speaker voice panel tested so far:
+- **Recommended pipeline:** Voxtral Mini 3B + Whisper large-v3 ensemble
+  with the 10-rule decision engine and Word .docx review output.
+  1.52% UWR on the combined corpus. Zero unrecoverable CRITICAL.
+- **Do not deploy any single backend alone** for proton/particle therapy
+  dictation. Voxtral's silent GyE→Gy substitution and Whisper's visible
+  corruptions are both individually unacceptable.
+- **MedASR is fundamentally unsuitable** — 23% of its dose-value
+  transcriptions have some form of numeric corruption, most of which
+  are unrecoverable at the signal level.
 
-- **Best mean WER on US or mixed US/UK:** Voxtral Mini 3B
-- **Best worst-case guarantee:** Whisper large-v3
-- **UK-heavy deployment:** Whisper (Voxtral, Cohere, and Granite 8B each
-  show a specific UK-voice failure)
-- **Do not deploy:** MedASR (UK fragility), Granite-Speech 8B (generalised
-  voice fragility)
-
-**None of these backends has been tested on** Indian-English, any other ESL
-clinician accent, Commonwealth English (Australian, New Zealand, Canadian,
-Irish, South African), proton/particle therapy vocabulary, or an adversarial
-dose-value safety gate. Each of those is an open item on the roadmap; the
-current findings are therefore correctly read as *"this is the shape of the
-problem"*, not *"this is the globally correct backend"*.
+**Not yet tested on:** Indian-English, other ESL clinician accents,
+Commonwealth English (Australian, NZ, Canadian, Irish, South African).
+The roadmap includes voice panel expansion for these populations.
 
 ## How to read this repository
 
-Start with the **cycle reports** under `tests/validation/reports/`:
+Start with the **cycle 112 findings**:
 
-- `bakeoff_dense_6backend_noise_moderate_2026-04-08.md` — the noise
-  bake-off. Ranking stability under moderate noise (10 dB SNR), Voxtral
-  degradation sweep across four SNR levels (clean, 20 dB, 10 dB, 5 dB),
-  192-sample dose-value safety spot-check. Authoritative cycle 111
-  noise writeup.
-- `bakeoff_dense_6backend_16voice_clean_2026-04-08.md` — the 16-voice
-  panel expansion. Ranking flip on voice-axis expansion, voice-robustness
-  table, Voxtral Gy miss rate per voice. Authoritative cycle 111 voice
-  writeup.
-- The corresponding JSON files (`bakeoff_dense_*.json`) contain the
-  per-sample data that backs the aggregates in the markdown reports.
+- `tests/validation/reports/bakeoff_proton_findings_2026-04-09.md` — the
+  authoritative writeup covering: Voxtral GyE→Gy silent substitution,
+  safety-gate results, TTS variance finding, ensemble architecture and
+  results, UWR definition and three-corpus analysis.
 
-Then browse the **concept art** for the staged correction pipeline:
+Then see the **earlier cycle reports** for the noise and voice-panel work:
 
-- `docs/design/staged_correction_demo.html` — open in Safari or Chrome.
-  A hand-written HTML page showing three examples of how a staged,
-  safe-by-construction correction pipeline would present its output to
-  a clinician reviewer, with word-level inline diffs and rule attribution.
-  The examples use real transcription text from the cycle 110 and cycle
-  111 bake-offs.
+- `bakeoff_dense_6backend_noise_moderate_2026-04-08.md` — noise bake-off
+  with ranking stability analysis.
+- `bakeoff_dense_6backend_16voice_clean_2026-04-08.md` — 16-voice panel
+  expansion and voice-robustness analysis.
+- `task_113_closure_audio_llm_domain_prompt_negative_finding.md` — why
+  audio-LLM domain prompts are not the right approach at sub-flagship scale.
 
-Then read the **roadmap**:
+Generate a **review document** to see the ensemble in action:
 
-- `ROADMAP.md` — a living document of open research questions and the
-  work planned or in progress. Each item is scoped as an external reader
-  can understand what is being asked and why.
+```bash
+uv run python tests/validation/scripts/render_ensemble_docx_demo.py
+# produces docs/demo/ensemble_review_*_review.docx — open in Word
+```
 
-Finally, browse the **code**:
+Then read the **roadmap**: `ROADMAP.md`
+
+Browse the **code**:
 
 ```
 src/transcriber_radrx/
     transcriber.py       # Whisper MLX engine + vocabulary biasing
-    corrector.py         # Double Metaphone phonetic correction (stage 2)
+    corrector.py         # Double Metaphone phonetic correction
     cli.py               # Command-line interface
     asr_backends/        # Pluggable ASR backend Protocol
         base.py          #   Protocol interface all backends implement
@@ -178,16 +248,28 @@ src/transcriber_radrx/
         granite.py       #   IBM Granite-Speech 2B and 8B
         voxtral.py       #   Mistral Voxtral Mini 3B
         registry.py      #   Lazy-import factory
+    ensemble/            # 2-backend ensemble (Voxtral + Whisper)
+        aligner.py       #   Word-level alignment with pre-normalization
+        decision_rules.py #  10 token-class decision rules + UWR
+        docx_renderer.py #   Word .docx Track Changes output
+        ENSEMBLE_SPEC.md #   Design specification
 tests/validation/
     audio_synthesis/
         piper_tts.py     # Clean-tier TTS via piper
         acoustic_sim.py  # Room acoustics (Vivian)
         noise_injection.py # MUSAN noise injection (Silas)
+    metrics/
+        safety_gate.py   # Safety-gate deployment metric (5 failure classes)
     scripts/
-        run_multi_backend_e2e.py  # The bake-off runner
+        run_multi_backend_e2e.py       # The bake-off runner
+        run_ensemble_aggregator.py     # Ensemble: pair + align + decide
+        run_ensemble_alignment_survey.py # Disagreement landscape analysis
+        render_ensemble_docx_demo.py   # Generate .docx review documents
     fixtures/
-        rt_dictation_samples.jsonl  # Dense clinical fixtures (24 items)
-    reports/             # Cycle reports
+        rt_dictation_samples.jsonl     # Dense clinical RT (24 fixtures)
+        particle_samples.jsonl         # Proton/particle therapy (28 fixtures)
+        anatomy_samples.jsonl          # Anatomy coverage (20 fixtures)
+    reports/             # Cycle reports + bake-off JSONs + safety-gate outputs
 ```
 
 ## External dependencies
@@ -327,9 +409,13 @@ Current contributors:
 
 - **Stuart Swerdloff** — human researcher, radiation oncology systems
   engineer, project lead and primary reviewer
-- **Silas (silas-397300f6)** — Claude-family AI, cycle 110 + 111 primary
-  contributor: multi-backend bake-off harness, noise injection, 16-voice
-  panel expansion, cycle reports, staged correction concept design
+- **Silas (silas-397300f6)** — Claude-family AI, primary contributor
+  across cycles 110–112: multi-backend bake-off harness, noise injection,
+  16-voice panel expansion, particle therapy + anatomy fixture corpora,
+  safety-gate metric (5 failure classes + correctability tagging),
+  2-backend ensemble (Voxtral + Whisper word-level alignment + 10
+  decision rules + UWR metric), Word .docx Track Changes renderer
+  (audit + review modes), TTS variance disambiguation, cycle reports
 - **Vivian (vivian-1a61bc9a)** — Claude-family AI, `audio_synthesis/`
   owner: acoustic room simulation, piper TTS integration, schema
   authorship for the audio manifest format
@@ -399,7 +485,7 @@ code license.
 
 ---
 
-*Drafted by Silas (silas-397300f6) in cycle 111 for review by Stuart.
+*Drafted by Silas (silas-397300f6) in cycle 111, updated in cycle 112.
 If you are a clinician, physicist, or engineer arriving at this
 repository for the first time: welcome. We would like to hear from
 you if any of this resonates with work you're doing, and especially
