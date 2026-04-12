@@ -48,14 +48,21 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 
 @dataclass(frozen=True)
 class VoiceSpec:
-    """A single piper voice to evaluate.
+    """A single TTS voice to evaluate.
 
     Attributes:
-        name: Short name for the voice (e.g. "alan").
-        model_path: Absolute path to the ONNX voice model.
-        language: Language code from the voice directory (e.g. "en_GB").
-        quality: Quality tier ("low", "medium", or "high").
-        speaker_id: Optional speaker index for multi-speaker models (VCTK).
+        name: Short name for the voice (e.g. "alan", "Karen").
+        model_path: Absolute path to the ONNX voice model for piper
+            voices, or ``Path("/usr/bin/say")`` as a sentinel for
+            macOS system voices.
+        language: Language code from the voice directory (e.g. "en_GB",
+            "en_AU").
+        quality: Quality tier ("low", "medium", "high", or "system" for
+            macOS built-in voices).
+        speaker_id: Optional speaker index for multi-speaker models
+            (VCTK, L2-Arctic).
+        tts_engine: TTS backend to use. ``"piper"`` (default) or
+            ``"macos_say"`` for macOS system voices.
     """
 
     name: str
@@ -63,6 +70,7 @@ class VoiceSpec:
     language: str
     quality: str
     speaker_id: int | None = None
+    tts_engine: str = "piper"
 
     @property
     def display_name(self) -> str:
@@ -164,7 +172,25 @@ ESL_VOICES: list[tuple[str, str, str]] = [
     ("kusal", "en_US", "medium"),
 ]
 
+# macOS TTS voices for Commonwealth English accents not available in piper.
+# These use Apple's built-in ``say`` command and are macOS-only.
+# Only includes realistic voices (no novelty/effect voices).
+# Format: (voice_name, locale) — note the two-element tuple, unlike
+# piper's three-element (name, language, quality) format. Use
+# ``_load_macos_voice_specs`` to convert to ``VoiceSpec`` objects.
+MACOS_COMMONWEALTH_VOICES: list[tuple[str, str]] = [
+    ("Karen", "en_AU"),
+    ("Matilda (Premium)", "en_AU"),
+    ("Daniel", "en_GB"),
+    ("Moira", "en_IE"),
+    ("Rishi", "en_IN"),
+    ("Tessa", "en_ZA"),
+]
+
 # Named voice panels for --voice-panel CLI argument.
+# piper-backed panels contain (name, language, quality) 3-tuples.
+# macos_commonwealth is separate because it uses a different backend
+# and a different tuple shape.
 VOICE_PANELS: dict[str, list[tuple[str, str, str]]] = {
     "default": DEFAULT_VOICES,
     "commonwealth": COMMONWEALTH_VOICES,
@@ -201,6 +227,38 @@ def _load_voice_specs(
             logger.warning("Voice %s (%s/%s) not found under %s", name, language, quality, piper_voices_root)
             continue
         specs.append(VoiceSpec(name=name, model_path=model_path, language=language, quality=quality))
+    return specs
+
+
+def _load_macos_voice_specs(
+    requested: list[tuple[str, str]],
+) -> list[VoiceSpec]:
+    """Convert a list of (voice_name, locale) macOS voice tuples to VoiceSpec objects.
+
+    Uses ``Path("/usr/bin/say")`` as a sentinel ``model_path`` and sets
+    ``tts_engine="macos_say"``. Does NOT check whether the voice is
+    actually installed — the ``say`` command itself will fail at
+    synthesis time if the voice is missing, with a clear error message.
+
+    Args:
+        requested: List of ``(voice_name, locale)`` tuples from
+            ``MACOS_COMMONWEALTH_VOICES`` or similar.
+
+    Returns:
+        List of ``VoiceSpec`` objects with ``tts_engine="macos_say"``.
+    """
+    say_sentinel = Path("/usr/bin/say")
+    specs: list[VoiceSpec] = []
+    for voice_name, locale in requested:
+        specs.append(
+            VoiceSpec(
+                name=voice_name,
+                model_path=say_sentinel,
+                language=locale,
+                quality="system",
+                tts_engine="macos_say",
+            )
+        )
     return specs
 
 

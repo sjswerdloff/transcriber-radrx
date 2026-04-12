@@ -54,8 +54,10 @@ from tests.validation.scripts.run_end_to_end import (
 )
 from tests.validation.scripts.run_multi_voice_e2e import (
     DEFAULT_VOICES,
+    MACOS_COMMONWEALTH_VOICES,
     VOICE_PANELS,
     VoiceSpec,
+    _load_macos_voice_specs,
     _load_voice_specs,
     expand_esl_voice_specs,
 )
@@ -391,13 +393,15 @@ def main(argv: list[str] | None = None) -> int:  # noqa: PLR0915
     )
     parser.add_argument(
         "--voice-panel",
-        choices=["default", "commonwealth", "esl"],
+        choices=["default", "commonwealth", "esl", "macos_commonwealth"],
         default=None,
         help=(
             "Select a predefined voice panel instead of listing individual "
             "voice names. 'default' = 16 en_GB/en_US voices, "
-            "'commonwealth' = 9 en_GB voices, "
-            "'esl' = 26 non-native English speakers (24 L2-Arctic + reza_ibrahim + kusal). "
+            "'commonwealth' = 9 en_GB piper voices, "
+            "'esl' = 26 non-native English speakers (24 L2-Arctic + reza_ibrahim + kusal), "
+            "'macos_commonwealth' = 6 macOS system voices covering AU/GB/IE/IN/ZA accents "
+            "(macOS only; requires the say command). "
             "Overrides --voices if set."
         ),
     )
@@ -520,6 +524,8 @@ def main(argv: list[str] | None = None) -> int:  # noqa: PLR0915
     if args.voice_panel is not None:
         if args.voice_panel == "esl":
             voices = expand_esl_voice_specs(args.piper_voices_root)
+        elif args.voice_panel == "macos_commonwealth":
+            voices = _load_macos_voice_specs(MACOS_COMMONWEALTH_VOICES)
         else:
             panel_voices = VOICE_PANELS[args.voice_panel]
             voices = _load_voice_specs(args.piper_voices_root, panel_voices)
@@ -569,15 +575,28 @@ def main(argv: list[str] | None = None) -> int:  # noqa: PLR0915
             audio_dir = tmp_root / voice.display_name / "audio"
             audio_dir.mkdir(parents=True, exist_ok=True)
             print(f"\n[synth] {voice.display_name}")
-            manifest_entries = synthesize_fixtures(
-                sampled,
-                voice_model=voice.model_path,
-                output_dir=audio_dir,
-                voice_name=voice.display_name,
-                piper_cmd=[str(args.piper_bin)] if args.piper_bin else None,
-                repo_root=REPO_ROOT,
-                speaker_id=voice.speaker_id,
-            )
+            if voice.tts_engine == "macos_say":
+                from tests.validation.audio_synthesis.macos_tts import (
+                    synthesize_fixtures as macos_synthesize,
+                )
+
+                manifest_entries = macos_synthesize(
+                    sampled,
+                    voice_name=voice.name,
+                    output_dir=audio_dir,
+                    display_name=voice.display_name,
+                    repo_root=REPO_ROOT,
+                )
+            else:
+                manifest_entries = synthesize_fixtures(
+                    sampled,
+                    voice_model=voice.model_path,
+                    output_dir=audio_dir,
+                    voice_name=voice.display_name,
+                    piper_cmd=[str(args.piper_bin)] if args.piper_bin else None,
+                    repo_root=REPO_ROOT,
+                    speaker_id=voice.speaker_id,
+                )
             voice_manifests[voice.display_name] = list(manifest_entries)
             print(f"  synthesized {len(manifest_entries)} / {len(sampled)}")
 

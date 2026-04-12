@@ -196,3 +196,43 @@ both backends fail on rare disease names or patient-specific terminology. This
 count is a meaningful clinical signal: a human reviewer could check 25 words
 across 56 fixture-voice pairs in under 5 minutes, versus reviewing entire
 transcriptions.
+
+---
+
+## Cycle 106 — macOS TTS backend (#117)
+
+### macOS module-level platform guard requires reload in tests
+
+`macos_tts.py` calls `_check_platform()` at module level so that importing
+on non-Darwin fails immediately. Tests that mock `sys.platform` must call
+`importlib.reload(mod)` after patching, or the guard has already fired
+against the real platform at import time. The autouse fixture in the test
+file sets `sys.platform = "darwin"` via monkeypatch before any test body
+runs, but the module may have already been imported; `importlib.reload` in
+individual platform-guard tests re-runs the module-level check under the
+patched platform value.
+
+### Sentinel model_path for non-file-backed TTS engines
+
+`VoiceSpec` uses `model_path: Path` to locate the ONNX model for piper.
+For macOS system voices, there is no ONNX file — the voice is identified
+solely by name. Using `Path("/usr/bin/say")` as a sentinel preserves the
+typed interface while signaling "this is a macOS system voice." The
+`tts_engine` field is the authoritative dispatch key; `model_path` is only
+passed to the piper synthesis path when `tts_engine == "piper"`.
+
+### afconvert inline flags: list formatting vs. string formatting
+
+ruff formats `["-f", "WAVE", "-d", f"LEI16@{RATE}", "-c", "1", ...]`
+with each flag on its own line (hanging indent), which makes the flag/value
+pairs harder to read as pairs. This is a style tradeoff with no linting
+solution — the formatter is authoritative and ruff format's output is
+correct. The test asserts on the *values* in the command list, not the
+source layout, so it is unaffected by formatter changes.
+
+### _NOVELTY_VOICE_NAMES uses lowercase keys for case-insensitive matching
+
+The `say -v '?'` output uses title-case voice names. The exclusion set
+stores all names in lowercase and the comparison uses `.lower()`. This
+handles platform variation (e.g. if Apple ever ships a voice whose display
+name capitalisation differs between macOS versions) without requiring regex.
