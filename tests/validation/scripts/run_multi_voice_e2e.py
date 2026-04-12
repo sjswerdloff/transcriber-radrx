@@ -104,6 +104,73 @@ DEFAULT_VOICES: list[tuple[str, str, str]] = [
     ("ryan", "en_US", "high"),
 ]
 
+# L2-Arctic speaker ID to L1 language mapping (from the L2-Arctic corpus paper).
+# 24 speakers, each with a different native language background.
+L2ARCTIC_SPEAKERS: dict[str, tuple[str, int]] = {
+    # Keys are speaker labels from the L2-Arctic corpus.
+    # Values are (L1_language, speaker_id_in_piper_l2arctic_model).
+    "ABA": ("Arabic", 21),
+    "SKA": ("Arabic", 23),
+    "YBAA": ("Arabic", 18),
+    "BWC": ("Mandarin", 20),
+    "LXC": ("Mandarin", 12),
+    "NCC": ("Mandarin", 13),
+    "TXHC": ("Mandarin", 0),
+    "HJK": ("Korean", 11),
+    "HKK": ("Korean", 16),
+    "YKWK": ("Korean", 14),
+    "YDCK": ("Korean", 15),
+    "ERMS": ("Spanish", 6),
+    "MBMPS": ("Spanish", 7),
+    "NJS": ("Spanish", 17),
+    "EBVS": ("Spanish", 22),
+    "THV": ("Vietnamese", 1),
+    "TLV": ("Vietnamese", 5),
+    "PNV": ("Vietnamese", 4),
+    "HQTV": ("Vietnamese", 8),
+    "ASI": ("Hindi", 10),
+    "RRBI": ("Hindi", 19),
+    "TNI": ("Hindi", 9),
+    "SVBI": ("Hindi", 2),
+    "ZHAA": ("Arabic", 3),
+}
+
+# Commonwealth English voice panel: en_GB accents.
+# All single-speaker en_GB voices included. Note that in the default panel
+# ``cori`` uses "high" quality; here we use "medium" to keep the panel
+# consistent (medium is the standard tier used for bake-off comparisons).
+COMMONWEALTH_VOICES: list[tuple[str, str, str]] = [
+    # en_GB single-speaker voices (8 voices) — every voice in the standard
+    # rhasspy/piper-voices HuggingFace tree under en/en_GB/ except the
+    # 109-speaker VCTK model (which needs speaker_id expansion).
+    ("alan", "en_GB", "medium"),
+    ("alba", "en_GB", "medium"),
+    ("aru", "en_GB", "medium"),
+    ("cori", "en_GB", "medium"),  # also has "high" quality
+    ("jenny_dioco", "en_GB", "medium"),
+    ("northern_english_male", "en_GB", "medium"),
+    ("semaine", "en_GB", "medium"),
+    ("southern_english_female", "en_GB", "low"),  # only has low quality
+]
+
+# ESL clinician voice panel: L2-Arctic multi-speaker + named ESL-background voices.
+# The L2-Arctic model is a 24-speaker multi-speaker model trained on non-native
+# English speakers from the L2-Arctic corpus. Each speaker has a known L1 background.
+# reza_ibrahim and kusal are single-speaker voices with names suggesting
+# non-native English backgrounds.
+ESL_VOICES: list[tuple[str, str, str]] = [
+    ("l2arctic", "en_US", "medium"),  # 24 speakers — expanded by expand_esl_voice_specs
+    ("reza_ibrahim", "en_US", "medium"),
+    ("kusal", "en_US", "medium"),
+]
+
+# Named voice panels for --voice-panel CLI argument.
+VOICE_PANELS: dict[str, list[tuple[str, str, str]]] = {
+    "default": DEFAULT_VOICES,
+    "commonwealth": COMMONWEALTH_VOICES,
+    "esl": ESL_VOICES,
+}
+
 
 def _resolve_voice(
     piper_voices_root: Path,
@@ -137,6 +204,50 @@ def _load_voice_specs(
     return specs
 
 
+def expand_esl_voice_specs(
+    piper_voices_root: Path,
+    esl_voices: list[tuple[str, str, str]] | None = None,
+) -> list[VoiceSpec]:
+    """Expand ESL voice panel into individual VoiceSpec entries.
+
+    The l2arctic model is multi-speaker (24 speakers). This function expands
+    it into one VoiceSpec per speaker with the appropriate speaker_id set.
+    Single-speaker voices (reza_ibrahim, kusal) pass through as-is.
+
+    Args:
+        piper_voices_root: Root of the piper-voices tree.
+        esl_voices: Voice tuples to expand. Defaults to ``ESL_VOICES``.
+
+    Returns:
+        List of VoiceSpec objects, with l2arctic expanded into 24 individual
+        speaker specs (one per L2-Arctic speaker) plus any single-speaker
+        voices that were found on disk.
+    """
+    if esl_voices is None:
+        esl_voices = ESL_VOICES
+    specs: list[VoiceSpec] = []
+    for name, language, quality in esl_voices:
+        model_path = _resolve_voice(piper_voices_root, name, language, quality)
+        if model_path is None:
+            logger.warning("Voice %s (%s/%s) not found under %s", name, language, quality, piper_voices_root)
+            continue
+        if name == "l2arctic":
+            # Expand multi-speaker model into individual speakers
+            for speaker_label, (_, speaker_id) in sorted(L2ARCTIC_SPEAKERS.items()):
+                specs.append(
+                    VoiceSpec(
+                        name=f"l2arctic-{speaker_label}",
+                        model_path=model_path,
+                        language=language,
+                        quality=quality,
+                        speaker_id=speaker_id,
+                    )
+                )
+        else:
+            specs.append(VoiceSpec(name=name, model_path=model_path, language=language, quality=quality))
+    return specs
+
+
 def _run_one_voice(
     voice: VoiceSpec,
     sampled_fixtures: list,  # type: ignore[type-arg]
@@ -162,6 +273,7 @@ def _run_one_voice(
         voice_name=voice.display_name,
         piper_cmd=piper_cmd,
         repo_root=REPO_ROOT,
+        speaker_id=voice.speaker_id,
     )
 
     synthesized = len(manifest_entries)

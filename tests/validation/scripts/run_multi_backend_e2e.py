@@ -54,8 +54,10 @@ from tests.validation.scripts.run_end_to_end import (
 )
 from tests.validation.scripts.run_multi_voice_e2e import (
     DEFAULT_VOICES,
+    VOICE_PANELS,
     VoiceSpec,
     _load_voice_specs,
+    expand_esl_voice_specs,
 )
 from transcriber_radrx.asr_backends import get_backend
 from transcriber_radrx.transcriber import transcribe_with_backend
@@ -388,6 +390,18 @@ def main(argv: list[str] | None = None) -> int:  # noqa: PLR0915
         ),
     )
     parser.add_argument(
+        "--voice-panel",
+        choices=["default", "commonwealth", "esl"],
+        default=None,
+        help=(
+            "Select a predefined voice panel instead of listing individual "
+            "voice names. 'default' = 16 en_GB/en_US voices, "
+            "'commonwealth' = 9 en_GB voices, "
+            "'esl' = 26 non-native English speakers (24 L2-Arctic + reza_ibrahim + kusal). "
+            "Overrides --voices if set."
+        ),
+    )
+    parser.add_argument(
         "--dense-only",
         action="store_true",
         default=True,
@@ -501,13 +515,21 @@ def main(argv: list[str] | None = None) -> int:  # noqa: PLR0915
         )
         return 1
 
-    # Resolve voices
-    wanted = set(args.voices)
-    requested_voices = [v for v in DEFAULT_VOICES if v[0] in wanted]
-    missing_voices = wanted - {v[0] for v in DEFAULT_VOICES}
-    if missing_voices:
-        print(f"WARNING: unknown voice names: {sorted(missing_voices)}", file=sys.stderr)
-    voices: list[VoiceSpec] = _load_voice_specs(args.piper_voices_root, requested_voices)
+    # Resolve voices — panel overrides individual --voices
+    voices: list[VoiceSpec]
+    if args.voice_panel is not None:
+        if args.voice_panel == "esl":
+            voices = expand_esl_voice_specs(args.piper_voices_root)
+        else:
+            panel_voices = VOICE_PANELS[args.voice_panel]
+            voices = _load_voice_specs(args.piper_voices_root, panel_voices)
+    else:
+        wanted = set(args.voices)
+        requested_voices = [v for v in DEFAULT_VOICES if v[0] in wanted]
+        missing_voices = wanted - {v[0] for v in DEFAULT_VOICES}
+        if missing_voices:
+            print(f"WARNING: unknown voice names: {sorted(missing_voices)}", file=sys.stderr)
+        voices = _load_voice_specs(args.piper_voices_root, requested_voices)
     if not voices:
         print("No valid voices to run", file=sys.stderr)
         return 1
@@ -554,6 +576,7 @@ def main(argv: list[str] | None = None) -> int:  # noqa: PLR0915
                 voice_name=voice.display_name,
                 piper_cmd=[str(args.piper_bin)] if args.piper_bin else None,
                 repo_root=REPO_ROOT,
+                speaker_id=voice.speaker_id,
             )
             voice_manifests[voice.display_name] = list(manifest_entries)
             print(f"  synthesized {len(manifest_entries)} / {len(sampled)}")
