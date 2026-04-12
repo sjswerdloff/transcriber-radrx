@@ -26,7 +26,10 @@ jobs:
           fi
 
       - name: Install dependencies
-        run: uv sync --extra dev --extra phonetic --extra audio
+        # asr-whisper-mlx is Apple Silicon only (mlx has no Linux wheels).
+        # Gitea runs on Stuart's macos-latest Mac so we include it here.
+        # GitHub CI (ubuntu-latest) intentionally omits this extra.
+        run: uv sync --extra dev --extra phonetic --extra audio --extra asr-whisper-mlx
 
       - name: Run pre-commit hooks
         run: uv run pre-commit run --all-files
@@ -47,7 +50,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          uv sync --extra dev --extra phonetic --extra audio
+          uv sync --extra dev --extra phonetic --extra audio --extra asr-whisper-mlx
           uv pip install -e .
 
       - name: Run tests

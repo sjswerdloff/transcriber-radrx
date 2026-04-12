@@ -2925,7 +2925,6 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "loguru" },
-    { name = "mlx-whisper" },
 ]
 
 [package.optional-dependencies]
@@ -2970,6 +2969,9 @@ asr-voxtral = [
     { name = "torchaudio" },
     { name = "transformers" },
 ]
+asr-whisper-mlx = [
+    { name = "mlx-whisper" },
+]
 audio = [
     { name = "numpy" },
     { name = "pyroomacoustics" },
@@ -3010,7 +3012,7 @@ requires-dist = [
     { name = "loguru", specifier = ">=0.7.3" },
     { name = "metaphone", marker = "extra == 'phonetic'", specifier = ">=0.6" },
     { name = "mistral-common", marker = "extra == 'asr-voxtral'", specifier = ">=1.5" },
-    { name = "mlx-whisper", specifier = ">=0.4.0" },
+    { name = "mlx-whisper", marker = "extra == 'asr-whisper-mlx'", specifier = ">=0.4.0" },
     { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.13" },
     { name = "numpy", marker = "extra == 'asr-cohere'", specifier = ">=1.24" },
     { name = "numpy", marker = "extra == 'asr-granite'", specifier = ">=1.24" },
@@ -3043,7 +3045,7 @@ requires-dist = [
     { name = "transformers", marker = "extra == 'asr-medasr'", specifier = ">=4.46" },
     { name = "transformers", marker = "extra == 'asr-voxtral'", specifier = ">=5.2" },
 ]
-provides-extras = ["dev", "phonetic", "audio", "validation", "asr-medasr", "asr-cohere", "asr-granite", "asr-voxtral"]
+provides-extras = ["asr-whisper-mlx", "dev", "phonetic", "audio", "validation", "asr-medasr", "asr-cohere", "asr-granite", "asr-voxtral"]
 
 [[package]]
 name = "transformers"

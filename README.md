@@ -1,5 +1,7 @@
 # transcriber-radrx
 
+[![CI](https://github.com/sjswerdloff/transcriber-radrx/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/sjswerdloff/transcriber-radrx/actions/workflows/ci.yml)
+
 **A validation framework and complementary-ensemble approach for clinical
 automatic speech recognition (ASR) in radiation oncology dictation.**
 

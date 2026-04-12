@@ -49,7 +49,20 @@ class TestApplyCorrections:
 
 
 class TestTranscribePipeline:
-    """End-to-end tests verifying corrector is wired into transcribe()."""
+    """End-to-end tests verifying corrector is wired into transcribe().
+
+    All tests in this class patch mlx_whisper.transcribe to avoid real model
+    loading. They are skipped on platforms where mlx_whisper is not installed
+    (Linux / GitHub CI — Apple Silicon only extra).
+    """
+
+    @pytest.fixture(autouse=True)
+    def _require_mlx_whisper(self) -> None:
+        """Skip entire class when mlx_whisper is not installed."""
+        pytest.importorskip(
+            "mlx_whisper",
+            reason="mlx_whisper not installed (Apple Silicon only — install with: uv sync --extra asr-whisper-mlx)",
+        )
 
     def test_corrector_actually_runs_in_transcribe(self, rt_vocab: Path) -> None:
         """Contract: transcribe() applies correction dictionary, not dead code.
