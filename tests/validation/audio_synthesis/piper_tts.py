@@ -263,6 +263,7 @@ def synthesize_one(
     voice_model: Path,
     *,
     piper_cmd: list[str] | None = None,
+    speaker_id: int | None = None,
 ) -> np.ndarray:
     """Synthesize a single text sample with piper and return int16 PCM at 22050 Hz.
 
@@ -270,6 +271,8 @@ def synthesize_one(
         text: Text to synthesize.
         voice_model: Path to piper ONNX voice model.
         piper_cmd: Piper command prefix (default: ["piper"]).
+        speaker_id: Optional speaker index for multi-speaker models (e.g. L2-Arctic,
+            VCTK). When set, ``--speaker N`` is appended to the piper command.
 
     Returns:
         Int16 mono PCM samples at 22050 Hz (piper's native rate).
@@ -279,6 +282,8 @@ def synthesize_one(
     """
     cmd_prefix = list(piper_cmd) if piper_cmd is not None else ["piper"]
     cmd = [*cmd_prefix, "--model", str(voice_model), "--output_raw"]
+    if speaker_id is not None:
+        cmd = [*cmd, "--speaker", str(speaker_id)]
 
     try:
         result = subprocess.run(  # noqa: S603
@@ -325,6 +330,8 @@ def build_manifest_entry(
     voice_name: str,
     audio_samples: np.ndarray,
     repo_root: Path,
+    *,
+    speaker_id: int | None = None,
 ) -> dict[str, object]:
     """Build an audio_manifest.jsonl entry for a synthesized file.
 
@@ -333,9 +340,14 @@ def build_manifest_entry(
     Args:
         fixture: The text fixture synthesized.
         audio_path: Absolute path to written WAV file.
-        voice_name: Piper voice identifier (e.g. "en_US-amy-medium").
+        voice_name: Piper voice identifier (e.g. "en_US-amy-medium"). When
+            ``speaker_id`` is also supplied, it is appended to form a unique
+            identifier such as ``"en_US-l2arctic-medium-speaker3"``.
         audio_samples: The int16 audio written (at TARGET_SAMPLE_RATE).
         repo_root: Repository root for computing relative paths.
+        speaker_id: Optional speaker index for multi-speaker models. When set,
+            the ``tts_voice`` field is extended with a ``-speakerN`` suffix so
+            that per-speaker results can be distinguished in the manifest.
 
     Returns:
         Dict matching the audio manifest schema.
@@ -346,13 +358,15 @@ def build_manifest_entry(
     except ValueError:
         relative_path = audio_path
 
+    tts_voice = f"{voice_name}-speaker{speaker_id}" if speaker_id is not None else voice_name
+
     return {
-        "audio_id": f"{fixture.id}-piper-{voice_name}-clean",
+        "audio_id": f"{fixture.id}-piper-{tts_voice}-clean",
         "text_id": fixture.id,
         "audio_path": str(relative_path),
         "tier": "clean",
         "tts_engine": "piper",
-        "tts_voice": voice_name,
+        "tts_voice": tts_voice,
         "sample_rate_hz": TARGET_SAMPLE_RATE,
         "duration_seconds": round(duration, 3),
         "channels": TARGET_CHANNELS,
@@ -371,6 +385,7 @@ def synthesize_fixtures(
     voice_name: str | None = None,
     piper_cmd: list[str] | None = None,
     repo_root: Path | None = None,
+    speaker_id: int | None = None,
 ) -> list[dict[str, object]]:
     """Synthesize audio for multiple fixtures and return manifest entries.
 
@@ -381,6 +396,10 @@ def synthesize_fixtures(
         voice_name: Voice identifier for manifest (default: model filename stem).
         piper_cmd: Piper command prefix (default: ["piper"]).
         repo_root: Repo root for relative paths in manifest.
+        speaker_id: Optional speaker index for multi-speaker models (e.g.
+            L2-Arctic, VCTK). Forwarded to ``synthesize_one`` (adds
+            ``--speaker N`` to piper command) and ``build_manifest_entry``
+            (appends ``-speakerN`` suffix to ``tts_voice``).
 
     Returns:
         List of manifest entries (one per successful synthesis).
@@ -395,13 +414,16 @@ def synthesize_fixtures(
     entries: list[dict[str, object]] = []
     for fixture in fixtures:
         try:
-            raw_audio = synthesize_one(fixture.text, voice_model, piper_cmd=piper_cmd)
+            raw_audio = synthesize_one(fixture.text, voice_model, piper_cmd=piper_cmd, speaker_id=speaker_id)
         except RuntimeError:
             logger.exception("Failed to synthesize %s", fixture.id)
             continue
 
         resampled = _resample_linear(raw_audio, PIPER_SAMPLE_RATE, TARGET_SAMPLE_RATE)
-        audio_path = output_dir / f"{fixture.id}-piper-{voice_name}.wav"
+        # Include speaker suffix in filename when dealing with multi-speaker models
+        # so that different speakers' WAVs don't collide in the same output_dir.
+        file_voice_tag = f"{voice_name}-speaker{speaker_id}" if speaker_id is not None else voice_name
+        audio_path = output_dir / f"{fixture.id}-piper-{file_voice_tag}.wav"
         write_wav(audio_path, resampled, TARGET_SAMPLE_RATE)
 
         entry = build_manifest_entry(
@@ -410,6 +432,7 @@ def synthesize_fixtures(
             voice_name=voice_name,
             audio_samples=resampled,
             repo_root=repo_root,
+            speaker_id=speaker_id,
         )
         entries.append(entry)
         logger.info("Synthesized %s (%.2fs)", fixture.id, entry["duration_seconds"])
