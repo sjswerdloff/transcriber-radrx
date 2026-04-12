@@ -27,6 +27,10 @@ import logging
 import re
 from dataclasses import dataclass
 from pathlib import Path
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from transcriber_radrx.phrase_corrector import PhraseCorrection
 
 logger = logging.getLogger(__name__)
 
@@ -632,3 +636,25 @@ class CorrectionDictionary:
         result_parts.append(text[last_end:])
 
         return "".join(result_parts), corrections
+
+    def correct_full(self, text: str) -> tuple[str, list[Correction], list[PhraseCorrection]]:
+        """Apply phrase-level then word-level corrections.
+
+        Runs PhraseCorrectorPipeline first (multi-word patterns), then
+        the existing single-word CorrectionDictionary. This ordering ensures
+        that multi-word fixes (e.g., 'bracket therapy' -> 'brachytherapy')
+        are applied before single-word matching tries to correct individual
+        tokens that are part of a larger pattern.
+
+        Args:
+            text: Raw transcription text from ASR.
+
+        Returns:
+            Tuple of (corrected_text, word_corrections, phrase_corrections).
+        """
+        from transcriber_radrx.phrase_corrector import PhraseCorrectorPipeline
+
+        phrase_pipeline = PhraseCorrectorPipeline()
+        text_after_phrases, phrase_corrections = phrase_pipeline.correct(text)
+        final_text, word_corrections = self.correct(text_after_phrases)
+        return final_text, word_corrections, phrase_corrections
