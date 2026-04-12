@@ -173,6 +173,8 @@ module = [
     "kenlm",
     "soundfile",
     "transformers",
+    "torch",
+    "torch.*",
     "torchaudio",
     "peft",
     "librosa",
