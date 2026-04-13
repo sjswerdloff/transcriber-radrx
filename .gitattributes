@@ -1,0 +1,4 @@
+tests/validation/reports/bakeoff_esl_dense_rt.json filter=lfs diff=lfs merge=lfs -text
+tests/validation/reports/bakeoff_esl_anatomy.json filter=lfs diff=lfs merge=lfs -text
+tests/validation/reports/bakeoff_esl_particle.json filter=lfs diff=lfs merge=lfs -text
+tests/validation/reports/bakeoff_commonwealth_particle.json filter=lfs diff=lfs merge=lfs -text
