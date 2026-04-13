@@ -99,8 +99,9 @@ thinking about the problem that produces receipts clinicians can check.*
 
 ## Findings so far
 
-Current as of **cycle 112** (April 2026). See `tests/validation/reports/`
-for the full writeups, especially `bakeoff_proton_findings_2026-04-09.md`.
+Current as of **cycle 113** (April 2026). See `tests/validation/reports/`
+for the full writeups, especially `cycle113_voice_panel_findings.md` and
+`bakeoff_proton_findings_2026-04-09.md`.
 
 ### Individual backends: every one fails on safety
 
@@ -192,30 +193,115 @@ for the full writeups, especially `bakeoff_proton_findings_2026-04-09.md`.
    The ensemble achieves post_correction_gate = PASS with zero
    unrecoverable CRITICAL failures across the combined corpus.
 
+### How the ensemble decision engine works
+
+The ensemble combines Voxtral Mini 3B and Whisper large-v3 through a
+four-stage pipeline:
+
+1. **Phrase corrections** (`phrase_corrector.py`) — 13 regex-based
+   multi-word fixes run on each backend's raw output before alignment.
+   Targets systematic ASR failures: dose unit garbling after numbers
+   (`50 ji` → `50 Gy`), compound-word splits (`chemo radiation` →
+   `chemoradiation`), multi-word substitutions (`bracket therapy` →
+   `brachytherapy`).
+2. **Word-level alignment** (`aligner.py`) — the corrected outputs are
+   normalised and aligned using `difflib.SequenceMatcher`. Each position
+   becomes an `AlignedSpan`: MATCH, SUBSTITUTION, INSERTION_A (Voxtral
+   only), or INSERTION_B (Whisper only).
+3. **Decision rules** (`decision_rules.py`) — the 10 rules below are
+   evaluated in priority order on each non-MATCH span. First match wins.
+4. **UWR flagging and output** — spans where `needs_review=True`
+   propagate to the clinician review document as highlighted words with
+   Word margin comments.
+
+**The 10 rules (evaluated in order; first match wins):**
+
+| # | Name | Condition | Winner | Review? |
+|---|------|-----------|--------|---------|
+| 1 | MATCH | Both backends agree | Either | No |
+| 2 | DOSE_UNIT_GYE | Both Gy-variants; at least one is `GyE` | `GyE` | No |
+| 3 | DOSE_UNIT_CONTEXT | Both Gy-variants, neither `GyE`; particle context present | `GyE` (inferred) | Yes |
+| 4 | DOSE_UNIT_VISIBLE | Exactly one is a Gy-variant | Gy-variant; promoted to `GyE` if particle context | No |
+| 5 | VOCABULARY_MATCH | One word in `rt_vocabulary.txt`, other not | Vocabulary word | No |
+| 6 | BOTH_WRONG | Neither in vocabulary, low mutual similarity | Voxtral (flagged) | Yes |
+| 7 | DECIMAL_PRECISION | Both numeric, different decimal places | Higher precision | No |
+| 8 | FORMATTING_DEFAULT | All other substitutions | Voxtral | No |
+| 9 | INSERTION_A | Word only in Voxtral | Voxtral | No |
+| 10 | INSERTION_B | Word only in Whisper | Whisper | No |
+
+**Why order matters:** Rules 2–4 are dose-unit specialists and must fire
+before Rule 5 (vocabulary). If vocabulary ran first, `Gy` might win over
+`GiE` on a vocabulary hit — missing the unit correction entirely. Rules
+3 and 6 are the only rules that set `needs_review=True` — these are the
+words that become UWR.
+
+**Example:** Voxtral produces `50.4 Gy`, Whisper produces `50.4 GiE` on
+a proton prescription. Neither is `GyE`, so Rule 2 skips. Rule 3 checks:
+both are Gy-variants, neither is `GyE`, and `proton` appears in the
+transcript → `has_particle_context()` returns true. Rule 3 fires: output
+`50.4 GyE`, flagged for physicist review.
+
+### Voice panel and noise findings (cycle 113)
+
+10. **Commonwealth English (8 piper en_GB voices)** achieves 0.72% UWR
+    on clean RT dense fixtures with the full correction pipeline. Better
+    than the cycle 112 headline (1.52%) — more voice diversity improves
+    ensemble confidence.
+11. **ESL voices (26 non-native speakers across 6 L1 backgrounds)** show
+    3.4–4.7% UWR depending on corpus. Analysis of missed terms reveals
+    two distinct failure classes: **domain vocabulary failures** (IGRT,
+    SRS fail 100% for all speakers, accent-independent) and **accent
+    penalty** (multi-syllable medical terms fail more for ESL). Most
+    correctable patterns are domain failures, not accent-specific.
+12. **TTS quality is a significant confound.** macOS system voices (higher
+    quality TTS including Indian English) achieve 0.42% UWR on RT dense —
+    vs 3.4% for L2-Arctic piper (lower quality TTS, same accent family).
+    The ESL UWR gap includes both accent and TTS fidelity effects, which
+    this study design cannot fully separate. L2-Arctic results are a
+    conservative upper bound.
+13. **Noise degradation is graceful.** macOS voices degrade from 0.42% UWR
+    (clean) to 1.04% (5 dB SNR, busy clinical environment). At matched
+    TTS quality, Indian English does not degrade faster than native
+    English voices under noise.
+14. **Phrase corrections reduce particle therapy UWR by 38%** (3.11% →
+    1.93% on piper Commonwealth, 2.82% → 0.09% on macOS). The Gy
+    dose-unit pattern alone accounts for most of the improvement.
+
 ### Deployment guidance (with caveats)
 
 - **Recommended pipeline:** Voxtral Mini 3B + Whisper large-v3 ensemble
-  with the 10-rule decision engine and Word .docx review output.
-  1.52% UWR on the combined corpus. Zero unrecoverable CRITICAL.
+  with phrase corrections, 10-rule decision engine, and Word .docx
+  review output. 0.72% UWR on Commonwealth voices (RT dense corpus).
+  Zero unrecoverable CRITICAL failures.
 - **Do not deploy any single backend alone** for proton/particle therapy
   dictation. Voxtral's silent GyE→Gy substitution and Whisper's visible
   corruptions are both individually unacceptable.
 - **MedASR is fundamentally unsuitable** — 23% of its dose-value
   transcriptions have some form of numeric corruption, most of which
   are unrecoverable at the signal level.
-
-**Not yet tested on:** Indian-English, other ESL clinician accents,
-Commonwealth English (Australian, NZ, Canadian, Irish, South African).
-The roadmap includes voice panel expansion for these populations.
+- **Validate with your actual users' voices.** The framework accepts real
+  recordings through the same pipeline as TTS — same metrics, same
+  reports, no code changes. A clinic can record their clinicians reading
+  the fixture corpus once and know their site-specific performance before
+  deployment.
+- **Clear enunciation remains the highest-impact intervention.** The
+  framework quantifies which specific words are problematic for a given
+  speaker — not "your accent is wrong" but "these 12 words need clearer
+  enunciation for the system to catch them reliably."
 
 ## How to read this repository
 
-Start with the **cycle 112 findings**:
+Start with the **cycle 113 findings** (voice panels, accent, noise):
+
+- `tests/validation/reports/cycle113_voice_panel_findings.md` — voice
+  panel UWR comparison (Commonwealth, ESL, macOS), noise degradation
+  curves, accent vs TTS quality analysis, phrase correction impact.
+
+Then the **cycle 112 findings** (ensemble, safety):
 
 - `tests/validation/reports/bakeoff_proton_findings_2026-04-09.md` — the
-  authoritative writeup covering: Voxtral GyE→Gy silent substitution,
-  safety-gate results, TTS variance finding, ensemble architecture and
-  results, UWR definition and three-corpus analysis.
+  ensemble writeup: Voxtral GyE→Gy silent substitution, safety-gate
+  results, TTS variance finding, UWR definition and three-corpus analysis.
 
 Then see the **earlier cycle reports** for the noise and voice-panel work:
 
@@ -240,7 +326,8 @@ Browse the **code**:
 ```
 src/transcriber_radrx/
     transcriber.py       # Whisper MLX engine + vocabulary biasing
-    corrector.py         # Double Metaphone phonetic correction
+    corrector.py         # Double Metaphone phonetic correction + correct_full()
+    phrase_corrector.py  # Regex-based multi-word ASR error patterns (13 rules)
     cli.py               # Command-line interface
     asr_backends/        # Pluggable ASR backend Protocol
         base.py          #   Protocol interface all backends implement
@@ -257,16 +344,19 @@ src/transcriber_radrx/
         ENSEMBLE_SPEC.md #   Design specification
 tests/validation/
     audio_synthesis/
-        piper_tts.py     # Clean-tier TTS via piper
+        piper_tts.py     # Clean-tier TTS via piper (with multi-speaker support)
+        macos_tts.py     # macOS system voices via say + afconvert (AU/IE/IN/ZA)
         acoustic_sim.py  # Room acoustics (Vivian)
         noise_injection.py # MUSAN noise injection (Silas)
     metrics/
         safety_gate.py   # Safety-gate deployment metric (5 failure classes)
     scripts/
-        run_multi_backend_e2e.py       # The bake-off runner
+        run_multi_backend_e2e.py       # The bake-off runner (--voice-panel support)
         run_ensemble_aggregator.py     # Ensemble: pair + align + decide
         run_ensemble_alignment_survey.py # Disagreement landscape analysis
         render_ensemble_docx_demo.py   # Generate .docx review documents
+        compute_ensemble_uwr.py        # UWR comparison across correction modes
+        mine_substitution_patterns.py  # Accent penalty + substitution analysis
     fixtures/
         rt_dictation_samples.jsonl     # Dense clinical RT (24 fixtures)
         particle_samples.jsonl         # Proton/particle therapy (28 fixtures)
@@ -412,12 +502,16 @@ Current contributors:
 - **Stuart Swerdloff** — human researcher, radiation oncology systems
   engineer, project lead and primary reviewer
 - **Silas (silas-397300f6)** — Claude-family AI, primary contributor
-  across cycles 110–112: multi-backend bake-off harness, noise injection,
+  across cycles 110–113: multi-backend bake-off harness, noise injection,
   16-voice panel expansion, particle therapy + anatomy fixture corpora,
   safety-gate metric (5 failure classes + correctability tagging),
   2-backend ensemble (Voxtral + Whisper word-level alignment + 10
   decision rules + UWR metric), Word .docx Track Changes renderer
-  (audit + review modes), TTS variance disambiguation, cycle reports
+  (audit + review modes), TTS variance disambiguation, Commonwealth
+  and ESL voice panels (L2-Arctic 24-speaker, macOS TTS AU/IE/IN/ZA),
+  phrase-level domain corrections (13 patterns from substitution mining),
+  noise degradation analysis, accent vs TTS quality characterisation,
+  analysis scripts, cycle reports
 - **Vivian (vivian-1a61bc9a)** — Claude-family AI, `audio_synthesis/`
   owner: acoustic room simulation, piper TTS integration, schema
   authorship for the audio manifest format
@@ -487,7 +581,7 @@ code license.
 
 ---
 
-*Drafted by Silas (silas-397300f6) in cycle 111, updated in cycle 112.
+*Drafted by Silas (silas-397300f6) in cycle 111, updated in cycles 112–113.
 If you are a clinician, physicist, or engineer arriving at this
 repository for the first time: welcome. We would like to hear from
 you if any of this resonates with work you're doing, and especially
