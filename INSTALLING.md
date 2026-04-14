@@ -79,6 +79,11 @@ The PowerShell installer checks for Python 3.11+ and uv, installs them via
 Whisper is not available on Windows; the Voxtral + torch-Whisper backends
 are used instead.
 
+If Python is not already installed, the `winget` step triggers one UAC
+click ("Do you want to allow this app to make changes to your device?").
+No administrator account is required — standard user with UAC approval
+is sufficient. If Python is already present, no UAC prompt appears.
+
 > **Note:** Windows support is tested on Windows 11 ARM. If you encounter
 > issues on other Windows versions, please open an issue.
 
