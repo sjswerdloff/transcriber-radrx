@@ -50,7 +50,43 @@ On Windows download from [git-scm.com](https://git-scm.com/).
 
 ---
 
-## Quick Start: macOS Apple Silicon (recommended)
+## Quick Start: macOS / Linux (one command)
+
+```bash
+git clone https://github.com/sjswerdloff/transcriber-radrx.git
+cd transcriber-radrx
+make install
+```
+
+That's it. The installer checks for Python 3.11+ and uv, installs them via
+Homebrew (macOS) if missing, detects Apple Silicon vs Intel/Linux, and runs
+`uv sync` with the right extras. On Apple Silicon you get MLX-accelerated
+Whisper; on Linux/Intel you get the torch-based Whisper backend.
+
+The first run downloads model dependencies and creates an isolated virtual
+environment in `.venv/`. It does not touch your system Python.
+
+## Quick Start: Windows
+
+```powershell
+git clone https://github.com/sjswerdloff/transcriber-radrx.git
+cd transcriber-radrx
+.\scripts\install.ps1
+```
+
+The PowerShell installer checks for Python 3.11+ and uv, installs them via
+`winget` if missing, and runs `uv sync` with the appropriate extras. MLX
+Whisper is not available on Windows; the Voxtral + torch-Whisper backends
+are used instead.
+
+> **Note:** Windows support is tested on Windows 11 ARM. If you encounter
+> issues on other Windows versions, please open an issue.
+
+---
+
+## Manual Installation (if you prefer)
+
+### macOS Apple Silicon
 
 Apple Silicon Macs (M1/M2/M3/M4) are the primary development platform. They get
 the full feature set including MLX-accelerated Whisper (fast, on-device inference)
@@ -62,19 +98,13 @@ cd transcriber-radrx
 uv sync --extra dev --extra asr-whisper-mlx --extra asr-voxtral --extra phonetic --extra audio --extra validation
 ```
 
-The first `uv sync` downloads model dependencies and creates an isolated virtual
-environment in `.venv/`. It does not touch your system Python. Subsequent syncs
-are fast.
-
 Verify the install:
 
 ```bash
-uv run transcribe-radrx --help
+uv run transcribe-radrx evaluate --help
 ```
 
----
-
-## Quick Start: Linux / macOS Intel
+### Linux / macOS Intel
 
 MLX is Apple Silicon only and must not be installed on Linux or Intel Macs.
 Whisper runs via the PyTorch backend on these platforms — slightly slower but

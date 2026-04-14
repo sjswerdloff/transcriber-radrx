@@ -25,7 +25,11 @@ ALL_EXTRAS := $(COMMON_EXTRAS) $(ASR_EXTRAS) $(PLATFORM_EXTRAS)
 # Installation
 # ---------------------------------------------------------------------------
 
-.PHONY: install-dev install-ci sync
+.PHONY: install install-dev install-ci sync
+
+## One-step install for clinicians (checks prerequisites, installs backends)
+install:
+	bash scripts/install.sh
 
 ## Install everything for local development (architecture-aware)
 install-dev:
@@ -142,6 +146,7 @@ info:
 help:
 	@echo "transcriber-radrx Makefile targets:"
 	@echo ""
+	@echo "  install       One-step install for clinicians (macOS/Linux)"
 	@echo "  install-dev   Install all deps for local development (arch-aware)"
 	@echo "  install-ci    Install minimal deps for CI (no heavy ASR backends)"
 	@echo "  sync          Alias for install-dev"
