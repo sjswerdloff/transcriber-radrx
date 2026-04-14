@@ -43,7 +43,7 @@ domains — before deployment with real clinicians.
 - WER (standard)
 - Per-term vocabulary recall (did specific RT terms survive?)
 - Safety-gate metric: weighted failure classes for dose-critical tokens
-- UWR (Unresolvable Word Rate) for ensemble configurations
+- UWR (Unresolved Word Rate) for ensemble configurations
 
 ## 4. Validation Experiments
 ### 4.1 Accent Characterisation

@@ -127,7 +127,7 @@ own dictations — skip this section unless you want to run research experiments
 Install the Piper Python wrapper:
 
 ```bash
-pip install piper-tts
+uv pip install piper-tts
 ```
 
 Or install the native binary from the
@@ -211,7 +211,7 @@ uv run transcribe-radrx evaluate \
 What this produces:
 
 - The ensemble transcription printed to the terminal.
-- WER and UWR (Uncertain Word Rate) printed to the terminal.
+- WER and UWR (Unresolved Word Rate) printed to the terminal.
 - `my_review.docx` — a Word document with flagged words highlighted and margin
   comments showing what each backend heard.
 

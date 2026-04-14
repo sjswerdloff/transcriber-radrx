@@ -180,7 +180,7 @@ class DecisionSource(StrEnum):
     VOXTRAL = "voxtral"        # Voxtral's word chosen
     WHISPER = "whisper"         # Whisper's word chosen
     CONTEXT_RULE = "context"   # Neither backend's word; derived from context
-    HUMAN_REVIEW = "review"    # Unresolvable; flagged for human review
+    HUMAN_REVIEW = "review"    # Unresolved; flagged for human review
 
 @dataclass(frozen=True)
 class EnsembleWord:
