@@ -326,9 +326,9 @@ Audio → Whisper large-v3 → text_b ──┘
    - Decimal precision preference (take the higher-precision number)
    - Voxtral default for formatting and general text (lower WER)
 
-### Introducing UWR: Unresolvable Word Rate
+### Introducing UWR: Unresolved Word Rate
 
-We define **UWR** (Unresolvable Word Rate) as the fraction of words in the
+We define **UWR** (Unresolved Word Rate) as the fraction of words in the
 ensemble output that the pipeline cannot confidently resolve from its two
 input channels and must defer to a downstream reviewer. The reviewer may be
 a human clinician, a domain-specific LLM, or a rule-based post-processor —
@@ -337,7 +337,7 @@ the pipeline does not assume.
 UWR is structurally analogous to WER but measures a different property:
 - **WER** counts all errors, including ones the system doesn't know about
   (silent failures).
-- **UWR** counts only the cases the system explicitly flags as unresolvable.
+- **UWR** counts only the cases the system explicitly flags as unresolved.
 
 A system can have low UWR and high WER (confidently wrong — dangerous) or
 high UWR and low WER (cautiously correct — safe). The ensemble targets the

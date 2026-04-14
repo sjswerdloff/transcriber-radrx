@@ -263,3 +263,63 @@ only `ctomy` (5 chars) instead of `ectomy` (6 chars). The correct pattern is
 A pattern for `physical marker` won't match `physical markers`. Always consider
 whether the real-world ASR output will produce singular or plural and include
 `s?` in the pattern when both are expected in clinical dictation.
+
+---
+
+## Cycle 110 — 0.2.0 CLI refactor: subcommand architecture
+
+### Local imports in command handlers — patch at the source module
+
+`_run_evaluate` uses local imports (`from transcriber_radrx.transcriber import
+transcribe_with_backend` etc.) inside the function body rather than at the
+module level. This is intentional: lazy imports prevent pulling in 7+ GB of
+PyTorch/MLX at process start when the user only wanted `--help`. For tests,
+the implication is that `patch("transcriber_radrx.cli.transcribe_with_backend")`
+will FAIL (no such attribute on the CLI module), while
+`patch("transcriber_radrx.transcriber.transcribe_with_backend")` works correctly
+because it patches the name at its source. Always patch at the source module for
+locally-imported names.
+
+### contextlib.ExitStack for multiple patches keeps lines short
+
+When a test needs 6–7 simultaneous patches, repeating the full dotted path for
+each patch target creates 130+ character lines that violate E501. Using
+`contextlib.ExitStack` with `stack.enter_context(patch(...))` allows storing
+patch targets as class-level constants (`_P_GET_BACKEND = "..."`) and keeps
+each line well within 127 characters. The entered contexts return their mock
+objects, so assertions against them work normally.
+
+### argparse subparser backward compat — inspect argv before parsing
+
+When adding subcommands to a CLI that previously had bare positional arguments,
+argparse will ERROR (not just fall through) if the first positional arg is not a
+valid subcommand choice. The correct backward-compat pattern is to inspect the
+effective argv BEFORE calling `parse_args`: find the first non-flag argument; if
+it is not in the known subcommand set, prepend the default subcommand name. This
+preserves `transcribe-radrx audio.wav` semantics while allowing
+`transcribe-radrx transcribe audio.wav` and `transcribe-radrx evaluate --audio
+audio.wav`.
+
+### CorrectionDictionary mock must return a proper 3-tuple from correct_full
+
+`correct_full` returns `tuple[str, list[Correction], list[PhraseCorrection]]`.
+When the test patches `CorrectionDictionary`, the mock instance's `correct_full`
+by default returns a `MagicMock`, not a 3-tuple. Unpacking that with
+`text, _, _ = corrector.correct_full(...)` raises `ValueError: not enough values
+to unpack`. Always configure: `corrector_instance.correct_full.return_value =
+("corrected text", [], [])`.
+
+### TRY300 and try/else: return must go in the else block
+
+ruff TRY300 requires that a `return` or other value-producing statement that
+appears inside a `try` block (after the potential-exception code) be moved to an
+`else` block. The pattern is:
+```python
+try:
+    do_risky_thing()
+except SomeError:
+    handle_or_raise()
+else:
+    return result
+```
+This makes the "success path" semantically distinct from the exception path.

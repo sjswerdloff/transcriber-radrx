@@ -45,7 +45,7 @@ demonstrably safer than either alone.
 - A **2-backend ensemble** that aligns Voxtral and Whisper word-by-word,
   applies 10 prioritized token-class decision rules at disagreement points,
   and produces a single output with per-word provenance. Introduces **UWR**
-  (Unresolvable Word Rate) — the fraction of words the ensemble cannot
+  (Unresolved Word Rate) — the fraction of words the ensemble cannot
   confidently resolve and must defer to a downstream reviewer.
 - A **72-fixture corpus** across three domains: 24 dense clinical RT
   fixtures, 28 particle therapy fixtures (proton + carbon ion, including
@@ -151,7 +151,7 @@ for the full writeups, especially `cycle113_voice_panel_findings.md` and
    clinical safety. **Combined: 98.5% of words resolved automatically,
    1.52% deferred to a downstream reviewer.**
 
-7. **UWR (Unresolvable Word Rate)** is the fraction of words the ensemble
+7. **UWR (Unresolved Word Rate)** is the fraction of words the ensemble
    cannot confidently resolve from its two input channels. Unlike WER
    (which counts all errors including silent ones the system doesn't know
    about), UWR counts only the cases the system *explicitly flags*.
@@ -399,13 +399,10 @@ voice tree further down the resolution order.
 **Piper binary** (pick one of):
 
 ```bash
-# Option A: install via uv (matches this repo's Python environment)
+# Option A: install via uv into the project virtual environment
 uv pip install piper-tts
 
-# Option B: install via pip into the current Python environment
-pip install piper-tts
-
-# Option C: install via Homebrew on macOS
+# Option B: install via Homebrew on macOS
 brew install piper-tts
 
 # Option D: point PIPER_BIN at an existing piper binary you have
