@@ -108,6 +108,14 @@ bakeoff-anatomy:
 ensemble-demo:
 	uv run python tests/validation/scripts/render_ensemble_docx_demo.py
 
+## Example: run ensemble evaluation on a recording with a gold reference.
+## Replace MY_DICTATION.wav and the --reference text with your own.
+evaluate-example:
+	uv run transcribe-radrx evaluate \
+		--audio MY_DICTATION.wav \
+		--reference "Prescribed dose of 54 Gy in 30 fractions to the PTV with IMRT." \
+		--output my_review.docx
+
 # ---------------------------------------------------------------------------
 # Info
 # ---------------------------------------------------------------------------
@@ -151,6 +159,7 @@ help:
 	@echo "  bakeoff-particle  Run bake-off on particle therapy fixtures"
 	@echo "  bakeoff-anatomy   Run bake-off on anatomy fixtures"
 	@echo "  ensemble-demo     Generate .docx review documents"
+	@echo "  evaluate-example  Example: run evaluate on MY_DICTATION.wav"
 	@echo ""
 	@echo "  info          Show architecture and extras"
 	@echo "  help          Show this help"
