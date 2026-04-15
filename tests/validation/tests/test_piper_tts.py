@@ -192,7 +192,7 @@ class TestSynthesizeOne:
             cmd = mock_run.call_args.args[0]
             assert "piper" in cmd
             assert "--model" in cmd
-            assert "/fake/model.onnx" in cmd
+            assert str(Path("/fake/model.onnx")) in cmd
             assert "--output_raw" in cmd
 
     def test_returns_int16_array(self) -> None:
