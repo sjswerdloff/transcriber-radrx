@@ -99,7 +99,7 @@ class DecisionSource(StrEnum):
         VOXTRAL: Voxtral's word was chosen.
         WHISPER: Whisper's word was chosen.
         CONTEXT_RULE: Word was derived from context (e.g. GyE promotion).
-        HUMAN_REVIEW: Unresolvable; flagged for human review.
+        HUMAN_REVIEW: Unresolved; flagged for human review.
     """
 
     MATCH = "match"

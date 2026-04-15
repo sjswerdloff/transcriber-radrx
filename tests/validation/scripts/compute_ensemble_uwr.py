@@ -1,7 +1,7 @@
 """Compute ensemble UWR from bake-off JSON reports.
 
 Reads paired Whisper + Voxtral transcriptions from bake-off JSONs,
-runs the ensemble, and reports UWR (Unresolvable Word Rate) — the
+runs the ensemble, and reports UWR (Unresolved Word Rate) — the
 fraction of words the ensemble cannot resolve automatically.
 
 Supports three correction modes:
