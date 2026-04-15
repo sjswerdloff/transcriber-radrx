@@ -98,16 +98,7 @@ jobs:
         # Heavy ASR extras (asr-voxtral, asr-granite, asr-cohere,
         # asr-medasr) are intentionally excluded — torch/transformers/
         # kenlm are multi-GB and tests skip backends that aren't installed.
-        # phonetic extra (metaphone → rapidfuzz) excluded on Windows:
-        # rapidfuzz C extension lacks Windows wheels for some versions.
-        # Phonetic correction tests skip gracefully when metaphone is absent.
-        run: |
-          if [ "$RUNNER_OS" = "Windows" ]; then
-            uv sync --extra dev --extra audio --extra validation
-          else
-            uv sync --extra dev --extra phonetic --extra audio --extra validation
-          fi
-        shell: bash
+        run: uv sync --extra dev --extra phonetic --extra audio --extra validation
 
       - name: Run tests
         run: uv run pytest tests/ --json-report --json-report-file=results.json -q
