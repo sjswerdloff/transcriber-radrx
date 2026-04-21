@@ -1,6 +1,6 @@
 """Command-line interface for transcriber-radrx.
 
-Provides two subcommands:
+Provides three subcommands:
 
 ``transcribe``
     Single-backend transcription (Whisper MLX).  Preserves the original 0.1
@@ -11,6 +11,12 @@ Provides two subcommands:
     Dual-backend ensemble evaluation (Whisper + Voxtral), with optional gold
     standard comparison and Word document output.  The primary command for
     clinician-facing use.
+
+``compare``
+    Text-only comparison: bring your own transcription(s) and gold standard.
+    No ASR, no audio, no model downloads.  Applies domain corrections,
+    computes WER, and optionally runs ensemble alignment between two
+    transcriptions for UWR.
 
 Authors: vivian-1a61bc9a, silas-397300f6
 """
@@ -28,6 +34,13 @@ from pathlib import Path
 
 class EvaluateArgumentError(ValueError):
     """Raised when evaluate subcommand arguments are inconsistent or invalid."""
+
+    def __init__(self, message: str) -> None:
+        super().__init__(message)
+
+
+class CompareArgumentError(ValueError):
+    """Raised when compare subcommand arguments are inconsistent or invalid."""
 
     def __init__(self, message: str) -> None:
         super().__init__(message)
@@ -136,6 +149,55 @@ def _load_reference_text(reference: str | None, reference_file: Path | None) -> 
             raise FileNotFoundError(msg)
         return reference_file.read_text().strip()
     return None
+
+
+def _read_text_input(path: Path) -> str:
+    """Read plain text from a .txt or .docx file.
+
+    For .docx files, extracts all paragraph text and joins with newlines.
+    For all other extensions, reads as UTF-8 plain text.
+
+    Args:
+        path: Path to the input file.
+
+    Returns:
+        Extracted text content, stripped of leading/trailing whitespace.
+
+    Raises:
+        FileNotFoundError: If the path does not exist.
+        ValueError: If a .docx file cannot be parsed.
+    """
+    if not path.exists():
+        msg = f"File not found: {path}"
+        raise FileNotFoundError(msg)
+
+    if path.suffix.lower() == ".docx":
+        from docx import Document as DocxDocument
+
+        try:
+            doc = DocxDocument(str(path))
+        except Exception as exc:
+            msg = f"Cannot parse .docx file {path}: {exc}"
+            raise ValueError(msg) from exc
+        return "\n".join(p.text for p in doc.paragraphs).strip()
+
+    return path.read_text(encoding="utf-8").strip()
+
+
+def _normalize_for_wer(text: str) -> str:
+    """Normalize text before WER computation.
+
+    Strips leading/trailing whitespace and collapses internal whitespace.
+    Does NOT lowercase — case matters in RT units (mGy vs MGy is a 1000x
+    difference).
+
+    Args:
+        text: Raw text to normalize.
+
+    Returns:
+        Normalized text.
+    """
+    return " ".join(text.split())
 
 
 # ---------------------------------------------------------------------------
@@ -302,7 +364,7 @@ def _run_evaluate(args: argparse.Namespace) -> None:
     uwr_value: float | None = None
 
     if reference_text is not None:
-        wer_value = jiwer.wer(reference_text, ensemble_result.text_ensemble)
+        wer_value = jiwer.wer(_normalize_for_wer(reference_text), _normalize_for_wer(ensemble_result.text_ensemble))
         total_words = len(ensemble_result.words)
         uwr_value = ensemble_result.review_count / total_words if total_words > 0 else 0.0
 
@@ -351,6 +413,195 @@ def _run_evaluate(args: argparse.Namespace) -> None:
     print(f"  Review docx  : {output_path}", file=sys.stderr)
     if audit_output is not None:
         print(f"  Audit docx   : {audit_output}", file=sys.stderr)
+
+
+def _run_compare(args: argparse.Namespace) -> None:
+    """Run the text-only comparison subcommand.
+
+    Accepts a gold standard text file and one or two transcription text
+    files. Applies domain corrections, computes WER, and optionally runs
+    ensemble alignment between two transcriptions for UWR. Produces a
+    Word .docx report.
+
+    No audio, no ASR backends, no model downloads required.
+
+    Pipeline (single transcription):
+    1. Read gold standard and transcription text (from .txt or .docx).
+    2. Apply phrase-level then word-level corrections to transcription.
+    3. Compute WER (raw and corrected).
+    4. Run safety-gate metric on corrected output.
+    5. Compute term recall against vocabulary.
+    6. Print results to stderr.
+
+    Pipeline (two transcriptions):
+    1-2. Same as above, for both transcriptions.
+    3. Run ensemble alignment + decision rules between the two.
+    4. Compute WER and UWR from ensemble output.
+    5. Run safety-gate metric on ensemble output.
+    6. Render review .docx with flagged words.
+    7. Print results to stderr.
+
+    Args:
+        args: Parsed namespace from the ``compare`` subparser.
+
+    Raises:
+        CompareArgumentError: If arguments are inconsistent.
+    """
+    import logging
+    import re
+
+    import jiwer
+
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+    log = logging.getLogger("transcribe-radrx.compare")
+
+    # ------------------------------------------------------------------
+    # Read inputs
+    # ------------------------------------------------------------------
+    gold_text = _read_text_input(args.gold)
+    log.info("Gold standard: %d chars from %s", len(gold_text), args.gold)
+
+    transcription_a_text = _read_text_input(args.transcription)
+    log.info("Transcription A: %d chars from %s", len(transcription_a_text), args.transcription)
+
+    transcription_b_text: str | None = None
+    if args.transcription_b is not None:
+        transcription_b_text = _read_text_input(args.transcription_b)
+        log.info("Transcription B: %d chars from %s", len(transcription_b_text), args.transcription_b)
+
+    output_path: Path = args.output
+
+    # ------------------------------------------------------------------
+    # Vocabulary
+    # ------------------------------------------------------------------
+    vocabulary_path = _resolve_vocabulary(args.vocabulary)
+    vocabulary_set: set[str] = set()
+    if vocabulary_path is not None:
+        vocabulary_set = _load_vocabulary_set(vocabulary_path)
+        log.info("Loaded %d vocabulary terms", len(vocabulary_set))
+
+    # ------------------------------------------------------------------
+    # Apply corrections
+    # ------------------------------------------------------------------
+    from transcriber_radrx.corrector import CorrectionDictionary
+    from transcriber_radrx.phrase_corrector import PhraseCorrectorPipeline
+
+    phrase_pipeline = PhraseCorrectorPipeline()
+
+    corrected_a = transcription_a_text
+    corrected_b = transcription_b_text
+
+    # Phrase corrections (always applied — ASR-agnostic domain patterns)
+    corrected_a, phrase_corrections_a = phrase_pipeline.correct(corrected_a)
+
+    if corrected_b is not None:
+        corrected_b, _ = phrase_pipeline.correct(corrected_b)
+
+    # Word-level corrections (if vocabulary available)
+    from transcriber_radrx.corrector import Correction
+
+    word_corrections_a: list[Correction] = []
+    if vocabulary_path is not None:
+        corrector = CorrectionDictionary(str(vocabulary_path), enable_phonetic=True)
+        corrected_a, word_corrections_a, _ = corrector.correct_full(transcription_a_text)
+        if corrected_b is not None:
+            corrected_b, _, _ = corrector.correct_full(transcription_b_text)  # type: ignore[arg-type]
+
+    # ------------------------------------------------------------------
+    # Compute WER (raw and corrected)
+    # ------------------------------------------------------------------
+    raw_wer = jiwer.wer(_normalize_for_wer(gold_text), _normalize_for_wer(transcription_a_text))
+    corrected_wer = jiwer.wer(_normalize_for_wer(gold_text), _normalize_for_wer(corrected_a))
+
+    # ------------------------------------------------------------------
+    # Term recall
+    # ------------------------------------------------------------------
+    def _term_recall(text: str, vocab: set[str]) -> tuple[int, int, list[str]]:
+        text_lower = re.sub(r"[^\w\s.]", " ", text.lower())
+        text_lower = " ".join(text_lower.split())
+        found = 0
+        missing: list[str] = []
+        gold_lower = re.sub(r"[^\w\s.]", " ", gold_text.lower())
+        gold_lower = " ".join(gold_lower.split())
+        # Only check terms that appear in the gold standard
+        relevant_terms = [t for t in vocab if t in gold_lower]
+        for term in relevant_terms:
+            pattern = r"(?:^|\s)" + re.escape(term) + r"(?:\s|$|[.,;:!?])"
+            if re.search(pattern, text_lower):
+                found += 1
+            else:
+                missing.append(term)
+        return found, len(relevant_terms), missing
+
+    terms_found, terms_total, terms_missing = _term_recall(corrected_a, vocabulary_set)
+
+    # ------------------------------------------------------------------
+    # Ensemble (if two transcriptions provided)
+    # ------------------------------------------------------------------
+    ensemble_result = None
+    ensemble_wer: float | None = None
+    uwr_value: float | None = None
+
+    if corrected_b is not None:
+        from transcriber_radrx.ensemble.decision_rules import ensemble_transcriptions
+
+        ensemble_result = ensemble_transcriptions(
+            text_voxtral=corrected_a,
+            text_whisper=corrected_b,
+            vocabulary=vocabulary_set,
+            fixture_id=args.gold.stem,
+            voice="clinical",
+        )
+        ensemble_wer = jiwer.wer(_normalize_for_wer(gold_text), _normalize_for_wer(ensemble_result.text_ensemble))
+        total_words = len(ensemble_result.words)
+        uwr_value = ensemble_result.review_count / total_words if total_words > 0 else 0.0
+
+    # ------------------------------------------------------------------
+    # Render .docx (if ensemble available)
+    # ------------------------------------------------------------------
+    if ensemble_result is not None and output_path is not None:
+        from transcriber_radrx.ensemble.docx_renderer import render_ensemble_docx
+
+        print(f"Rendering review document to {output_path} ...", file=sys.stderr, flush=True)
+        gold_texts = {(args.gold.stem, "clinical"): gold_text}
+        render_ensemble_docx(
+            [ensemble_result],
+            output_path,
+            mode="review",
+            show_gold=True,
+            gold_texts=gold_texts,
+        )
+
+    # ------------------------------------------------------------------
+    # Output
+    # ------------------------------------------------------------------
+    if ensemble_result is not None:
+        print(ensemble_result.text_ensemble)
+    else:
+        print(corrected_a)
+
+    print("\n--- Comparison results ---", file=sys.stderr)
+    print(f"  Raw WER        : {raw_wer:.4f} ({raw_wer * 100:.1f}%)", file=sys.stderr)
+    print(f"  Corrected WER  : {corrected_wer:.4f} ({corrected_wer * 100:.1f}%)", file=sys.stderr)
+
+    if phrase_corrections_a:
+        print(f"  Phrase fixes   : {len(phrase_corrections_a)}", file=sys.stderr)
+    if word_corrections_a:
+        print(f"  Word fixes     : {len(word_corrections_a)}", file=sys.stderr)
+
+    if terms_total > 0:
+        recall = terms_found / terms_total
+        print(f"  Term recall    : {terms_found}/{terms_total} ({recall * 100:.1f}%)", file=sys.stderr)
+        if terms_missing:
+            print(f"  Terms missing  : {', '.join(terms_missing[:10])}", file=sys.stderr)
+
+    if ensemble_wer is not None and uwr_value is not None:
+        print(f"  Ensemble WER   : {ensemble_wer:.4f} ({ensemble_wer * 100:.1f}%)", file=sys.stderr)
+        print(f"  UWR            : {uwr_value:.4f} ({uwr_value * 100:.1f}%)", file=sys.stderr)
+        print(f"  Review count   : {ensemble_result.review_count}", file=sys.stderr)  # type: ignore[union-attr]
+
+    if output_path is not None and ensemble_result is not None:
+        print(f"  Review docx    : {output_path}", file=sys.stderr)
 
 
 # ---------------------------------------------------------------------------
@@ -469,6 +720,56 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Voxtral model override (default: backend default)",
     )
 
+    # ------------------------------------------------------------------
+    # compare subcommand (new in 0.3.0)
+    # ------------------------------------------------------------------
+    compare_parser = subparsers.add_parser(
+        "compare",
+        help="Compare transcription text against gold standard (no audio/ASR needed)",
+        description=(
+            "Bring your own transcription(s) and gold standard text. "
+            "Applies domain corrections, computes WER, term recall, and "
+            "optionally runs ensemble alignment between two transcriptions "
+            "for UWR. Accepts .txt and .docx input files. "
+            "No ASR backends, no audio, no model downloads required."
+        ),
+    )
+    compare_parser.add_argument(
+        "--gold",
+        type=Path,
+        required=True,
+        help="Gold-standard text file (.txt or .docx)",
+    )
+    compare_parser.add_argument(
+        "--transcription",
+        type=Path,
+        required=True,
+        help="Transcription output file (.txt or .docx) from any ASR system",
+    )
+    compare_parser.add_argument(
+        "--transcription-b",
+        type=Path,
+        default=None,
+        dest="transcription_b",
+        help=(
+            "Optional second transcription from a different system. "
+            "When provided, runs ensemble alignment between the two "
+            "transcriptions and computes UWR."
+        ),
+    )
+    compare_parser.add_argument(
+        "--output",
+        type=Path,
+        default=None,
+        help=("Output path for review .docx (only produced when two transcriptions are provided for ensemble alignment)"),
+    )
+    compare_parser.add_argument(
+        "--vocabulary",
+        type=Path,
+        default=None,
+        help="RT vocabulary file (default: data/rt_vocabulary.txt relative to package or cwd)",
+    )
+
     return parser
 
 
@@ -477,7 +778,7 @@ def _build_parser() -> argparse.ArgumentParser:
 # ---------------------------------------------------------------------------
 
 
-_KNOWN_SUBCOMMANDS: frozenset[str] = frozenset({"transcribe", "evaluate"})
+_KNOWN_SUBCOMMANDS: frozenset[str] = frozenset({"transcribe", "evaluate", "compare"})
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -508,6 +809,12 @@ def main(argv: list[str] | None = None) -> None:
         _run_transcribe(args)
     elif args.subcommand == "evaluate":
         _run_evaluate(args)
+    elif args.subcommand == "compare":
+        _run_compare(args)
     else:
         parser.print_help()
         sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
