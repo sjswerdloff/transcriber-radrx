@@ -187,18 +187,18 @@ class TestRunCompareCore:
 
 
 # ---------------------------------------------------------------------------
-# _run_evaluate_core — mocked backends, no PySide6
+# _run_evaluate_subprocess — subprocess-based evaluate, no PySide6
 # ---------------------------------------------------------------------------
 
 
-class TestRunEvaluateCoreImport:
-    """Verify _run_evaluate_core is importable without PySide6."""
+class TestRunEvaluateSubprocessImport:
+    """Verify _run_evaluate_subprocess is importable without PySide6."""
 
     def test_importable(self) -> None:
-        """Contract: _run_evaluate_core imports cleanly from gui module."""
-        from transcriber_radrx.gui import _run_evaluate_core
+        """Contract: _run_evaluate_subprocess imports cleanly from gui module."""
+        from transcriber_radrx.gui import _run_evaluate_subprocess
 
-        assert callable(_run_evaluate_core)
+        assert callable(_run_evaluate_subprocess)
 
 
 # ---------------------------------------------------------------------------

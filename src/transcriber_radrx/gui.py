@@ -18,6 +18,7 @@ Authors: silas-397300f6
 
 from __future__ import annotations
 
+import contextlib
 import re
 import sys
 from pathlib import Path
@@ -199,13 +200,17 @@ def _run_compare_core(
     return result
 
 
-def _run_evaluate_core(
+def _run_evaluate_subprocess(
     audio_path: Path,
     output_path: Path,
     vocabulary_path: Path | None,
     progress_callback: object | None = None,
 ) -> dict[str, object]:
-    """Execute the evaluate pipeline and return a results dict.
+    """Execute the evaluate pipeline in a subprocess.
+
+    Runs ``transcribe-radrx evaluate`` as a child process to isolate MLX
+    GPU operations from Qt's event loop (MLX + QThread causes bus errors
+    on Apple Silicon). Parses results from the CLI's stderr output.
 
     Args:
         audio_path: Path to the audio WAV file.
@@ -218,18 +223,9 @@ def _run_evaluate_core(
 
     Raises:
         FileNotFoundError: If the audio file does not exist.
-        GUIWorkerError: If the evaluate pipeline fails.
+        GUIWorkerError: If the subprocess fails.
     """
-    import logging
-
-    from transcriber_radrx.asr_backends.registry import get_backend
-    from transcriber_radrx.cli import _load_vocabulary_set, _resolve_vocabulary
-    from transcriber_radrx.corrector import CorrectionDictionary
-    from transcriber_radrx.ensemble.decision_rules import ensemble_transcriptions
-    from transcriber_radrx.ensemble.docx_renderer import render_ensemble_docx
-    from transcriber_radrx.transcriber import transcribe_with_backend
-
-    logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+    import subprocess
 
     if not audio_path.exists():
         msg = f"Audio file not found: {audio_path}"
@@ -239,53 +235,60 @@ def _run_evaluate_core(
         if callable(progress_callback):
             progress_callback(msg)  # type: ignore[call-arg]
 
-    resolved_vocab = _resolve_vocabulary(vocabulary_path)
-    vocabulary_set: set[str] = set()
-    if resolved_vocab is not None:
-        vocabulary_set = _load_vocabulary_set(resolved_vocab)
+    _emit("Starting evaluation (this may take a few minutes) ...")
 
-    _emit("Loading Whisper large-v3 ...")
-    whisper_backend = get_backend("mlx_whisper")
+    cmd = [
+        sys.executable,
+        "-m",
+        "transcriber_radrx.cli",
+        "evaluate",
+        "--audio",
+        str(audio_path),
+        "--output",
+        str(output_path),
+    ]
+    if vocabulary_path is not None:
+        cmd.extend(["--vocabulary", str(vocabulary_path)])
 
-    _emit("Loading Voxtral Mini 3B ...")
-    voxtral_backend = get_backend("voxtral")
+    try:
+        result = subprocess.run(  # noqa: S603
+            cmd,
+            capture_output=True,
+            text=True,
+            timeout=600,
+            check=False,
+        )
+    except subprocess.TimeoutExpired as exc:
+        msg = "Evaluation timed out after 10 minutes"
+        raise GUIWorkerError(msg) from exc
 
-    _emit(f"Transcribing {audio_path.name} with Whisper ...")
-    whisper_result = transcribe_with_backend(audio_path, whisper_backend, vocabulary_path=resolved_vocab)
+    # Parse stderr for progress and results
+    ensemble_text = result.stdout.strip()
+    review_count = 0
+    total_words = 0
 
-    _emit(f"Transcribing {audio_path.name} with Voxtral ...")
-    voxtral_result = transcribe_with_backend(audio_path, voxtral_backend, vocabulary_path=resolved_vocab)
+    for line in result.stderr.splitlines():
+        # Forward progress lines
+        if "Loading" in line or "Transcribing" in line or "Running" in line or "Rendering" in line:
+            _emit(line.strip().removeprefix("INFO: "))
 
-    whisper_text = whisper_result.corrected_text
-    voxtral_text = voxtral_result.corrected_text
+        # Parse result lines
+        if "Review count" in line:
+            with contextlib.suppress(ValueError):
+                review_count = int(line.split(":")[-1].strip())
+        elif "Total words" in line:
+            with contextlib.suppress(ValueError):
+                total_words = int(line.split(":")[-1].strip())
 
-    if resolved_vocab is not None:
-        corrector = CorrectionDictionary(str(resolved_vocab))
-        whisper_text, _, _ = corrector.correct_full(whisper_result.text)
-        voxtral_text, _, _ = corrector.correct_full(voxtral_result.text)
-
-    _emit("Running ensemble decision rules ...")
-    ensemble_result = ensemble_transcriptions(
-        text_voxtral=voxtral_text,
-        text_whisper=whisper_text,
-        vocabulary=vocabulary_set,
-        fixture_id=audio_path.stem,
-        voice="clinical",
-    )
-
-    _emit(f"Rendering review document to {output_path} ...")
-    render_ensemble_docx(
-        [ensemble_result],
-        output_path,
-        mode="review",
-        show_gold=False,
-        gold_texts=None,
-    )
+    if result.returncode != 0:
+        error_lines = [line for line in result.stderr.splitlines() if "error" in line.lower() or "Error" in line]
+        msg = "\n".join(error_lines) if error_lines else f"Evaluation failed (exit code {result.returncode})"
+        raise GUIWorkerError(msg)
 
     return {
-        "ensemble_text": ensemble_result.text_ensemble,
-        "review_count": ensemble_result.review_count,
-        "total_words": len(ensemble_result.words),
+        "ensemble_text": ensemble_text,
+        "review_count": review_count,
+        "total_words": total_words,
         "output_path": str(output_path),
     }
 
@@ -380,9 +383,13 @@ if _PYSIDE6_AVAILABLE:
             self._vocabulary_path = vocabulary_path
 
         def run(self) -> None:
-            """Execute the evaluate pipeline."""
+            """Execute the evaluate pipeline in a subprocess.
+
+            MLX GPU operations conflict with Qt's threading model on Apple
+            Silicon (bus error). Running as a subprocess isolates them.
+            """
             try:
-                results = _run_evaluate_core(
+                results = _run_evaluate_subprocess(
                     self._audio_path,
                     self._output_path,
                     self._vocabulary_path,
