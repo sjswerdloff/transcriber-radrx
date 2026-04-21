@@ -74,6 +74,22 @@ class GUIWorkerError(RuntimeError):
 # ---------------------------------------------------------------------------
 
 
+def _normalize_for_wer(text: str) -> str:
+    """Normalize text before WER computation.
+
+    Strips leading/trailing whitespace and collapses internal whitespace.
+    Does NOT lowercase — case matters in RT units (mGy vs MGy is a 1000x
+    difference).
+
+    Args:
+        text: Raw text to normalize.
+
+    Returns:
+        Normalized text suitable for WER comparison.
+    """
+    return " ".join(text.split())
+
+
 def _term_recall(text: str, gold_text: str, vocab: set[str]) -> tuple[int, int, list[str]]:
     """Compute term recall of *text* against vocabulary terms present in *gold_text*.
 
@@ -163,8 +179,8 @@ def _run_compare_core(
         if corrected_b is not None and transcription_b_text is not None:
             corrected_b, _, _ = corrector.correct_full(transcription_b_text)
 
-    raw_wer = jiwer.wer(gold_text, transcription_a_text)
-    corrected_wer = jiwer.wer(gold_text, corrected_a)
+    raw_wer = jiwer.wer(_normalize_for_wer(gold_text), _normalize_for_wer(transcription_a_text))
+    corrected_wer = jiwer.wer(_normalize_for_wer(gold_text), _normalize_for_wer(corrected_a))
 
     terms_found, terms_total, terms_missing = _term_recall(corrected_a, gold_text, vocabulary_set)
 
@@ -189,7 +205,7 @@ def _run_compare_core(
             fixture_id=gold_path.stem,
             voice="clinical",
         )
-        ensemble_wer = jiwer.wer(gold_text, ensemble_result.text_ensemble)
+        ensemble_wer = jiwer.wer(_normalize_for_wer(gold_text), _normalize_for_wer(ensemble_result.text_ensemble))
         total_words = len(ensemble_result.words)
         uwr_value = ensemble_result.review_count / total_words if total_words > 0 else 0.0
         result["ensemble_wer"] = ensemble_wer

@@ -184,6 +184,22 @@ def _read_text_input(path: Path) -> str:
     return path.read_text(encoding="utf-8").strip()
 
 
+def _normalize_for_wer(text: str) -> str:
+    """Normalize text before WER computation.
+
+    Strips leading/trailing whitespace and collapses internal whitespace.
+    Does NOT lowercase — case matters in RT units (mGy vs MGy is a 1000x
+    difference).
+
+    Args:
+        text: Raw text to normalize.
+
+    Returns:
+        Normalized text.
+    """
+    return " ".join(text.split())
+
+
 # ---------------------------------------------------------------------------
 # Subcommand implementations
 # ---------------------------------------------------------------------------
@@ -348,7 +364,7 @@ def _run_evaluate(args: argparse.Namespace) -> None:
     uwr_value: float | None = None
 
     if reference_text is not None:
-        wer_value = jiwer.wer(reference_text, ensemble_result.text_ensemble)
+        wer_value = jiwer.wer(_normalize_for_wer(reference_text), _normalize_for_wer(ensemble_result.text_ensemble))
         total_words = len(ensemble_result.words)
         uwr_value = ensemble_result.review_count / total_words if total_words > 0 else 0.0
 
@@ -494,8 +510,8 @@ def _run_compare(args: argparse.Namespace) -> None:
     # ------------------------------------------------------------------
     # Compute WER (raw and corrected)
     # ------------------------------------------------------------------
-    raw_wer = jiwer.wer(gold_text, transcription_a_text)
-    corrected_wer = jiwer.wer(gold_text, corrected_a)
+    raw_wer = jiwer.wer(_normalize_for_wer(gold_text), _normalize_for_wer(transcription_a_text))
+    corrected_wer = jiwer.wer(_normalize_for_wer(gold_text), _normalize_for_wer(corrected_a))
 
     # ------------------------------------------------------------------
     # Term recall
@@ -536,7 +552,7 @@ def _run_compare(args: argparse.Namespace) -> None:
             fixture_id=args.gold.stem,
             voice="clinical",
         )
-        ensemble_wer = jiwer.wer(gold_text, ensemble_result.text_ensemble)
+        ensemble_wer = jiwer.wer(_normalize_for_wer(gold_text), _normalize_for_wer(ensemble_result.text_ensemble))
         total_words = len(ensemble_result.words)
         uwr_value = ensemble_result.review_count / total_words if total_words > 0 else 0.0
 
