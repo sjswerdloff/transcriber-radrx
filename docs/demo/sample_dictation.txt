@@ -1,0 +1,1 @@
+prescribed dose of 54 Gy in 30 fractions to the PTV with a simultaneous integrated boost to 60 Gy for the high-risk CTV using IMRT.
