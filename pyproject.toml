@@ -108,9 +108,17 @@ asr-voxtral = [
     "mistral-common>=1.5",
     "librosa>=0.10",
 ]
+# PySide6 GUI launcher (LGPL — compatible with Apache 2.0 project licence).
+# Install with: uv sync --extra gui
+gui = [
+    "PySide6>=6.6",
+]
 
 [project.scripts]
 transcribe-radrx = "transcriber_radrx.cli:main"
+
+[project.gui-scripts]
+transcribe-radrx-gui = "transcriber_radrx.gui:main"
 
 [build-system]
 requires = ["hatchling"]
@@ -134,7 +142,11 @@ force-exclude = true
 select = ["E", "F", "I", "W", "UP", "S", "B", "A", "C4", "SIM", "TRY", "ARG", "PTH"]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**" = ["S101"]
+# S101: assert is standard pytest pattern
+# ARG002: qt_app fixture parameters exist for side effects (QApplication setup),
+#         not for use inside the test method body — pytest requires the name to match
+#         the fixture name, so renaming to _qt_app is not an option.
+"tests/**" = ["S101", "ARG002"]
 # Fixture generators contain literal clinical sentences that cannot be
 # meaningfully wrapped — they are realistic dictation patterns.
 "tests/validation/scripts/generate_dense_clinical.py" = ["E501"]
@@ -180,6 +192,10 @@ module = [
     "librosa",
     "accelerate",
     "transcriber_radrx.asr_backends._medasr_mlx_lib.*",
+    # PySide6 ships its own .pyi stubs but they may not be present in all
+    # environments (CI without the gui extra). Suppress missing-import errors.
+    "PySide6",
+    "PySide6.*",
 ]
 ignore_missing_imports = true
 
@@ -230,3 +246,15 @@ warn_unused_ignores = false
 [[tool.mypy.overrides]]
 module = "transcriber_radrx.asr_backends.voxtral"
 warn_unused_ignores = false
+
+# gui.py: PySide6 may not be installed in CI (the gui extra is optional).
+# When PySide6 is absent, all Qt classes resolve to Any via
+# ignore_missing_imports, causing:
+#   - [misc] "Class cannot subclass X (has type Any)"
+#   - [unused-ignore] on type: ignore comments written for the installed case
+# These are expected dual-environment artefacts — the same pattern as the
+# asr backend modules above.  Disable both checks for this module.
+[[tool.mypy.overrides]]
+module = "transcriber_radrx.gui"
+warn_unused_ignores = false
+disable_error_code = ["misc"]

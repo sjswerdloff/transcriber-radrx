@@ -39,6 +39,10 @@ install-dev:
 install-ci:
 	uv sync $(COMMON_EXTRAS)
 
+## Install with GUI support (PySide6)
+install-gui:
+	uv sync $(ALL_EXTRAS) --extra gui
+
 ## Alias for install-dev
 sync: install-dev
 

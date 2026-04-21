@@ -99,6 +99,83 @@ keyword arguments.
 
 ---
 
+## Cycle 111 — PySide6 GUI launcher (gui.py)
+
+### pytest.importorskip at module level skips the ENTIRE file
+
+When `pytest.importorskip("PySide6")` is placed at the top level of a test
+module (not inside a test class or function), pytest skips collection of the
+entire file when the package is absent. This means non-GUI tests in the same
+file also silently disappear. The correct pattern is to use `pytest.mark.skipif`
+with a conditional flag defined from a try/except import check, applied per-class
+rather than per-file.
+
+```python
+try:
+    import PySide6 as _pyside6_check  # noqa: F401
+    _PYSIDE6_PRESENT = True
+except ModuleNotFoundError:
+    _PYSIDE6_PRESENT = False
+
+_skip_no_pyside6 = pytest.mark.skipif(not _PYSIDE6_PRESENT, reason="PySide6 not installed")
+
+@_skip_no_pyside6
+class TestPySide6Widget:
+    ...
+```
+
+This gives 18 passing tests in the no-PySide6 CI environment instead of
+0 collected.
+
+### dual-environment mypy for optional GUI dependencies
+
+The `misc` error "Class cannot subclass X (has type Any)" from mypy appears
+whenever PySide6 is absent (Qt classes become `Any` via ignore_missing_imports).
+The same dual-environment problem exists for asr backend modules. Pattern:
+
+```toml
+[[tool.mypy.overrides]]
+module = "transcriber_radrx.gui"
+warn_unused_ignores = false
+disable_error_code = ["misc"]
+```
+
+This suppresses both "unused type: ignore comment" (when PySide6 absent) and
+"class cannot subclass Any" without affecting strict mode elsewhere.
+
+### dict[str, object] requires explicit str() conversion for float()
+
+When a results dict is typed as `dict[str, object]`, mypy rejects
+`float(results.get("key", 0.0))` because `.get()` returns `object`, not
+`SupportsFloat`. The safe pattern is `float(str(results.get("key", 0.0)))`.
+Similarly for list values: use a conditional isinstance check:
+```python
+raw = results.get("terms_missing", [])
+terms: list[str] = [str(t) for t in raw] if isinstance(raw, list) else []
+```
+
+### ARG002 for fixture parameters that exist only for side effects
+
+pytest fixtures used only for their side effects (e.g. ensuring QApplication
+is created) trigger ARG002 ("unused method argument") when the test method
+parameter is named but not referenced. Since pytest requires the parameter name
+to match the fixture name exactly (renaming to `_qt_app` breaks fixture injection),
+the clean fix is to add `"ARG002"` to the `tests/**` per-file-ignores in ruff config.
+
+### QThread.finished Signal type annotation with PySide6
+
+PySide6 Signals are declared as class attributes:
+```python
+class CompareWorker(QThread):
+    finished: Signal = Signal(dict)
+    error: Signal = Signal(str)
+    progress: Signal = Signal(str)
+```
+When PySide6 is absent (CI), these class bodies are inside `if _PYSIDE6_AVAILABLE:` guards
+and never executed — mypy and ruff both skip them cleanly.
+
+---
+
 ## Phase 1.1 + Phase 2 — Ensemble Decision Rules (#119)
 
 ### WER vs. safety: the ensemble trades one for the other
