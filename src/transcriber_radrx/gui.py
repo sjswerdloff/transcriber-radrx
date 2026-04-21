@@ -32,7 +32,7 @@ if TYPE_CHECKING:
 # ---------------------------------------------------------------------------
 
 try:
-    from PySide6.QtCore import QThread, QUrl, Signal
+    from PySide6.QtCore import QElapsedTimer, QThread, QTimer, QUrl, Signal
     from PySide6.QtGui import QDragEnterEvent, QDropEvent
     from PySide6.QtWidgets import (
         QApplication,
@@ -557,7 +557,29 @@ if _PYSIDE6_AVAILABLE:
             audio_layout = QVBoxLayout(audio_group)
             self._audio_picker = FilePickerWidget("Audio file (.wav):", [".wav"])
             audio_layout.addWidget(self._audio_picker)
+
+            # Record controls
+            record_row = QHBoxLayout()
+            self._record_btn = QPushButton("Record")
+            self._record_btn.clicked.connect(self._on_record_toggle)
+            record_row.addWidget(self._record_btn)
+
+            self._record_duration = QLabel("")
+            self._record_duration.setStyleSheet("color: #555; font-family: monospace;")
+            record_row.addWidget(self._record_duration)
+            record_row.addStretch()
+            audio_layout.addLayout(record_row)
+
             layout.addWidget(audio_group)
+
+            # Recording state
+            self._is_recording = False
+            self._recorder: object = None  # QMediaRecorder when active
+            self._record_timer = QTimer(self)
+            self._record_timer.setInterval(500)
+            self._record_timer.timeout.connect(self._update_record_duration)
+            self._elapsed_timer = QElapsedTimer()
+            self._recording_path: Path | None = None
 
             # Status
             self._status_label = QLabel("Ready")
@@ -579,6 +601,87 @@ if _PYSIDE6_AVAILABLE:
             btn_row.addStretch()
             layout.addLayout(btn_row)
             layout.addStretch()
+
+        def _on_record_toggle(self) -> None:
+            """Start or stop microphone recording."""
+            if self._is_recording:
+                self._stop_recording()
+            else:
+                self._start_recording()
+
+        def _start_recording(self) -> None:
+            """Start recording from the default microphone."""
+            try:
+                from PySide6.QtMultimedia import QAudioInput, QMediaCaptureSession, QMediaRecorder
+            except ImportError:
+                QMessageBox.warning(
+                    self,
+                    "Recording unavailable",
+                    "QtMultimedia is not available. Record audio with another tool and use the file picker.",
+                )
+                return
+
+            import tempfile
+
+            # Create a temp WAV file for the recording
+            with tempfile.NamedTemporaryFile(suffix=".wav", prefix="radrx-recording-", delete=False) as tmp:
+                self._recording_path = Path(tmp.name)
+
+            # Set up capture session
+            self._audio_input = QAudioInput(self)
+            self._capture_session = QMediaCaptureSession(self)
+            self._capture_session.setAudioInput(self._audio_input)
+
+            recorder = QMediaRecorder(self)
+            self._capture_session.setRecorder(recorder)
+
+            from PySide6.QtMultimedia import QMediaFormat
+
+            recorder.setMediaFormat(QMediaFormat(QMediaFormat.FileFormat.Wave))
+            recorder.setOutputLocation(QUrl.fromLocalFile(str(self._recording_path)))
+            self._recorder = recorder
+
+            recorder.record()
+            self._is_recording = True
+            self._elapsed_timer.start()
+            self._record_timer.start()
+            self._record_btn.setText("Stop Recording")
+            self._record_btn.setStyleSheet("background-color: #e74c3c; color: white;")
+            self._record_duration.setText("0:00")
+            self._status_label.setText("Recording ...")
+
+        def _stop_recording(self) -> None:
+            """Stop the current recording and update the file picker."""
+            if self._recorder is not None:
+                from PySide6.QtMultimedia import QMediaRecorder
+
+                if isinstance(self._recorder, QMediaRecorder):
+                    self._recorder.stop()
+
+            self._record_timer.stop()
+            self._is_recording = False
+            self._record_btn.setText("Record")
+            self._record_btn.setStyleSheet("")
+
+            elapsed_ms = self._elapsed_timer.elapsed()
+            secs = elapsed_ms // 1000
+            mins = secs // 60
+            secs = secs % 60
+            self._record_duration.setText(f"{mins}:{secs:02d}")
+
+            if self._recording_path and self._recording_path.exists() and self._recording_path.stat().st_size > 0:
+                self._audio_picker.set_path(self._recording_path)
+                self._status_label.setText(f"Recorded {mins}:{secs:02d} — ready to transcribe")
+            else:
+                self._status_label.setText("Recording may have failed — check microphone permissions")
+
+        def _update_record_duration(self) -> None:
+            """Update the recording duration display (called by timer)."""
+            elapsed_ms = self._elapsed_timer.elapsed()
+            secs = elapsed_ms // 1000
+            mins = secs // 60
+            secs = secs % 60
+            self._record_duration.setText(f"{mins}:{secs:02d}")
 
         def _on_transcribe(self) -> None:
             """Prompt for output path and start the evaluate worker."""
