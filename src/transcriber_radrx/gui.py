@@ -607,7 +607,21 @@ if _PYSIDE6_AVAILABLE:
 
             btn_row.addStretch()
             layout.addLayout(btn_row)
+
+            # Transcription result text area (visible after transcription)
+            result_group = QGroupBox("Transcription Result")
+            result_layout = QVBoxLayout(result_group)
+            self._result_text = QTextEdit()
+            self._result_text.setReadOnly(True)
+            self._result_text.setPlaceholderText("Transcription will appear here after processing.")
+            self._result_text.setMaximumHeight(120)
+            result_layout.addWidget(self._result_text)
+            layout.addWidget(result_group)
+
             layout.addStretch()
+
+            # Track paths for the plain-text output
+            self._last_txt_path: Path | None = None
 
         def _on_record_toggle(self) -> None:
             """Start or stop microphone recording."""
@@ -729,6 +743,9 @@ if _PYSIDE6_AVAILABLE:
         def _on_finished(self, results: dict[str, object]) -> None:
             """Handle successful pipeline completion.
 
+            Displays the ensemble transcription text, saves a plain-text
+            copy alongside the .docx, and opens the .docx in Word.
+
             Args:
                 results: Results dict from the evaluate pipeline.
             """
@@ -737,12 +754,23 @@ if _PYSIDE6_AVAILABLE:
             self._last_output_path = Path(output_path_str) if output_path_str else None
             review_count = results.get("review_count", 0)
             total_words = results.get("total_words", 0)
+            ensemble_text = str(results.get("ensemble_text", ""))
+
+            # Show transcription text in the GUI
+            self._result_text.setPlainText(ensemble_text)
+
+            # Save plain-text transcription alongside the .docx
+            if self._last_output_path:
+                txt_path = self._last_output_path.with_suffix(".txt")
+                txt_path.write_text(ensemble_text, encoding="utf-8")
+                self._last_txt_path = txt_path
+
             self._status_label.setText(
-                f"Done — {review_count} review words out of {total_words}. Saved to {Path(output_path_str).name}"
+                f"Done — {review_count} review words out of {total_words}. Saved to {Path(output_path_str).name} and .txt"
             )
             self._compare_btn.setVisible(True)
 
-            # Open in system default app
+            # Open .docx in system default app
             if self._last_output_path and self._last_output_path.exists():
                 from PySide6.QtGui import QDesktopServices
 
@@ -759,8 +787,10 @@ if _PYSIDE6_AVAILABLE:
             QMessageBox.critical(self, "Transcription failed", message)
 
         def _on_compare(self) -> None:
-            """Emit signal to switch to Compare tab with last output pre-loaded."""
-            if self._last_output_path:
+            """Emit signal to switch to Compare tab with transcription text pre-loaded."""
+            if self._last_txt_path and self._last_txt_path.exists():
+                self.switch_to_compare.emit(str(self._last_txt_path))
+            elif self._last_output_path:
                 self.switch_to_compare.emit(str(self._last_output_path))
 
 
